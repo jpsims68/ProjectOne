@@ -1,0 +1,62 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build, lint, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+      - name: Lint
+        run: |
+          if [ -f .ruff.toml ] || [ -f pyproject.toml ]; then
+            pip install ruff && ruff check . || exit 1
+          else
+            echo "No lint config yet - scaffold stage"
+          fi
+      - name: Test
+        run: |
+          if [ -d tests ] && ls tests/**/*.py >/dev/null 2>&1; then
+            pip install pytest && pytest -q
+          else
+            echo "No tests yet - scaffold stage"
+          fi
+
+  security-scan:
+    name: Security scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependency vulnerability scan
+        run: |
+          pip install pip-audit
+          if [ -f requirements.txt ]; then pip-audit -r requirements.txt || exit 1; else echo "No dependencies yet"; fi
+      - name: Static security analysis
+        run: |
+          pip install bandit
+          if ls slices platform >/dev/null 2>&1; then bandit -r slices platform -q || exit 1; else echo "No source yet"; fi
