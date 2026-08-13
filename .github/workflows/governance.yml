@@ -1,0 +1,75 @@
+name: Governance
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: governance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  slice-boundaries:
+    name: Slice boundaries (VSA-1 / VSA-3)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce slice boundaries and manifests
+        run: python3 governance/scripts/check_slice_boundaries.py
+
+  secret-protection:
+    name: Secret protection (non-waivable invariant)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refuse committed secret values
+        run: python3 governance/scripts/check_no_secrets.py
+
+  pr-governance:
+    name: PR governance metadata
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Write PR body to file
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s' "$PR_BODY" > /tmp/pr_body.md
+      - name: Check required governance metadata
+        run: python3 governance/scripts/check_pr_governance.py /tmp/pr_body.md
+
+  baseline-integrity:
+    name: Framework baseline integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify frozen framework baseline hashes
+        run: |
+          if [ -f governance/framework/SHA256SUMS.txt ]; then
+            cd governance/framework && sha256sum -c SHA256SUMS.txt
+          else
+            echo "Framework baseline not yet committed — skipping (scaffold stage)"
+          fi
