@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Governance question
+    url: https://github.com/jpsims68/ProjectOne/tree/main/governance
+    about: Read the frozen framework baseline, profile, and adapters before raising a governance issue.

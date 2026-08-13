@@ -1,0 +1,86 @@
+name: Governed work item
+description: Create a work item that can seed a valid framework work item
+title: "[WORK] "
+labels: ["work-item", "needs-classification"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Classification precedes implementation. A work item without type, risk class,
+        owner and lifecycle position cannot be implemented.
+  - type: input
+    id: title
+    attributes:
+      label: Capability or problem
+      description: "What outcome is needed?"
+    validations:
+      required: true
+  - type: dropdown
+    id: work_type
+    attributes:
+      label: Work type
+      options:
+        - FEATURE_SLICE
+        - DEFECT
+        - ARCHITECTURE_CHANGE
+        - SECURITY_CHANGE
+        - DOCUMENTATION_CHANGE
+        - THEME_CHANGE
+        - METHODOLOGY_CHANGE
+        - COMMERCIAL_CHANGE
+        - PERFORMANCE_CHANGE
+        - DEPENDENCY_UPGRADE
+        - SPIKE
+        - EMERGENCY
+        - GOVERNANCE_AUDIT
+        - EXCEPTION_REQUEST
+    validations:
+      required: true
+  - type: dropdown
+    id: risk_class
+    attributes:
+      label: Proposed risk class
+      description: "Uncertainty routes UPWARD. If impact cannot be bounded, choose R4."
+      options:
+        - R1
+        - R2
+        - R3
+        - R4
+        - UNKNOWN - classify me
+    validations:
+      required: true
+  - type: textarea
+    id: risk_basis
+    attributes:
+      label: Risk basis
+      description: "Which triggers fired? Which higher-class conditions were checked and did not fire?"
+    validations:
+      required: true
+  - type: input
+    id: slice
+    attributes:
+      label: Slice or area
+      description: "Which slice owns this? Or 'platform' / 'contracts' / 'data'."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: "How will we know this is done? Testable statements only."
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Governing sources
+      description: "Which sources govern this work? Include version. Effective source = base + applicable overlays."
+  - type: checkboxes
+    id: gates
+    attributes:
+      label: Anticipated gates
+      options:
+        - label: Requires independent review
+        - label: Requires human approval
+        - label: Touches a protected shared asset (platform / contracts / data)
+        - label: Touches a canonical data path (tenant isolation verification required)

@@ -1,0 +1,27 @@
+# ProjectOne CODEOWNERS
+# Maps repository paths to the framework role accountable for them (Step 65).
+#
+# NOTE ON SOLO OWNERSHIP: every path currently resolves to @jpsims68 because there is
+# one human. The ROLE column is the governing fact — when a second human joins, only the
+# handle changes, not the ownership model. See governance/OWNERSHIP-MAP.md.
+
+# Default: everything requires owner review
+*                               @jpsims68
+
+# --- Protected shared assets (VSA-2, VSA-4) -------------------------------
+/platform/                      @jpsims68
+/contracts/                     @jpsims68
+/data/                          @jpsims68
+
+# --- Governance and enforcement surface -----------------------------------
+/governance/                    @jpsims68
+/.github/                       @jpsims68
+
+# --- Operations, config, tests, docs --------------------------------------
+/ops/                           @jpsims68
+/config/                        @jpsims68
+/tests/                         @jpsims68
+/docs/                          @jpsims68
+
+# --- Slices: feature-first ownership (VSA-6) ------------------------------
+/slices/                        @jpsims68
