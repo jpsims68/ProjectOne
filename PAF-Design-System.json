@@ -1,0 +1,65 @@
+{
+  "header": {
+    "artifactId": "PAF-DESIGN-SYSTEM",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "tokenLayer": {
+    "tokenClasses": [
+      "COLOR",
+      "TYPOGRAPHY",
+      "SPACING",
+      "RADIUS",
+      "ELEVATION",
+      "MOTION",
+      "ICONOGRAPHY"
+    ],
+    "rule": "Tokens carry appearance values only. A token may never encode a business rule, threshold, or feature condition."
+  },
+  "themeLayer": {
+    "rule": "A theme is a named set of token values. Swapping a theme changes appearance only; it never changes what a component does or which data it shows."
+  },
+  "structuralLayer": {
+    "rule": "Component structure, behavior, and data binding are independent of the active theme and are never generated from theme content."
+  },
+  "layerSeparationRule": "No magic numbers in the render layer: colors, bands, thresholds, and formats arrive via spec or token, never hardcoded (chart ground rule 11).",
+  "sharedControlRegistry": [],
+  "baselineRule": "Every shared control and screen has an approved visual baseline. A rendered difference from baseline is a defect unless the baseline itself is changed through a governed workflow.",
+  "accessibilityRequirements": [
+    {
+      "requirement": "Color is never the sole encoding channel",
+      "rule": "Severity, status, or category needs a second channel: shape, position, icon, or label, for colorblind and grayscale/offline use (chart ground rule 12)"
+    },
+    {
+      "requirement": "Keyboard navigability",
+      "rule": "Every interactive control reachable and operable without a pointer device"
+    },
+    {
+      "requirement": "Contrast",
+      "rule": "Text and meaningful graphical elements meet WCAG 2.1 AA contrast ratios against their background token"
+    }
+  ],
+  "responsiveMatrix": [
+    {
+      "breakpointId": "COMPACT",
+      "minWidth": 0
+    },
+    {
+      "breakpointId": "STANDARD",
+      "minWidth": 768
+    },
+    {
+      "breakpointId": "WIDE",
+      "minWidth": 1280
+    }
+  ],
+  "visualRegressionRule": "Visual regression evidence is DETERMINISTIC: same input yields identical pixels, stable sort and category order, no random jitter (chart ground rule 10)."
+}

@@ -1,0 +1,280 @@
+{
+  "header": {
+    "artifactId": "PAF-MATRIX-SOURCE-BUNDLE",
+    "version": "0.1",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "generatedFrom": [
+      "framework/contracts/*.json",
+      "framework/workflows/*.json"
+    ],
+    "note": "Generic source classes each role receives. Least-authority: concrete source IDs bind at Profile."
+  },
+  "bundles": {
+    "ROLE_ADMIN_DOC": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_ARCHITECTURE": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DATA_DEFINITION",
+        "necessity": "CONDITIONAL"
+      },
+      {
+        "sourceClass": "CONTRACT_REGISTRY",
+        "necessity": "MANDATORY"
+      }
+    ],
+    "ROLE_BUSINESS_DOC": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_CODING": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_RECORD",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "CONTRACT_REGISTRY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "TECHNOLOGY_REGISTRY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DATA_DEFINITION",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_CONSULTING": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_ENDUSER_DOC": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_GUI_GOVERNANCE": [
+      {
+        "sourceClass": "DESIGN_SYSTEM",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "GUI_BASELINE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "ACCESSIBILITY_STANDARD",
+        "necessity": "MANDATORY"
+      }
+    ],
+    "ROLE_METHODOLOGY": [
+      {
+        "sourceClass": "METHODOLOGY_CATALOG",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DATA_DEFINITION",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_ONBOARDING": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_ORCHESTRATOR": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "LIFECYCLE_REGISTRY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "RISK_STANDARD",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "OWNERSHIP_REGISTRY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "WORK_ITEM",
+        "necessity": "MANDATORY"
+      }
+    ],
+    "ROLE_QUALITY": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "VERIFICATION_MAP",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_RECORD",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "WORK_ITEM",
+        "necessity": "MANDATORY"
+      }
+    ],
+    "ROLE_SECURITY_RELEASE": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "SECURITY_STANDARD",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "EXCEPTION_REGISTRY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "RISK_STANDARD",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "RECOVERY_RECORD",
+        "necessity": "MANDATORY"
+      }
+    ],
+    "ROLE_SPIKE": [
+      {
+        "sourceClass": "WORK_ITEM",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_TECH_DOC": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_AUTHORITY",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_TEST_DEBUG": [
+      {
+        "sourceClass": "WORK_ITEM",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "TEST_ASSETS",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_RECORD",
+        "necessity": "CONDITIONAL"
+      }
+    ],
+    "ROLE_UX_DESIGN": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "DESIGN_SYSTEM",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "PRODUCT_SCOPE",
+        "necessity": "MANDATORY"
+      },
+      {
+        "sourceClass": "ACCESSIBILITY_STANDARD",
+        "necessity": "MANDATORY"
+      }
+    ]
+  }
+}

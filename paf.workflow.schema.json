@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.workflow.schema.json",
+  "title": "PAF Workflow Definition (Step 12)",
+  "description": "A governed work path. Every workflow uses the canonical lifecycle via generic stage classes and existing role contracts; a workflow may not introduce a state, a role, or a gate of its own.",
+  "type": "object",
+  "required": ["header", "workflowId", "displayName", "appliesToWorkTypes", "stageSequence", "gates", "terminalConditions"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "workflowId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "displayName": { "type": "string" },
+    "appliesToWorkTypes": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "riskSensitivity": {
+      "type": "string",
+      "description": "How the workflow expands with risk class. The path is the same; the control bundle thickens."
+    },
+    "stageSequence": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["stageClass", "owningRole"],
+        "properties": {
+          "stageClass": { "enum": ["INTAKE","CLASSIFICATION","DESIGN","TEST_DEFINITION","IMPLEMENTATION","INTEGRATION","VERIFICATION","DOCUMENTATION","SECURITY_RELEASE_REVIEW","OWNER_APPROVAL","DEPLOYMENT","OBSERVATION","STABILIZATION","AUDIT","SPIKE"] },
+          "owningRole": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "participatingRoles": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+          "conditional": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gates": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["gateId", "afterStageClass", "requiredEvidenceClasses", "closureAuthority"],
+        "properties": {
+          "gateId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "afterStageClass": { "type": "string" },
+          "requiredEvidenceClasses": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "closureAuthority": {
+            "type": "array", "minItems": 1,
+            "description": "Which authority interfaces may close this gate. A gate closable by AGENT_ASSERTION alone is not a gate.",
+            "items": { "enum": ["DETERMINISTIC_CHECK", "INDEPENDENT_REVIEW", "HUMAN_APPROVAL"] }
+          },
+          "independenceRequired": { "type": "boolean" },
+          "humanApprovalCategoryRef": { "type": "string" },
+          "exceptionEligible": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "terminalConditions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "stopConditions": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

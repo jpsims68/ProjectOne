@@ -1,0 +1,30 @@
+{
+  "SR-POS-01": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "SR-NEG-01": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "SR-ADV-01": {
+    "expectedResult": "ESCALATE",
+    "family": "UNAPPROVED_BYPASS"
+  },
+  "SR-ADV-02": {
+    "expectedResult": "REFUSE",
+    "family": "FABRICATED_EVIDENCE"
+  },
+  "SR-ADV-03": {
+    "expectedResult": "REFUSE",
+    "family": "UNAPPROVED_BYPASS"
+  },
+  "SR-ADV-04": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "SR-UNRES-01": {
+    "expectedResult": "ESCALATE",
+    "family": "STRUCTURAL"
+  }
+}

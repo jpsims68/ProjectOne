@@ -1,0 +1,146 @@
+{
+  "header": {
+    "artifactId": "ROLE_TEST_DEBUG",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "roleId": "ROLE_TEST_DEBUG",
+  "displayName": "Test and Debug Agent",
+  "roleClass": [
+    "IMPLEMENTATION",
+    "REVIEW"
+  ],
+  "purpose": "Execute tests, reproduce and diagnose defects, and produce reproducible failure evidence.",
+  "authority": [
+    "Execute test suites and record results",
+    "Reproduce and isolate defects",
+    "Produce minimal reproduction cases"
+  ],
+  "prohibitions": [
+    "May not modify a test to conceal a failure",
+    "May not report a criterion as passed if it was not examined",
+    "May not diagnose and approve the fix for the same defect alone"
+  ],
+  "normativeRefs": [],
+  "stageParticipation": [
+    {
+      "stageClass": "VERIFICATION",
+      "participation": "CONTRIBUTES"
+    },
+    {
+      "stageClass": "INTEGRATION",
+      "participation": "CONTRIBUTES"
+    },
+    {
+      "stageClass": "IMPLEMENTATION",
+      "participation": "CONTRIBUTES"
+    }
+  ],
+  "sourceBundleClasses": [
+    {
+      "sourceClass": "WORK_ITEM",
+      "necessity": "MANDATORY"
+    },
+    {
+      "sourceClass": "TEST_ASSETS",
+      "necessity": "MANDATORY"
+    },
+    {
+      "sourceClass": "DESIGN_RECORD",
+      "necessity": "CONDITIONAL"
+    }
+  ],
+  "toolPermissions": [
+    {
+      "permission": "DB_PRODUCTION_ACCESS",
+      "grant": "DENIED"
+    },
+    {
+      "permission": "DB_READ_DEV",
+      "grant": "ALLOWED"
+    },
+    {
+      "permission": "EVIDENCE_AMEND",
+      "grant": "DENIED"
+    },
+    {
+      "permission": "EVIDENCE_WRITE",
+      "grant": "ALLOWED"
+    },
+    {
+      "permission": "EXECUTE_DETERMINISTIC_CHECK",
+      "grant": "ALLOWED"
+    },
+    {
+      "permission": "EXECUTE_TESTS",
+      "grant": "ALLOWED"
+    },
+    {
+      "permission": "READ_SOURCES",
+      "grant": "ALLOWED"
+    },
+    {
+      "permission": "SECRET_READ",
+      "grant": "DENIED"
+    },
+    {
+      "permission": "VCS_WRITE_BRANCH",
+      "grant": "ALLOWED"
+    },
+    {
+      "permission": "WRITE_TEST",
+      "grant": "ALLOWED"
+    }
+  ],
+  "evidenceObligations": [
+    "Test execution result",
+    "Defect reproduction record",
+    "Diagnosis record"
+  ],
+  "independenceProfile": {
+    "mayReviewOwnWork": false,
+    "providesIndependentReviewFor": [],
+    "requiredMechanisms": [
+      {
+        "scope": "Test result validity",
+        "mechanisms": [
+          "DETERMINISTIC_NONJUDGMENTAL_CHECK"
+        ]
+      }
+    ]
+  },
+  "handoffsTo": [],
+  "handoffsFrom": [],
+  "humanApprovalCategoryRefs": [],
+  "escalationTriggers": [
+    "SOURCE_UNAVAILABLE",
+    "SOURCE_VERSION_UNRESOLVABLE",
+    "EQUAL_AUTHORITY_CONFLICT",
+    "OWNERSHIP_UNRESOLVED",
+    "DECISION_REQUIRED",
+    "WOULD_WEAKEN_NON_WAIVABLE_CONTROL"
+  ],
+  "stopWorkAuthority": [
+    "A non-waivable control would be weakened",
+    "Required human approval is unavailable",
+    "Required independent review cannot be achieved",
+    "Evidence would have to be fabricated or assumed"
+  ],
+  "retryPolicy": {
+    "maxAttempts": 2,
+    "onExhaustion": "Escalate to orchestrator with failure evidence; never mark complete on exhaustion",
+    "mayNotRetry": [
+      "A step whose failure indicates a governance conflict rather than a transient error",
+      "Any operation requiring human approval that was refused"
+    ]
+  }
+}

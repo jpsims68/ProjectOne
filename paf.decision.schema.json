@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.decision.schema.json",
+  "title": "PAF Decision Record",
+  "type": "object",
+  "required": ["decisionId", "subject", "decisionState", "decidedBy", "basis", "timestamp"],
+  "properties": {
+    "decisionId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "workItemId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "subject": { "type": "string", "minLength": 1 },
+    "decisionState": { "enum": ["OPEN", "DECIDED", "SUPERSEDED", "REVERSED", "DEFERRED"] },
+    "decidedBy": { "$ref": "paf.common.schema.json#/$defs/actorRef" },
+    "requiresHumanAuthority": { "type": "boolean" },
+    "humanApprovalRecordId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "optionsConsidered": { "type": "array", "items": { "type": "string" } },
+    "basis": { "type": "string", "minLength": 1 },
+    "governingSourceRefs": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "reversalCost": { "type": "string", "description": "What it would cost to reverse later. Load-bearing decisions are those whose reversal means rebuilding rather than editing." },
+    "timestamp": { "$ref": "paf.common.schema.json#/$defs/timestamp" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "requiresHumanAuthority": { "const": true }, "decisionState": { "const": "DECIDED" } }, "required": ["requiresHumanAuthority", "decisionState"] },
+      "then": { "required": ["humanApprovalRecordId"] }
+    }
+  ],
+  "additionalProperties": false
+}

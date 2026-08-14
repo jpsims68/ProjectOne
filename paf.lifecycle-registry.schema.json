@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.lifecycle-registry.schema.json",
+  "title": "PAF Lifecycle Registry Contract (Step 6)",
+  "description": "The CORE defines what a lifecycle registry must contain and how transitions resolve. It carries no state names. A PROFILE binds an instance; a deterministic equality check then asserts the framework's resolved transition table is identical to the bound instance's, with zero additions, removals, renames, merges or reorderings.",
+  "type": "object",
+  "required": [
+    "header",
+    "authority",
+    "primaryStates",
+    "interruptStates"
+  ],
+  "properties": {
+    "header": {
+      "$ref": "paf.common.schema.json#/$defs/artifactHeader"
+    },
+    "humanPhaseMap": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "phase",
+          "machineStates"
+        ],
+        "properties": {
+          "phase": {
+            "type": "string"
+          },
+          "machineStates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "primaryStates": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "allowedNext",
+          "entryCondition",
+          "exitEvidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "responsibleRole": {
+            "type": "string"
+          },
+          "allowedNext": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "entryCondition": {
+            "type": "string"
+          },
+          "exitEvidence": {
+            "type": [
+              "string",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "interruptStates": {
+      "type": "array",
+      "minItems": 1,
+      "description": "States that suspend forward progress. Each must declare how work resumes; an interrupt without a resume rule is a trap.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "resumeRule"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resumeRule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "globalIf": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "auxiliaryTracks": {
+      "type": "object",
+      "description": "Auxiliary status markers mapped onto the primary lifecycle. They never replace the primary state.",
+      "additionalProperties": true
+    },
+    "changeHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "machineStateAuthority",
+        "humanPhaseAuthority",
+        "adapterRule"
+      ],
+      "properties": {
+        "machineStateAuthority": {
+          "type": "string",
+          "description": "This registry is the canonical machine-state vocabulary and transition authority."
+        },
+        "humanPhaseAuthority": {
+          "type": "string",
+          "description": "Human-readable promotion phases map onto these states; they are not a second state machine."
+        },
+        "adapterRule": {
+          "type": "string",
+          "description": "No adapter may invent, rename, merge, skip or reorder a governed state or gate without an approved governance change."
+        },
+        "humanApprovalAuthority": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "description": "Declares that this registry is the sole machine-state authority, that human phases are labels rather than a second state machine, and that adapters may only map to it."
+    }
+  },
+  "additionalProperties": true
+}

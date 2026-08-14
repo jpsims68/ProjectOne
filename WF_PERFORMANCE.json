@@ -1,0 +1,92 @@
+{
+  "header": {
+    "artifactId": "WF_PERFORMANCE",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_PERFORMANCE",
+  "displayName": "Performance Change",
+  "appliesToWorkTypes": [
+    "PERFORMANCE_CHANGE"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "DESIGN",
+      "owningRole": "ROLE_ARCHITECTURE"
+    },
+    {
+      "stageClass": "IMPLEMENTATION",
+      "owningRole": "ROLE_CODING"
+    },
+    {
+      "stageClass": "VERIFICATION",
+      "owningRole": "ROLE_QUALITY"
+    },
+    {
+      "stageClass": "OBSERVATION",
+      "owningRole": "ROLE_SECURITY_RELEASE"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_PE_BASELINE",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "PERFORMANCE_BASELINE",
+        "WORKLOAD_DEFINITION"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_PE_MEASURED",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "PERFORMANCE_MEASUREMENT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_PE_OBSERVED",
+      "afterStageClass": "OBSERVATION",
+      "requiredEvidenceClasses": [
+        "OBSERVATION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    }
+  ],
+  "terminalConditions": [
+    "Performance contract met against a representative workload"
+  ],
+  "stopConditions": [
+    "A non-waivable control would be weakened",
+    "Required human approval unavailable",
+    "Required independent review unachievable",
+    "Equal-authority source conflict on a material subject"
+  ]
+}

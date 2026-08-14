@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.common.schema.json",
+  "title": "PAF Common Primitives",
+  "description": "Shared primitive types for all Portable Agent Framework artifacts. Contains no project or vendor content.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]{1,127}$",
+      "description": "Stable machine identifier. Never reused after retirement."
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?(-[A-Za-z0-9.]+)?$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}([+-][0-9]{2}:[0-9]{2}|Z)$",
+      "description": "ISO-8601 with explicit offset. Offset is mandatory: a bare local time is unresolvable across platforms."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "namedHuman": {
+      "type": "object",
+      "description": "A specific human being. Never an agent, role, or group.",
+      "required": [
+        "humanId",
+        "displayName"
+      ],
+      "properties": {
+        "humanId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "actorRef": {
+      "type": "object",
+      "description": "Who performed an action. actorClass distinguishes human from agent from deterministic check; this distinction is load-bearing for independence and approval and may never be blurred.",
+      "required": [
+        "actorClass",
+        "actorId"
+      ],
+      "properties": {
+        "actorClass": {
+          "enum": [
+            "HUMAN",
+            "AGENT",
+            "DETERMINISTIC_CHECK",
+            "ADAPTER"
+          ]
+        },
+        "actorId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "roleId": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifactHeader": {
+      "type": "object",
+      "description": "Required declaration on every governed framework artifact (SR-3).",
+      "required": [
+        "artifactId",
+        "version",
+        "status",
+        "schemaVersion",
+        "layer",
+        "createdAt"
+      ],
+      "properties": {
+        "artifactId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "status": {
+          "enum": [
+            "DRAFT",
+            "PROPOSED",
+            "ACTIVE",
+            "SUPERSEDED",
+            "RETIRED",
+            "FROZEN"
+          ]
+        },
+        "schemaVersion": {
+          "$ref": "#/$defs/semver"
+        },
+        "layer": {
+          "enum": [
+            "CORE",
+            "PROFILE",
+            "ADAPTER"
+          ],
+          "description": "Declares which of the three layers this artifact belongs to. Enforces PR-1/PR-2 mechanically."
+        },
+        "governedBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "createdAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "supersedes": {
+          "$ref": "#/$defs/identifier"
+        },
+        "supersessionBasis": {
+          "type": "string",
+          "description": "Explicit recorded basis. Required whenever supersedes is present: recency alone is never authority (CR-2)."
+        },
+        "frozenAt": {
+          "$ref": "#/$defs/timestamp",
+          "description": "When this artifact was frozen into an approved baseline. Required whenever status is FROZEN: a frozen artifact with no freeze provenance cannot be traced to the approval that froze it."
+        },
+        "frozenUnder": {
+          "type": "string",
+          "description": "The approval record identifier under which this artifact was frozen."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "supersedes"
+            ]
+          },
+          "then": {
+            "required": [
+              "supersessionBasis"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "FROZEN"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "frozenAt",
+              "frozenUnder"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "evidenceRef": {
+      "type": "object",
+      "required": [
+        "evidenceId",
+        "evidenceClass"
+      ],
+      "properties": {
+        "evidenceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "evidenceClass": {
+          "$ref": "#/$defs/identifier"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "contentHash": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "configurationBinding": {
+      "type": "object",
+      "description": "A CORE contract pointing at the PROFILE instance that satisfies it. Absent binding does not disable the control (CR-5); it forces the control to its most restrictive form and requires an unconfiguredControlWarning.",
+      "required": [
+        "contractId",
+        "bindingState"
+      ],
+      "properties": {
+        "contractId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bindingState": {
+          "enum": [
+            "BOUND",
+            "UNBOUND_STRICT_MODE"
+          ]
+        },
+        "boundInstanceId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "boundInstanceVersion": {
+          "$ref": "#/$defs/semver"
+        },
+        "boundInstanceHash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "conformanceCheckId": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "bindingState": {
+                "const": "BOUND"
+              }
+            },
+            "required": [
+              "bindingState"
+            ]
+          },
+          "then": {
+            "required": [
+              "boundInstanceId",
+              "boundInstanceVersion",
+              "conformanceCheckId"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "unconfiguredControlWarning": {
+      "type": "object",
+      "description": "Mandatory record whenever a control is unbound. Ratified amendment to D-PAF-02: an unconfigured control must be announced to the owner, not silently strict.",
+      "required": [
+        "contractId",
+        "strictModeBehavior",
+        "raisedAt",
+        "ownerNotified"
+      ],
+      "properties": {
+        "contractId": {
+          "$ref": "#/$defs/identifier"
+        },
+        "strictModeBehavior": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raisedAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "ownerNotified": {
+          "type": "boolean"
+        },
+        "clearedAt": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

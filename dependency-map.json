@@ -1,0 +1,129 @@
+{
+  "header": {
+    "artifactId": "PAF-MATRIX-DEPENDENCY",
+    "version": "0.1",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "generatedFrom": [
+      "framework/contracts/*.json",
+      "framework/workflows/*.json"
+    ],
+    "note": "Role handoff and review edges, plus layer direction. Authority (REVIEWS) edges must be acyclic: a review cycle means mutual self-approval."
+  },
+  "layerEdges": [
+    {
+      "from": "PROFILE",
+      "to": "CORE",
+      "type": "BINDS_TO"
+    },
+    {
+      "from": "ADAPTER",
+      "to": "CORE",
+      "type": "TRANSLATES"
+    }
+  ],
+  "roleEdges": [
+    {
+      "from": "ROLE_ARCHITECTURE",
+      "to": "ROLE_CODING",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_ARCHITECTURE",
+      "to": "ROLE_UX_DESIGN",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_CODING",
+      "to": "ROLE_QUALITY",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_CODING",
+      "to": "ROLE_TEST_DEBUG",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_ARCHITECTURE",
+      "to": "ROLE_CODING",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_UX_DESIGN",
+      "to": "ROLE_CODING",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_GUI_GOVERNANCE",
+      "to": "ROLE_UX_DESIGN",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_GUI_GOVERNANCE",
+      "to": "ROLE_CODING",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_METHODOLOGY",
+      "to": "ROLE_ARCHITECTURE",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_ORCHESTRATOR",
+      "to": "ROLE_ARCHITECTURE",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_ORCHESTRATOR",
+      "to": "ROLE_UX_DESIGN",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_ORCHESTRATOR",
+      "to": "ROLE_CODING",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_ORCHESTRATOR",
+      "to": "ROLE_QUALITY",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_ORCHESTRATOR",
+      "to": "ROLE_SECURITY_RELEASE",
+      "type": "HANDOFF"
+    },
+    {
+      "from": "ROLE_QUALITY",
+      "to": "ROLE_CODING",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_QUALITY",
+      "to": "ROLE_ARCHITECTURE",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_SECURITY_RELEASE",
+      "to": "ROLE_CODING",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_SECURITY_RELEASE",
+      "to": "ROLE_ARCHITECTURE",
+      "type": "REVIEWS"
+    },
+    {
+      "from": "ROLE_SECURITY_RELEASE",
+      "to": "ROLE_QUALITY",
+      "type": "REVIEWS"
+    }
+  ],
+  "authorityCyclesDetected": [],
+  "acyclic": true
+}

@@ -1,0 +1,56 @@
+{
+  "header": {
+    "artifactId": "PAF-REGRESSION-SELF-APPROVAL",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "controlUnderTest": "No role may approve its own work (ownership + independence contracts)",
+  "controlRefs": [
+    "paf.ownership-registry.schema.json",
+    "paf.independence-standard.schema.json"
+  ],
+  "positiveCases": [
+    {
+      "caseId": "SA-POS-01",
+      "description": "Implementer hands off to a distinct reviewer role with a qualifying mechanism",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/handoff-distinct-reviewer.json",
+      "expectedResult": "ACCEPT"
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "SA-NEG-01",
+      "description": "Implementer role attempts to close its own verification gate",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/self-close-gate.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "python3 validation/validate_run2.py  # asserts mayReviewOwnWork=false structurally"
+    }
+  ],
+  "adversarialCases": [
+    {
+      "caseId": "SA-ADV-01",
+      "description": "Reviewer role is the SAME conversational continuation as the implementer, merely relabeled, with no clean-context invocation recorded",
+      "family": "SELF_APPROVAL",
+      "fixtureRef": "fixtures/relabel-only-review.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "SA-ADV-02",
+      "description": "Owner of a protected shared asset is also its sole approver",
+      "family": "SELF_APPROVAL",
+      "fixtureRef": "fixtures/protected-asset-sole-owner-approver.json",
+      "expectedResult": "REFUSE"
+    }
+  ],
+  "answerKey": "framework/testing/answer-keys/PAF-REGRESSION-SELF-APPROVAL.answers.json"
+}

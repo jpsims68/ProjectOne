@@ -1,0 +1,26 @@
+{
+  "EX-POS-01": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "EX-NEG-01": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "EX-NEG-02": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "EX-ADV-01": {
+    "expectedResult": "REFUSE",
+    "family": "SILENT_EXCEPTION"
+  },
+  "EX-ADV-02": {
+    "expectedResult": "REFUSE",
+    "family": "SILENT_EXCEPTION"
+  },
+  "EX-ADV-03": {
+    "expectedResult": "REFUSE",
+    "family": "SILENT_EXCEPTION"
+  }
+}

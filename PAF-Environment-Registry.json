@@ -1,0 +1,64 @@
+{
+  "header": {
+    "artifactId": "PAF-ENVIRONMENT-REGISTRY",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "environments": [
+    {
+      "envId": "LOCAL",
+      "tier": 0,
+      "productionDataAllowed": false,
+      "secretHandling": "Local unbound injection; never committed"
+    },
+    {
+      "envId": "DEV",
+      "tier": 1,
+      "productionDataAllowed": false,
+      "secretHandling": "CI-managed secret store, injected at runtime"
+    },
+    {
+      "envId": "STAGING",
+      "tier": 2,
+      "productionDataAllowed": false,
+      "secretHandling": "CI-managed secret store, injected at runtime; synthetic/anonymized data only"
+    },
+    {
+      "envId": "PRODUCTION",
+      "tier": 3,
+      "productionDataAllowed": true,
+      "secretHandling": "Managed secret vault, injected at runtime, access logged"
+    }
+  ],
+  "promotionRule": "Promotion is strictly tier-increasing and evidence-gated. An environment may not be skipped, and promotion into a production-data-allowed environment requires the release gate's full evidence and human approval.",
+  "interfaceContracts": [
+    {
+      "contractId": "PUBLIC_API_CONTRACT",
+      "versioningPolicy": "Semantic versioning; breaking change requires a major version and a migration record",
+      "consumerBreakingChangeRule": "A breaking change may not ship without identifying every known consumer and confirming their compatibility path"
+    }
+  ],
+  "configurationSurfaces": [
+    {
+      "surfaceId": "APP_CONFIG",
+      "mayContainSecrets": false,
+      "changeAuthority": "ROLE_CODING with ROLE_SECURITY_RELEASE review"
+    },
+    {
+      "surfaceId": "CI_PIPELINE_CONFIG",
+      "mayContainSecrets": false,
+      "changeAuthority": "ROLE_SECURITY_RELEASE"
+    }
+  ],
+  "securityToolingRefs": [
+    "PAF-SECURITY-STANDARD"
+  ]
+}

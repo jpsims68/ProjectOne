@@ -1,0 +1,120 @@
+{
+  "header": {
+    "artifactId": "PAF-VERIFICATION-EXECUTION",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "executionRules": {
+    "wordingImmutable": "The execution model never alters, paraphrases, or reinterprets requirement wording. It attaches execution behavior to it.",
+    "unmappedIsGap": "A decision with no mapped verification mechanism is a governance coverage gap, not a satisfied requirement.",
+    "mappedIsNotImplemented": "A mapped mechanism does not count as implemented until the framework actually provides it and evidence can be linked to it.",
+    "evidenceLinkable": "A verification is satisfied only when a concrete evidence record can be resolved from the decision identifier."
+  },
+  "statusModel": {
+    "states": [
+      "UNMAPPED",
+      "DEFINED_IN_MAP",
+      "MECHANISM_IMPLEMENTED",
+      "EVIDENCE_LINKABLE",
+      "EVIDENCE_PRESENT",
+      "VERIFIED"
+    ],
+    "advanceRule": "Status advances one step at a time and only on the evidence that step requires. Skipping a state, or advancing without its evidence, is a fabricated completion and a non-waivable violation.",
+    "minimumForFrameworkApproval": "EVIDENCE_LINKABLE - the mechanism exists and evidence can be attached to it. EVIDENCE_PRESENT and VERIFIED belong to application work, not framework approval."
+  },
+  "mechanismTypes": [
+    {
+      "mechanismType": "AUTOMATED_TEST",
+      "producesEvidenceClass": "TEST_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "SCHEMA_VALIDATION",
+      "producesEvidenceClass": "STATIC_CHECK_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "STATIC_ANALYSIS",
+      "producesEvidenceClass": "STATIC_CHECK_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "CONTRACT_COMPARISON",
+      "producesEvidenceClass": "CONTRACT_COMPARISON_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "SECURITY_SCAN",
+      "producesEvidenceClass": "SECURITY_SCAN_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "VISUAL_REGRESSION",
+      "producesEvidenceClass": "VISUAL_REGRESSION_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "MEASUREMENT",
+      "producesEvidenceClass": "PERFORMANCE_MEASUREMENT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "SOURCE_RESOLUTION_CHECK",
+      "producesEvidenceClass": "STATIC_CHECK_RESULT",
+      "isDeterministic": true,
+      "satisfiesIndependenceAlone": true,
+      "reproductionRequired": true
+    },
+    {
+      "mechanismType": "INDEPENDENT_AGENT_REVIEW",
+      "producesEvidenceClass": "INDEPENDENT_REVIEW_RECORD",
+      "isDeterministic": false,
+      "satisfiesIndependenceAlone": false,
+      "reproductionRequired": false
+    },
+    {
+      "mechanismType": "SPECIALIST_ROLE_REVIEW",
+      "producesEvidenceClass": "REVIEW_RECORD",
+      "isDeterministic": false,
+      "satisfiesIndependenceAlone": false,
+      "reproductionRequired": false
+    },
+    {
+      "mechanismType": "HUMAN_REVIEW",
+      "producesEvidenceClass": "HUMAN_APPROVAL_RECORD",
+      "isDeterministic": false,
+      "satisfiesIndependenceAlone": false,
+      "reproductionRequired": false
+    },
+    {
+      "mechanismType": "OBSERVATION",
+      "producesEvidenceClass": "OBSERVATION_RECORD",
+      "isDeterministic": false,
+      "satisfiesIndependenceAlone": false,
+      "reproductionRequired": false
+    }
+  ],
+  "records": []
+}

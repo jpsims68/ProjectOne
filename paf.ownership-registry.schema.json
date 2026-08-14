@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.ownership-registry.schema.json",
+  "title": "PAF Ownership Registry Contract",
+  "description": "Every governed artifact and work type has an accountable owner and a review path. Contains no project owners.",
+  "type": "object",
+  "required": ["header", "ownedEntityClasses", "ownershipRules", "assignments"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "ownedEntityClasses": {
+      "type": "array", "minItems": 1,
+      "description": "The kinds of thing that require ownership. Generic; a profile maps its artifacts onto these.",
+      "items": {
+        "type": "object",
+        "required": ["classId", "description", "requiresReviewPath"],
+        "properties": {
+          "classId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "description": { "type": "string" },
+          "requiresReviewPath": { "type": "boolean" },
+          "sharedAssetProtection": {
+            "type": "boolean",
+            "description": "True marks a protected shared asset: change requires explicit impact analysis, consumer identification, and retesting."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ownershipRules": {
+      "type": "object",
+      "required": ["noOrphanRule", "singleAccountableOwner", "selfApprovalProhibition", "unresolvedBehavior"],
+      "properties": {
+        "noOrphanRule": { "const": "Every governed artifact and work type must resolve to exactly one accountable owner and at least one review path." },
+        "singleAccountableOwner": { "const": "Ownership may be shared operationally but accountability is singular." },
+        "selfApprovalProhibition": { "const": "An owner may not be the sole approver of a change they authored." },
+        "unresolvedBehavior": { "const": "OWNERSHIP_UNRESOLVED_INTERRUPT" }
+      },
+      "additionalProperties": false
+    },
+    "assignments": {
+      "type": "array",
+      "description": "Populated only in a PROFILE instance.",
+      "items": {
+        "type": "object",
+        "required": ["entityId", "entityClass", "accountableOwnerRole", "reviewPath"],
+        "properties": {
+          "entityId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "entityClass": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "accountableOwnerRole": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "contributingRoles": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+          "reviewPath": { "type": "array", "minItems": 1, "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+          "changeAuthority": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "protectedAsset": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

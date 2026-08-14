@@ -1,0 +1,22 @@
+{
+  "BY-POS-01": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "BY-NEG-01": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "BY-ADV-01": {
+    "expectedResult": "REFUSE",
+    "family": "UNAPPROVED_BYPASS"
+  },
+  "BY-ADV-02": {
+    "expectedResult": "REFUSE",
+    "family": "UNAPPROVED_BYPASS"
+  },
+  "BY-ADV-03": {
+    "expectedResult": "REFUSE",
+    "family": "UNAPPROVED_BYPASS"
+  }
+}
