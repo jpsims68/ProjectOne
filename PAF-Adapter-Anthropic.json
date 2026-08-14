@@ -1,0 +1,131 @@
+{
+  "header": {
+    "artifactId": "PAF-ADAPTER-ANTHROPIC",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "ADAPTER",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-ADAPTER-CONTRACT"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "adapterId": "PAF-ADAPTER-ANTHROPIC",
+  "surfaceClass": "CONVERSATIONAL_WORKBENCH",
+  "displayName": "Anthropic / Claude Conversational-Workbench Adapter (first-class, required)",
+  "translationRules": {
+    "translatesNeverRedefines": "An adapter maps framework behavior onto a native surface. It never changes what a control means, only how it is expressed.",
+    "noAuthorityOrigination": "An adapter never becomes an authority. It cannot approve, cannot classify risk, and cannot resolve a source conflict.",
+    "noProjectGovernance": "An adapter carries no project-specific governance. Project rules live in the Profile, not the adapter.",
+    "noStateInvention": "An adapter may not invent, rename, merge, skip, or reorder a governed lifecycle state or gate.",
+    "noIndependenceCollapse": "An adapter may not collapse required independent steps into one invocation for convenience."
+  },
+  "capabilityMap": [
+    {
+      "capability": "Conversational execution -> framework work items",
+      "support": "TRANSLATED",
+      "translationNote": "Claude turns map to work on a governed work item; the item holds state, not the conversation"
+    },
+    {
+      "capability": "Sandboxed code execution -> deterministic checks",
+      "support": "NATIVE",
+      "translationNote": "In-container Python/bash runs framework deterministic checks reproducibly \u2014 the strongest independence mechanism available here"
+    },
+    {
+      "capability": "File creation/export -> artifact + continuation packages",
+      "support": "NATIVE",
+      "translationNote": "Files written to outputs and downloaded by owner are the durable state layer"
+    },
+    {
+      "capability": "Context management -> continuity snapshots",
+      "support": "TRANSLATED",
+      "translationNote": "Finite context; continuity snapshots with hash-chained packages carry state across sessions and platforms"
+    },
+    {
+      "capability": "File hashing / integrity",
+      "support": "NATIVE",
+      "translationNote": "sha256sum/hashlib available; used for package chain and freeze attestation"
+    },
+    {
+      "capability": "Clean-context independent review",
+      "support": "TRANSLATED",
+      "translationNote": "PROTOCOL: open a NEW conversation; supply governing sources + work product + acceptance criteria + evidence, but NOT the originating instance's reasoning or scratch context; require the reviewer to reconstruct conclusions independently; record all 11 independence evidence fields",
+      "mitigation": "This is the discipline that makes independence real on a single-platform. It is a manual protocol the owner initiates; the adapter defines it, the owner executes it."
+    },
+    {
+      "capability": "Subagent/review behavior",
+      "support": "TRANSLATED",
+      "translationNote": "Where subagents exist they are correlated reviewers unless given clean context; a subagent in the same reasoning lineage does NOT satisfy independence"
+    },
+    {
+      "capability": "Local git operations",
+      "support": "NATIVE",
+      "translationNote": "git available in-container; repo exported before session end"
+    },
+    {
+      "capability": "Different model FAMILY independence",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "Different Claude tiers available; a genuinely different model family is not, without the owner running it elsewhere",
+      "mitigation": "Gates specifically requiring cross-family independence route to HUMAN_REVIEW or a different platform. Never simulated.",
+      "riskAcceptor": "John (owner)"
+    },
+    {
+      "capability": "Remote GitHub/CI",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "No credentials on this surface",
+      "mitigation": "Delegate to GitHub adapter; live validation deferred to owner",
+      "riskAcceptor": "John (owner)",
+      "deferredVerification": true
+    },
+    {
+      "capability": "Secret storage",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "secret_protection non-waivable; no vault; chat is plaintext",
+      "mitigation": "Secrets never entered in conversation; bound in owner's environment via unbound interface",
+      "riskAcceptor": "John (owner)"
+    },
+    {
+      "capability": "Persistent container state",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "Container resets between tasks",
+      "mitigation": "Durable externalized state: complete self-contained continuation package + SHA256SUMS exported each run, re-uploaded and validated on resume, chained by predecessor hash. Owner retains packages.",
+      "riskAcceptor": "John (owner)"
+    },
+    {
+      "capability": "Persistent per-role tool sandboxing",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "All tools available every turn",
+      "mitigation": "Tool-permission matrix declarative; enforced via GitHub/CI adapter",
+      "riskAcceptor": "John (owner)"
+    }
+  ],
+  "prohibitions": [
+    "MUST NOT encode platform conveniences as framework behavior",
+    "MUST NOT contain any project-specific governance (portability requirement)",
+    "Conversation memory is never durable state",
+    "Model fluency is never evidence",
+    "A relabeled same-context review never satisfies independence",
+    "MUST NOT self-certify a control it cannot actually satisfy \u2014 declares CANNOT_SATISFY honestly"
+  ],
+  "evidenceTranslation": {
+    "rule": "Evidence is produced by reproducible in-container scripts and exported with content hashes. Model assertion is never evidence. Every reproducible evidence record carries its reproduction command.",
+    "evidenceSurfaceMap": [
+      {
+        "frameworkEvidence": "STATIC_CHECK_RESULT",
+        "anthropicSurface": "in-container python validator + exported result"
+      },
+      {
+        "frameworkEvidence": "INDEPENDENT_REVIEW_RECORD",
+        "anthropicSurface": "clean-context separate conversation with 11 evidence fields"
+      }
+    ]
+  },
+  "handoffTranslation": {
+    "rule": "Handoff = exported continuation package (artifacts + snapshot + evidence + SHA256SUMS). Successor validates Core hash, package integrity, and predecessor-chain before any work; a break is a STOP condition.",
+    "cleanContextSupport": true
+  },
+  "lifecycleSyncRule": "The conversation reflects the canonical work-item state; Claude never holds a competing state, and a new session reconstructs state from the continuation package, never from memory."
+}

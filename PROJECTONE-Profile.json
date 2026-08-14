@@ -1,0 +1,73 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-PROFILE",
+    "version": "1.1",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "supersedes": "PROJECTONE-PROFILE@1.0",
+    "supersessionBasis": "CP-001 governed change package \u2014 repository binding and OD-01 disposition"
+  },
+  "profileId": "PROJECTONE",
+  "boundFrameworkVersion": "PAF v0.x (construction baseline; final bind at Step 55 freeze)",
+  "terminology": {
+    "industryAgnostic": "The platform serves multi-industry clients with diverse processes and vocabularies. All language must reflect this.",
+    "prohibitedFramings": [
+      "SMB wholesale distribution as a target vertical or beachhead \u2014 a misconception from a prototype dataset, never to be reintroduced",
+      "P2P/O2C as a primary process focus",
+      "Any single-industry or single-process positioning"
+    ],
+    "retainedPositioning": "Customer size positioning (mid-market / SMB) is correct and retained.",
+    "productClass": "Process Intelligence as a Service (PIaaS) \u2014 multi-tenant, process- and industry-agnostic",
+    "clientModel": "Clients bring their own event logs and processes."
+  },
+  "productConstraints": {
+    "multiTenant": "Multi-tenant; tenant isolation is a global non-waivable invariant",
+    "mvpIsFunctionalSubset": "MVP delivers a functional subset; the DESIGN must accommodate all functionality through every post-MVP requirement so no redesign or data migration is ever needed to activate later features",
+    "designAheadPrinciple": "DDR P-8 / no-migration: deferring functionality is permitted; deferring design that accumulated state will later require is not"
+  },
+  "architectureReferences": {
+    "designAuthority": "201-ProjectOne-Design-Decision-Record.md (DDR) + applicable 999 overlays",
+    "productScope": "401-ProjectOne-PRD.md + applicable 999 overlays",
+    "buildSequence": "410-ProjectOne-Build-Roadmap.md (sequence only; subordinate to DDR/PRD/Build Policy)",
+    "buildPolicy": "ProjectOne-Build-Requirements-and-Architecture-Policy-v1.2.docx (sole normative home for VSA/CPM/UX + 330 requirements)",
+    "dataDefinition": "205-ProjectOne-Data-Dictionary.md + ProjectOne-Field-Catalog-Registry-v1.0.json (governed continuation per AB-CM-024)"
+  },
+  "buildSequenceNote": "RICE sequencing ranks discretionary items on a completed foundation; foundation/infrastructure is sequenced by dependency, not RICE.",
+  "tenantSecurityConstraints": {
+    "boundSecurityStandard": "PAF-SECURITY-STANDARD",
+    "tenantIsolation": "Every canonical data access path scoped to a tenant boundary; isolation that cannot be demonstrated is a violation"
+  },
+  "noMigrationRules": {
+    "principle": "DDR P-8",
+    "cutLineRule": "The cut line moves through features, never through design. 'Not in MVP' means not operational yet, never not designed for.",
+    "designAheadTax": "Deferred features carry a small non-zero design line item above the cut line; deferred is never free.",
+    "designNowBuildLaterClass": [
+      "OCPM spine (D-35)",
+      "script-catalog typed spine (D-60)",
+      "cross-tenant/delegated access model (D-61)",
+      "baseline/target hooks (D-53)"
+    ]
+  },
+  "documentTimestampRule": "All ProjectOne document timestamps must be to-the-minute in local Eastern time (America/New_York), not UTC.",
+  "provenanceTaggingRule": "When a Historical Files Reconciliation finding drives a canon/documentation edit, append a parenthetical provenance note including the finding ID wherever the finding lands.",
+  "repository": {
+    "url": "https://github.com/jpsims68/ProjectOne",
+    "defaultBranch": "main",
+    "visibility": "public",
+    "stateAtBinding": "stub \u2014 README.md only, single commit"
+  },
+  "githubExecutionModel": {
+    "decision": "OD-01 RESOLVED \u2014 Option A",
+    "description": "Owner executes all GitHub operations. The assistant produces exact commands and expected output; the owner runs them and returns actual output, which becomes the evidence record.",
+    "rationale": "Keeps credentials and secrets entirely off the assistant platform. secret_protection is a global non-waivable invariant, so this is handled by architecture rather than by exception.",
+    "approver": "John",
+    "approvedAt": "2026-08-13T15:55:28-04:00",
+    "consequence": "Steps 63-72, 91, 101 and 110 are owner-executed. No GitHub result is recorded as passing unless the owner actually ran it and returned output."
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "header": {
+    "artifactId": "PAF-ADAPTER-CODING-WORKBENCH",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "ADAPTER",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-ADAPTER-CONTRACT"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "adapterId": "PAF-ADAPTER-CODING-WORKBENCH",
+  "surfaceClass": "CODING_WORKBENCH",
+  "displayName": "Coding-Workbench Adapter Contract (VS Code / Codex / IDE / future)",
+  "translationRules": {
+    "translatesNeverRedefines": "An adapter maps framework behavior onto a native surface. It never changes what a control means, only how it is expressed.",
+    "noAuthorityOrigination": "An adapter never becomes an authority. It cannot approve, cannot classify risk, and cannot resolve a source conflict.",
+    "noProjectGovernance": "An adapter carries no project-specific governance. Project rules live in the Profile, not the adapter.",
+    "noStateInvention": "An adapter may not invent, rename, merge, skip, or reorder a governed lifecycle state or gate.",
+    "noIndependenceCollapse": "An adapter may not collapse required independent steps into one invocation for convenience."
+  },
+  "capabilityMap": [
+    {
+      "capability": "Editor work -> framework work items",
+      "support": "TRANSLATED",
+      "translationNote": "Editing sessions operate on a governed work item"
+    },
+    {
+      "capability": "Local execution/tests -> deterministic checks",
+      "support": "NATIVE",
+      "translationNote": "IDE-run tests map to framework evidence"
+    },
+    {
+      "capability": "VCS integration -> GitHub adapter",
+      "support": "TRANSLATED",
+      "translationNote": "Delegates repository operations to the repository adapter"
+    },
+    {
+      "capability": "Technology constraint enforcement",
+      "support": "TRANSLATED",
+      "translationNote": "IDE surfaces the approved technology registry; unapproved dependency use is a violation"
+    },
+    {
+      "capability": "Per-role tool sandboxing",
+      "support": "TRANSLATED",
+      "translationNote": "Where the IDE supports workspace-scoped tooling; declared per concrete IDE"
+    }
+  ],
+  "prohibitions": [
+    "A new coding workbench is added by implementing this contract, never by redefining the framework",
+    "IDE convenience features never override a governed gate",
+    "Local green build is not acceptance"
+  ],
+  "evidenceTranslation": {
+    "rule": "IDE-run checks are evidence only when reproducible outside the IDE. A result that only reproduces inside one developer's IDE is not portable evidence."
+  },
+  "handoffTranslation": {
+    "rule": "Handoff via committed branch + evidence, delegated to the repository adapter.",
+    "cleanContextSupport": false
+  },
+  "lifecycleSyncRule": "IDE reflects work-item state via the repository adapter; it holds no independent state."
+}

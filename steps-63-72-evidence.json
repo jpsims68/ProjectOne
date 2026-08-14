@@ -1,0 +1,136 @@
+{
+  "header": {
+    "artifactId": "EVIDENCE-SETUP-001",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE"
+    ],
+    "createdAt": "2026-08-13T18:22:49-04:00"
+  },
+  "workItemId": "SETUP-001",
+  "steps": "63-72",
+  "repository": "https://github.com/jpsims68/ProjectOne",
+  "executionModel": "OWNER-EXECUTED per OD-01 Option A. Every result below was produced by John running the operation and returning output. No GitHub result is recorded from assistant execution.",
+  "pullRequest": {
+    "number": 1,
+    "title": "Work/setup 001 repository governance",
+    "mergedTo": "main",
+    "commitsInBranch": 9
+  },
+  "stepResults": [
+    {
+      "step": 63,
+      "name": "Create the GitHub repository",
+      "result": "PASS",
+      "evidence": "15 files verified present in main by independent clone. Repository is public, default branch main.",
+      "verifiedBy": "DETERMINISTIC_CHECK \u2014 assistant cloned the public repo and enumerated files"
+    },
+    {
+      "step": 64,
+      "name": "Branch strategy",
+      "result": "PASS",
+      "evidence": "main + work/<id> model; governance/BRANCH-STRATEGY.md committed. Work performed on work/SETUP-001-repository-governance, merged via PR, branch deleted."
+    },
+    {
+      "step": 65,
+      "name": "CODEOWNERS",
+      "result": "PASS",
+      "evidence": ".github/CODEOWNERS present; path->role mapping documented in governance/OWNERSHIP-MAP.md including the solo-owner limitation."
+    },
+    {
+      "step": 66,
+      "name": "Branch protection",
+      "result": "PASS",
+      "evidence": "Ruleset 'main protection' Active on default branch. VERIFIED BY REJECTION: browser edit to README.md on main returned 'You can\\u2019t commit to main because it is a protected branch' with no override option offered.",
+      "verifiedBy": "OWNER EXECUTION \u2014 negative test, observed rejection"
+    },
+    {
+      "step": 67,
+      "name": "PR templates",
+      "result": "PASS",
+      "evidence": ".github/pull_request_template.md present and loaded automatically on PR #1. Enforced by the PR governance metadata check."
+    },
+    {
+      "step": 68,
+      "name": "Issue templates",
+      "result": "PASS",
+      "evidence": ".github/ISSUE_TEMPLATE/work-item.yml + config.yml present. blank_issues_enabled=false, so every work item passes through classification."
+    },
+    {
+      "step": 69,
+      "name": "Required status checks",
+      "result": "PASS",
+      "evidence": "6 checks required: Build lint test; Security scan; Slice boundaries (VSA-1/VSA-3); Secret protection (non-waivable invariant); PR governance metadata; Framework baseline integrity. Source pinned to GitHub Actions.",
+      "note": "Sourcery review deliberately EXCLUDED from required checks \u2014 an external service must not be able to block or unblock a merge."
+    },
+    {
+      "step": 70,
+      "name": "CI workflows",
+      "result": "PASS",
+      "evidence": "ci.yml and governance.yml present, both declaring permissions: contents: read (least privilege). All 6 checks observed green on PR #1."
+    },
+    {
+      "step": 71,
+      "name": "Evidence conventions",
+      "result": "PASS",
+      "evidence": "governance/EVIDENCE-CONVENTIONS.md committed. Rule established: a CI log link is not evidence; artifacts are copied into the repository with content hashes."
+    },
+    {
+      "step": 72,
+      "name": "Release/tag conventions",
+      "result": "PASS",
+      "evidence": "Tag ruleset 'release tags' Active on pattern v*, restrict deletions + block force pushes. governance/RELEASE-CONVENTIONS.md committed."
+    }
+  ],
+  "defectFoundAndCorrected": {
+    "id": "F-R8-01",
+    "severity": "MATERIAL",
+    "description": "The Governance workflow listened only for pull_request default types (opened, synchronize, reopened). Editing a PR description therefore did NOT re-trigger the PR governance metadata check, and 'Re-run all checks' replays the ORIGINAL event payload \u2014 meaning a PR opened with an empty description could never pass that check no matter how many times it was re-run or corrected.",
+    "impact": "Would have made the governance metadata gate permanently unsatisfiable for any PR opened before its description was filled in. The predictable workaround \u2014 disabling or ignoring the check \u2014 would have removed the enforcement entirely.",
+    "correction": "Added types: [opened, edited, synchronize, reopened] to the pull_request trigger. Verified: check went green on the corrected description.",
+    "foundBy": "Owner execution \u2014 the check failed with 'declared risk class: MISSING' against a description that was demonstrably populated."
+  },
+  "ownerFindings": [
+    {
+      "id": "OF-01",
+      "finding": "Browser drag-and-drop upload silently skips dot-prefixed paths. The entire .github directory (7 files: CODEOWNERS, PR template, 2 issue templates, 2 workflows) plus .gitignore were dropped without warning.",
+      "significance": "Had this gone unnoticed, the repository would have appeared complete while enforcing nothing. Detected because the owner checked the uploaded file list against expectation rather than assuming success.",
+      "correction": "Files created individually via the browser's create-file path, which supports dot directories."
+    },
+    {
+      "id": "OF-02",
+      "finding": "Assistant instruction would have produced a doubled path (.github/.github/pull_request_template.md) because GitHub retains directory context after a commit.",
+      "significance": "Caught before commit by the owner. Instruction corrected to check the breadcrumb before typing a path."
+    },
+    {
+      "id": "OF-03",
+      "finding": "Required status checks default to source 'Any source', which permits ANY entity with repository access to post a check with a matching name and satisfy the requirement.",
+      "significance": "HIGHEST-CONSEQUENCE FINDING. A required check satisfiable by an arbitrary reporter is not a control. Would have left a forgeable green tick on every governance gate.",
+      "correction": "Source pinned to GitHub Actions, so only the repository's own workflows can report check results."
+    }
+  ],
+  "thirdPartyAccess": {
+    "app": "Sourcery AI",
+    "status": "SUSPENDED by owner",
+    "issue": "Had write access and overwrote the PR description \u2014 the field carrying governance evidence (risk class, evidence-honesty attestation, recovery procedure, approval record).",
+    "disposition": "Suspended rather than uninstalled; reversible by the owner only. Excluded from required status checks.",
+    "residualRisk": "Suspension is a setting, not structural removal. Recorded as accepted by John.",
+    "followUp": "Confirm no Sourcery check appears on the next PR."
+  },
+  "solooOwnerLimitation": {
+    "constraint": "GitHub does not permit a PR author to approve their own pull request. With one human, requiring 1 approval would deadlock every merge.",
+    "handling": "Required approvals set to 0. Automated checks are ENFORCED; human review is ATTESTED in the PR body.",
+    "honestStatement": "On this repository, human-review independence is attested, not enforced. Deterministic-check independence IS enforced. This is consistent with D-PAF-04, which made deterministic checks the independence backbone.",
+    "changeTrigger": "When a second human joins, set required approvals to 1 and enable dismissal of stale approvals. Human review then moves from attested to enforced."
+  },
+  "verificationOfLiveState": {
+    "method": "Independent clone of the public repository by the assistant",
+    "filesInMain": 15,
+    "governanceChecksRerunAgainstLiveRepo": "check_slice_boundaries.py PASS; check_no_secrets.py PASS",
+    "workflowTriggerConfirmed": "types: [opened, edited, synchronize, reopened] present in main"
+  }
+}

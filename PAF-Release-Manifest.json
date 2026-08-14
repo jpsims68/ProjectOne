@@ -1,0 +1,58 @@
+{
+  "header": {
+    "artifactId": "PAF-RELEASE-MANIFEST",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "frameworkVersion": "1.0-rc1",
+  "releaseState": "VALIDATION_CANDIDATE",
+  "note": "Release candidate for framework validation (Run 6). NOT approved \u2014 framework approval is Step 54, freeze is Step 55.",
+  "componentCount": 101,
+  "dependencyVersions": {
+    "jsonschema-draft": "2020-12",
+    "python": "3.12",
+    "validationLibrary": "jsonschema (pip)"
+  },
+  "validationEvidence": [
+    {
+      "check": "validate_framework.py",
+      "result": "15/15",
+      "layer": "framework core"
+    },
+    {
+      "check": "validate_run2.py",
+      "result": "21/21",
+      "layer": "roles/workflows/matrices"
+    },
+    {
+      "check": "validate_run3.py",
+      "result": "18/18",
+      "layer": "testing/registries/gui/ops"
+    },
+    {
+      "check": "validate_run4.py",
+      "result": "16/16",
+      "layer": "profile binding (D-PAF-01)"
+    },
+    {
+      "check": "conformance_probe.py",
+      "result": "5/5",
+      "layer": "contract-instance conformance"
+    }
+  ],
+  "openItemsBlockingApproval": [
+    "360 decisions at DEFINED_IN_MAP; framework-v1 minimum is EVIDENCE_LINKABLE (Steps 44-56)",
+    "GitHub/CI/secrets adapters CANNOT_SATISFY on this platform \u2014 live validation deferred to owner",
+    "75 requirements untested consolidation fidelity",
+    "Framework Activation Checkpoint not yet run (pre-Step 57)"
+  ],
+  "approvalGate": "Step 54 \u2014 explicit owner approval required. Not inferrable from validation passing."
+}

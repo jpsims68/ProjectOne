@@ -1,0 +1,48 @@
+{
+  "header": {
+    "artifactId": "PAF-ADAPTER-CONTRACT",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "ADAPTER",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-ADAPTER-CONTRACT"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "adapterId": "PAF-ADAPTER-CONTRACT",
+  "surfaceClass": "GENERIC",
+  "displayName": "Generic Workbench Adapter Contract",
+  "translationRules": {
+    "translatesNeverRedefines": "An adapter maps framework behavior onto a native surface. It never changes what a control means, only how it is expressed.",
+    "noAuthorityOrigination": "An adapter never becomes an authority. It cannot approve, cannot classify risk, and cannot resolve a source conflict.",
+    "noProjectGovernance": "An adapter carries no project-specific governance. Project rules live in the Profile, not the adapter.",
+    "noStateInvention": "An adapter may not invent, rename, merge, skip, or reorder a governed lifecycle state or gate.",
+    "noIndependenceCollapse": "An adapter may not collapse required independent steps into one invocation for convenience."
+  },
+  "capabilityMap": [
+    {
+      "capability": "Defines the boundary all adapters inherit",
+      "support": "NATIVE",
+      "translationNote": "This is the contract, not an implementation"
+    }
+  ],
+  "prohibitions": [
+    "No adapter may redefine governance",
+    "No adapter may originate authority",
+    "No adapter may carry project-specific governance",
+    "No adapter may invent/rename/merge/skip/reorder states or gates",
+    "No adapter may collapse required independent review into one invocation"
+  ],
+  "evidenceTranslation": {
+    "rule": "Every adapter maps framework evidence records onto its native surface without changing evidence semantics. An evidence PASS means the same thing on every surface."
+  },
+  "handoffTranslation": {
+    "rule": "Every adapter can express a framework handoff record. Clean-context handoff support is declared, not assumed.",
+    "cleanContextSupport": true
+  },
+  "lifecycleSyncRule": "Adapters reflect the canonical lifecycle state; they never hold a competing one."
+}

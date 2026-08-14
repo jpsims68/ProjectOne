@@ -1,0 +1,60 @@
+{
+  "header": {
+    "artifactId": "PAF-OWNER-APPROVAL-RECORD",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T15:25:53-04:00"
+  },
+  "approvals": [
+    {
+      "approvalId": "APR-001",
+      "step": 49,
+      "subject": "Governance sustainability thresholds",
+      "approvalClassRef": "owner sustainability acceptance",
+      "decision": "APPROVED_AS_PROPOSED",
+      "approver": {
+        "actorClass": "HUMAN",
+        "actorId": "John"
+      },
+      "basis": "EXPLICIT_REVIEW \u2014 owner reviewed the approval package and stated 'approve both'",
+      "notSatisfiedBy": [
+        "SILENCE",
+        "ELAPSED_TIME",
+        "AGENT_RECOMMENDATION",
+        "MAJORITY",
+        "ROLE_RELABEL",
+        "EMERGENCY"
+      ],
+      "timestamp": "2026-08-13T15:25:53-04:00",
+      "thresholdsAdopted": "profile/PROJECTONE-Sustainability-Thresholds.json (v0.1 -> ADOPTED)"
+    },
+    {
+      "approvalId": "APR-002",
+      "step": 54,
+      "subject": "Agent Framework v1",
+      "approvalClassRef": "BUILD_REQUIREMENTS_ARCHITECTURE_POLICY (framework governance authority)",
+      "decision": "APPROVED",
+      "approver": {
+        "actorClass": "HUMAN",
+        "actorId": "John"
+      },
+      "basis": "EXPLICIT_REVIEW \u2014 owner reviewed PAF-Framework-v1-Approval-Package-v1.0 and stated 'approve both'",
+      "precondition": "APR-001 recorded first, per Dry-Run Acceptance Plan gateRule",
+      "effect": "PAF 1.0-rc1 promoted to v1.0; freeze at Step 55",
+      "timestamp": "2026-08-13T15:25:53-04:00",
+      "ownerAcknowledgedResidualRisks": [
+        "Verification mechanism mapping (360/360) is assistant judgment, not independently verified \u2014 OD-05 remains open and recommended",
+        "Live GitHub/CI, secrets, per-role sandboxing, cross-family independence CANNOT_SATISFY on this platform \u2014 deferred to owner execution",
+        "Framework has governed 12 simulated scenarios, not real production work",
+        "75 of 330 requirements have untested consolidation fidelity pending recap documents"
+      ]
+    }
+  ],
+  "agentCanApprove": false,
+  "note": "Recorded from the owner's explicit instruction. No approval here was inferred."
+}

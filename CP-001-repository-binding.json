@@ -1,0 +1,55 @@
+{
+  "header": {
+    "artifactId": "CP-001",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T15:55:28-04:00"
+  },
+  "changePackageId": "CP-001",
+  "title": "Bind the ProjectOne repository and record OD-01 disposition",
+  "rationale": "The Profile was frozen under APR-002. Adding the repository URL and the owner's GitHub execution decision is a change to a frozen artifact and therefore requires a governed change package with a new version \u2014 not an in-place edit. Editing the frozen profile directly would invalidate the freeze manifest, which is exactly the defect class F-R7-02 caught.",
+  "targetArtifact": "profile/PROJECTONE-Profile.json",
+  "versionTransition": {
+    "from": "1.0 FROZEN",
+    "to": "1.1 ACTIVE"
+  },
+  "hashBefore": "656ac2d6ae21065a6ad5ced49e4ef07951afb2b4559339c65aa82008190e7dd8",
+  "riskClass": "R2",
+  "riskBasis": "Configuration binding; no security, tenant, canonical-data, or source-authority impact. No R4 or R3 trigger fires.",
+  "changes": [
+    {
+      "field": "repository",
+      "value": {
+        "url": "https://github.com/jpsims68/ProjectOne",
+        "defaultBranch": "main",
+        "visibility": "public",
+        "stateAtBinding": "stub \u2014 README.md only, single commit"
+      }
+    },
+    {
+      "field": "githubExecutionModel",
+      "value": {
+        "decision": "OD-01 RESOLVED \u2014 Option A",
+        "description": "Owner executes all GitHub operations. The assistant produces exact commands and expected output; the owner runs them and returns actual output, which becomes the evidence record.",
+        "rationale": "Keeps credentials and secrets entirely off the assistant platform. secret_protection is a global non-waivable invariant, so this is handled by architecture rather than by exception.",
+        "approver": "John",
+        "approvedAt": "2026-08-13T15:55:28-04:00",
+        "consequence": "Steps 63-72, 91, 101 and 110 are owner-executed. No GitHub result is recorded as passing unless the owner actually ran it and returned output."
+      }
+    }
+  ],
+  "reviewPath": [
+    "ROLE_ARCHITECTURE"
+  ],
+  "approvalRequired": false,
+  "approvalBasis": "R2 configuration binding within the owner's already-recorded OD-01 decision. Not a material architecture change; no non-delegable approval class applies.",
+  "evidenceRefs": [
+    "Repository read confirmed: clone succeeded, 1 file, branch main, commit 79a4417"
+  ],
+  "hashAfter": "976e7b381f3c0f4e4f1a93dbf9dac06f76811761b874efcfa5ae14fe4810fc52"
+}
