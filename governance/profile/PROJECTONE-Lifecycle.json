@@ -1,0 +1,70 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-LIFECYCLE",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "binding": {
+    "contractId": "paf.lifecycle-registry",
+    "bindingState": "BOUND",
+    "boundInstanceId": "ProjectOne-Lifecycle-State-Registry-v1.1.json",
+    "boundInstanceVersion": "as-packaged",
+    "boundInstanceHash": "550ea7e8ba8a9e6c710c04be6393741302d85144e2fb9b7707a994037326de8a",
+    "conformanceCheckId": "conformance_probe.py"
+  },
+  "workTypeEntryStates": {
+    "FEATURE_SLICE": "BACKLOG",
+    "DEFECT": "BACKLOG",
+    "SPIKE": "BACKLOG",
+    "ARCHITECTURE_CHANGE": "BACKLOG",
+    "SECURITY_CHANGE": "BACKLOG",
+    "DOCUMENTATION_CHANGE": "BACKLOG",
+    "THEME_CHANGE": "BACKLOG",
+    "METHODOLOGY_CHANGE": "BACKLOG",
+    "COMMERCIAL_CHANGE": "BACKLOG",
+    "PERFORMANCE_CHANGE": "BACKLOG",
+    "DEPENDENCY_UPGRADE": "BACKLOG",
+    "EMERGENCY": "CONTAINED",
+    "GOVERNANCE_AUDIT": "SCOPED",
+    "EXCEPTION_REQUEST": "DECISION_REQUIRED"
+  },
+  "noSecondStateMachineAssertion": "ProjectOne creates NO states of its own. Every work item uses the 27 primary + 13 interrupt states of the bound registry. Framework stage classes map onto these states; they are not a parallel machine.",
+  "stageClassToStateMap": {
+    "INTAKE": "BACKLOG",
+    "CLASSIFICATION": "RISK_CLASSIFIED",
+    "DESIGN": "DESIGN_IN_PROGRESS",
+    "TEST_DEFINITION": "TESTS_DEFINED",
+    "IMPLEMENTATION": "IMPLEMENTING",
+    "INTEGRATION": "INTEGRATION",
+    "VERIFICATION": "VERIFYING",
+    "DOCUMENTATION": "DOCUMENTING",
+    "SECURITY_RELEASE_REVIEW": "SECURITY_RELEASE_REVIEW",
+    "OWNER_APPROVAL": "READY_FOR_OWNER_APPROVAL",
+    "DEPLOYMENT": "PRODUCTION",
+    "OBSERVATION": "PRODUCTION_OBSERVATION",
+    "STABILIZATION": "READY_FOR_STABLE_APPROVAL",
+    "AUDIT": "SCOPED",
+    "SPIKE": "SPIKE_IN_PROGRESS"
+  },
+  "humanPhaseMapEcho": [
+    "Development",
+    "Integration",
+    "Verification",
+    "Release Candidate",
+    "Staging/Preproduction",
+    "Owner Approval / Owner Release Approval",
+    "Production",
+    "Post-release Verification",
+    "Production Observation",
+    "Stable"
+  ]
+}

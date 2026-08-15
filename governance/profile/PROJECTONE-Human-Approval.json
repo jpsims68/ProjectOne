@@ -1,0 +1,76 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-HUMAN-APPROVAL",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "binding": {
+    "contractId": "paf.human-approval-registry",
+    "bindingState": "BOUND",
+    "boundInstanceId": "ProjectOne-Human-Approval-Authority-and-Continuity-Registry-v1.0.json",
+    "boundInstanceVersion": "as-packaged",
+    "boundInstanceHash": "19e095535afc666cf80d9c1cb0b3778e3360c12a80757cc263e4a973a0e49018",
+    "conformanceCheckId": "conformance_probe.py"
+  },
+  "primaryApprover": "John (sole final human authority)",
+  "approvalClassCount": 20,
+  "nonDelegableCount": 14,
+  "gateBindingNote": "Owner/material/release/Stable gates in the framework workflows map to these approval class IDs. agentCanApprove=false is asserted structurally.",
+  "approvalClassIds": [
+    "PROJECT_VISION_STRATEGY",
+    "PRODUCT_SCOPE_ACCEPTANCE",
+    "DDR_LOCK_OR_AMEND",
+    "BUILD_REQUIREMENTS_ARCHITECTURE_POLICY",
+    "MATERIAL_ARCHITECTURE_SHARED_PLATFORM",
+    "DATABASE_SCHEMA_OR_NO_MIGRATION_DESIGN",
+    "SECURITY_TENANT_PRIVACY_POLICY",
+    "CANONICAL_METHODOLOGY_DEFINITION",
+    "DESIGN_SYSTEM_SHARED_CONTROL_POLICY",
+    "MATERIAL_GUI_BASELINE",
+    "MATERIAL_UX_ACCESSIBILITY_RESPONSIVE_PERFORMANCE_TRADEOFF",
+    "COMMERCIAL_PRICING_PACKAGING_CONTRACT_SLA",
+    "DESTRUCTIVE_PRODUCTION_DATA_OPERATION",
+    "PRODUCTION_RELEASE",
+    "MATERIAL_RESIDUAL_RISK_ACCEPTANCE",
+    "STABLE_STATUS",
+    "UNRESOLVED_CROSS_AGENT_DISPUTE",
+    "GOVERNANCE_EXCEPTION_NOT_OTHERWISE_MAPPED",
+    "MATERIAL_SECURITY_EXCEPTION",
+    "RISK_CLASS_DOWNGRADE_FROM_R4"
+  ],
+  "technologyStack": {
+    "note": "Profile-layer content per C-R3-03. Binds into PAF-TECHNOLOGY-REGISTRY (which ships empty at CORE).",
+    "entries": [
+      {
+        "name": "FastAPI",
+        "category": "FRAMEWORK",
+        "status": "ACTIVE"
+      },
+      {
+        "name": "SQL Server (Azure)",
+        "category": "DATABASE",
+        "status": "ACTIVE"
+      },
+      {
+        "name": "Cytoscape.js",
+        "category": "LIBRARY",
+        "status": "ACTIVE"
+      },
+      {
+        "name": "PM4Py",
+        "category": "LIBRARY",
+        "status": "PROHIBITED",
+        "note": "Dropped per DDR D-66 in favor of native analytics engine"
+      }
+    ]
+  }
+}

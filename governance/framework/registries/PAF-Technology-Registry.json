@@ -1,0 +1,35 @@
+{
+  "header": {
+    "artifactId": "PAF-TECHNOLOGY-REGISTRY",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "approvalRule": "An agent may use only entries listed ACTIVE in this registry. An unlisted technology, tool, or dependency is DENIED by default (CR-5), regardless of convenience, familiarity, or apparent suitability. Adding an entry is a governed change.",
+  "categories": [
+    "LANGUAGE_RUNTIME",
+    "FRAMEWORK",
+    "LIBRARY",
+    "DATABASE",
+    "BUILD_TOOL",
+    "CI_TOOL",
+    "IDE_EXTENSION",
+    "INFRASTRUCTURE",
+    "TESTING_TOOL",
+    "SECURITY_TOOL"
+  ],
+  "approvedEntries": [],
+  "changeHistory": [
+    {
+      "note": "CORE instance intentionally carries zero approvedEntries. A project's stack is Profile content (Step 32/Adapter Step 39), never framework content.",
+      "date": "2026-08-13T10:01:00-04:00"
+    }
+  ]
+}

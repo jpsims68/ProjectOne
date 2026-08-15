@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.risk-standard.schema.json",
+  "title": "PAF Risk & Materiality Standard Contract (Step 7)",
+  "description": "Defines the machinery of risk classification: ordered classes, highest-trigger-wins precedence, uncertainty-upward default, override asymmetry, and control-bundle binding. Carries no project trigger text.",
+  "type": "object",
+  "required": [
+    "header",
+    "classificationRules",
+    "classes",
+    "overrideRule"
+  ],
+  "properties": {
+    "header": {
+      "$ref": "paf.common.schema.json#/$defs/artifactHeader"
+    },
+    "classificationRules": {
+      "type": "object",
+      "required": [
+        "precedence",
+        "uncertainty",
+        "record"
+      ],
+      "properties": {
+        "precedence": {
+          "type": "string",
+          "description": "Must express highest-triggered-class-wins evaluation order."
+        },
+        "uncertainty": {
+          "type": "string",
+          "description": "Must express that unknowns classify UPWARD, never downward."
+        },
+        "record": {
+          "type": "string",
+          "description": "Must require recording triggered AND non-triggered high-class conditions, evidence source, classifier, and timestamp."
+        }
+      },
+      "additionalProperties": true
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 2,
+      "description": "Ordered highest-severity-first. Each binds a minimum control bundle.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "definition",
+          "controlBundle"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          },
+          "triggers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "controlBundle": {
+            "type": [
+              "object",
+              "array"
+            ]
+          },
+          "allConditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Conjunctive definition used by the residual lowest class: EVERY condition must hold to qualify."
+          },
+          "examples": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "anyOf": [
+          {
+            "required": [
+              "triggers"
+            ]
+          },
+          {
+            "required": [
+              "allConditions"
+            ]
+          }
+        ],
+        "description": "Higher classes are defined disjunctively by triggers (any one fires). The residual lowest class is defined conjunctively by allConditions (every one must hold). Exactly one of the two must be present \u2014 a class with neither is undecidable and is rejected."
+      }
+    },
+    "fullAgentReviewTriggers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "overrideRule": {
+      "type": "string",
+      "description": "Must be asymmetric: raising a class requires no special approval; lowering requires independent agreement plus the authority that would have applied at the original class."
+    },
+    "normativeLanguageBinding": {
+      "type": "object",
+      "description": "Binds normative uses of 'material' to this standard, and must include an anti-avoidance rule preventing down-classification to dodge controls.",
+      "additionalProperties": true
+    },
+    "changeHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

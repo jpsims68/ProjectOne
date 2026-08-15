@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.environment-registry.schema.json",
+  "title": "PAF Environment & Interface/Config Registry Contract (Step 22)",
+  "description": "Defines environments, their promotion order, interface contracts, and configuration surfaces. Prevents production behavior from being reachable through an unapproved path.",
+  "type": "object",
+  "required": ["header", "environments", "promotionRule", "interfaceContracts", "configurationSurfaces", "securityToolingRefs"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "environments": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["envId", "tier", "productionDataAllowed", "secretHandling"],
+        "properties": {
+          "envId": { "type": "string" },
+          "tier": { "type": "integer", "minimum": 0, "description": "Lower promotes into higher. 0 = local/dev." },
+          "productionDataAllowed": { "type": "boolean" },
+          "secretHandling": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "promotionRule": {
+      "const": "Promotion is strictly tier-increasing and evidence-gated. An environment may not be skipped, and promotion into a production-data-allowed environment requires the release gate's full evidence and human approval."
+    },
+    "interfaceContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["contractId", "versioningPolicy", "consumerBreakingChangeRule"],
+        "properties": {
+          "contractId": { "type": "string" },
+          "versioningPolicy": { "type": "string" },
+          "consumerBreakingChangeRule": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "configurationSurfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["surfaceId", "mayContainSecrets", "changeAuthority"],
+        "properties": {
+          "surfaceId": { "type": "string" },
+          "mayContainSecrets": { "const": false, "description": "Structural: configuration surfaces never carry secret values directly." },
+          "changeAuthority": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securityToolingRefs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

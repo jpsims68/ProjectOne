@@ -1,0 +1,83 @@
+{
+  "header": {
+    "artifactId": "WF_DEFECT",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_DEFECT",
+  "displayName": "Defect Correction",
+  "appliesToWorkTypes": [
+    "DEFECT"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "CLASSIFICATION",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "VERIFICATION",
+      "owningRole": "ROLE_TEST_DEBUG"
+    },
+    {
+      "stageClass": "IMPLEMENTATION",
+      "owningRole": "ROLE_CODING"
+    },
+    {
+      "stageClass": "INTEGRATION",
+      "owningRole": "ROLE_CODING"
+    },
+    {
+      "stageClass": "DOCUMENTATION",
+      "owningRole": "ROLE_TECH_DOC"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_DF_REPRODUCED",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "DEFECT_REPRODUCTION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_DF_FIXED",
+      "afterStageClass": "INTEGRATION",
+      "requiredEvidenceClasses": [
+        "TEST_RESULT",
+        "REGRESSION_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "exceptionEligible": false
+    }
+  ],
+  "terminalConditions": [
+    "Defect verified fixed with regression evidence",
+    "Defect accepted as known with recorded risk"
+  ],
+  "stopConditions": [
+    "A test would be weakened to make the fix pass"
+  ]
+}

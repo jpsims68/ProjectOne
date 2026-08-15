@@ -1,0 +1,66 @@
+[
+  {
+    "id": "RP-01",
+    "historical": "D-66: drop PM4Py in favour of a native analytics engine",
+    "expected": "R3 + human approval + independent review",
+    "actual": "R3 + human approval + independent review",
+    "basis": "technology/architecture change routes to MATERIAL_ARCHITECTURE_SHARED_PLATFORM",
+    "pass": true
+  },
+  {
+    "id": "RP-02",
+    "historical": "D-35: OCPM spine designed now, functionality deferred",
+    "expected": "R4 + structural deferral declared",
+    "actual": "R4 + structural deferral declared",
+    "basis": "deferral must be STRUCTURAL_DESIGN, not FUNCTIONALITY_ONLY",
+    "pass": true
+  },
+  {
+    "id": "RP-03",
+    "historical": "F-009 held at CRITICAL despite a simple fix (baseline discipline)",
+    "expected": "REFUSED \u2014 held",
+    "actual": "REFUSED \u2014 held",
+    "basis": "DATA-5 is NON_WAIVABLE",
+    "pass": true
+  },
+  {
+    "id": "RP-04",
+    "historical": "v1.1-FROZEN audit uploaded accidentally; must not be evidence",
+    "expected": "EXCLUDED",
+    "actual": "EXCLUDED",
+    "basis": "no source governs this subject",
+    "pass": true
+  },
+  {
+    "id": "RP-05",
+    "historical": "406 workspace copy differs from packaged source",
+    "expected": "REFUSED \u2014 hash mismatch",
+    "actual": "REFUSED \u2014 hash mismatch",
+    "basis": "registered source hash != uncontrolled copy (proved in bootstrap)",
+    "pass": true
+  },
+  {
+    "id": "RP-06",
+    "historical": "DDR read without applying its 999 overlays",
+    "expected": "REFUSED \u2014 incomplete read",
+    "actual": "REFUSED \u2014 incomplete read",
+    "basis": "incomplete read: 4 applicable overlay(s) not applied: ['AB-CM-008', 'AB-CM-017', 'AB-CM-025', 'AB-CM-035']",
+    "pass": true
+  },
+  {
+    "id": "RP-07",
+    "historical": "DDR lock/amend attempted by agent",
+    "expected": "REFUSED \u2014 owner only",
+    "actual": "REFUSED \u2014 owner only",
+    "basis": "agent can never supply human approval",
+    "pass": true
+  },
+  {
+    "id": "RP-08",
+    "historical": "Spike finding vs DDR on a design subject",
+    "expected": "DDR wins over spike",
+    "actual": "DDR wins over spike",
+    "basis": "resolved",
+    "pass": true
+  }
+]

@@ -1,0 +1,190 @@
+{
+  "scenarios": [
+    {
+      "scenarioId": "DR-01",
+      "name": "R1 low-risk bounded change",
+      "riskClass": "R1",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R1"
+      ]
+    },
+    {
+      "scenarioId": "DR-02",
+      "name": "R2 ordinary slice change",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R2",
+        "independence=OK"
+      ]
+    },
+    {
+      "scenarioId": "DR-03",
+      "name": "R3 cross-slice/shared change",
+      "riskClass": "R3",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R3",
+        "independence=OK",
+        "approval OK (MATERIAL_ARCHITECTURE_SHARED_PLATFORM)"
+      ]
+    },
+    {
+      "scenarioId": "DR-04",
+      "name": "R4 security/tenant or canonical-data change",
+      "riskClass": "R4",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R4",
+        "independence=OK",
+        "approval OK (SECURITY_TENANT_PRIVACY_POLICY)"
+      ]
+    },
+    {
+      "scenarioId": "DR-05",
+      "name": "Emergency containment",
+      "riskClass": "R4",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R4",
+        "approval OK (MATERIAL_RESIDUAL_RISK_ACCEPTANCE)",
+        "exception REFUSED: global non-waivable invariant: tenant_isolation",
+        "interrupt=CONTAINED"
+      ]
+    },
+    {
+      "scenarioId": "DR-06",
+      "name": "Exception request",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R2",
+        "approval OK (GOVERNANCE_EXCEPTION_NOT_OTHERWISE_MAPPED)",
+        "exception GRANTED: eligible, bounded, compensated, human-approved",
+        "interrupt=DECISION_REQUIRED"
+      ]
+    },
+    {
+      "scenarioId": "DR-07",
+      "name": "Human approver unavailable",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R2",
+        "approval REFUSED (PRODUCTION_RELEASE): approval never satisfied by ELAPSED_TIME",
+        "-> correctly refused; work holds at SAFE_HOLD_HUMAN_APPROVAL",
+        "interrupt=SAFE_HOLD_HUMAN_APPROVAL"
+      ]
+    },
+    {
+      "scenarioId": "DR-08",
+      "name": "Governance audit workflow",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R2",
+        "independence=OK",
+        "approval OK (MATERIAL_RESIDUAL_RISK_ACCEPTANCE)"
+      ]
+    },
+    {
+      "scenarioId": "DR-09",
+      "name": "Context-loss / restart",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R2"
+      ]
+    },
+    {
+      "scenarioId": "DR-09b",
+      "name": "Continuity chain verification on restart",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "valid chain resumes: True",
+        "broken chain STOPs: True (STOP: predecessor package chain broken)"
+      ]
+    },
+    {
+      "scenarioId": "DR-10",
+      "name": "GUI/theme change",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R2",
+        "independence=OK",
+        "approval OK (MATERIAL_GUI_BASELINE)"
+      ]
+    },
+    {
+      "scenarioId": "DR-11",
+      "name": "Failed test / unknown recovery state",
+      "riskClass": "R3",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R3",
+        "interrupt=EVIDENCE_INSUFFICIENT"
+      ]
+    },
+    {
+      "scenarioId": "DR-11b",
+      "name": "Retry bounding",
+      "riskClass": "R2",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "attempt1 allowed=True",
+        "attempt2 exhausted=True (max attempts (2) exhausted \u2014 escalate)",
+        "governance conflict never retried=True"
+      ]
+    },
+    {
+      "scenarioId": "DR-12",
+      "name": "Retrospective replay of pre-framework governance",
+      "riskClass": "R3",
+      "lifecycleLegal": true,
+      "independenceOk": true,
+      "log": [
+        "risk=R3"
+      ]
+    }
+  ],
+  "metrics": {
+    "end_to_end_elapsed_time": 270,
+    "agent_invocation_count": 100,
+    "human_approval_count": 7,
+    "human_review_minutes": 70,
+    "specialist_reviewer_count": 5,
+    "evidence_artifact_count": 31,
+    "manual_touch_count": 7,
+    "queue_wait_time": 20,
+    "reroute_count": 4,
+    "exception_count": 2,
+    "full_agent_review_trigger_count": 2,
+    "regression_suite_count": 12,
+    "rework_loop_count": 1,
+    "context_restart_count": 1,
+    "blocked_time": 20,
+    "policy_lookup_count": 12,
+    "source_bundle_resolution_time": 12,
+    "false_block_count": 0,
+    "missed_required_gate_count": 0,
+    "pro_forma_or_bypass_signal_count": 0
+  },
+  "zeroToleranceViolations": [],
+  "scenariosRun": 12
+}

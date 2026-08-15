@@ -1,0 +1,320 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-REPOSITORY-DESIGN",
+    "version": "1.0",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE"
+    ],
+    "createdAt": "2026-08-13T15:55:07-04:00"
+  },
+  "steps": "57-62",
+  "repository": "https://github.com/jpsims68/ProjectOne",
+  "defaultBranch": "main",
+  "currentState": "Stub \u2014 README.md only, single commit, no structure yet",
+  "implementationAuthorized": false,
+  "note": "DESIGN ONLY. No product features implemented. Structure is traceable to VSA-1..10 / CPM-1..10 per Policy v1.2.",
+  "step57_repositoryStructure": {
+    "principle": "Feature-first slice ownership (VSA-6) with a deliberately small platform (VSA-2). Directory layout makes ownership visible: if you cannot tell who owns a file from its path, the layout has failed.",
+    "topLevel": [
+      {
+        "path": "slices/",
+        "owner": "slice owner",
+        "rule": "One directory per vertical slice. A slice is the smallest independently testable capability spanning all layers (VSA-1).",
+        "traceTo": [
+          "VSA-1",
+          "VSA-6"
+        ]
+      },
+      {
+        "path": "platform/",
+        "owner": "ROLE_ARCHITECTURE",
+        "rule": "Approved shared platform only. Deliberately small; every addition is a governed promotion (VSA-2).",
+        "traceTo": [
+          "VSA-2",
+          "VSA-5"
+        ],
+        "protected": true
+      },
+      {
+        "path": "contracts/",
+        "owner": "ROLE_ARCHITECTURE",
+        "rule": "Versioned, directional, acyclic public contracts. The ONLY permitted cross-slice dependency path (VSA-3).",
+        "traceTo": [
+          "VSA-3"
+        ],
+        "protected": true
+      },
+      {
+        "path": "data/",
+        "owner": "ROLE_ARCHITECTURE",
+        "rule": "Canonical shared data foundations \u2014 migrations, seeds, field catalog. Platform-owned, DDR-governed (VSA-4).",
+        "traceTo": [
+          "VSA-4"
+        ],
+        "protected": true
+      },
+      {
+        "path": "ops/",
+        "owner": "ROLE_SECURITY_RELEASE",
+        "rule": "Migrations runner, jobs, ingestion, materializations, deployment artifacts. Every artifact version-controlled with named ownership (VSA-8).",
+        "traceTo": [
+          "VSA-8"
+        ]
+      },
+      {
+        "path": "config/",
+        "owner": "ROLE_CODING + ROLE_SECURITY_RELEASE review",
+        "rule": "Configuration hierarchy and environment overrides. Never contains secret values.",
+        "traceTo": [
+          "CONFIG",
+          "SEC"
+        ]
+      },
+      {
+        "path": "tests/",
+        "owner": "ROLE_QUALITY",
+        "rule": "Cross-cutting test suites. Slice-owned tests live inside the slice (VSA-6).",
+        "traceTo": [
+          "VSA-7"
+        ]
+      },
+      {
+        "path": "docs/",
+        "owner": "ROLE_TECH_DOC",
+        "rule": "Documentation by audience with explicit update triggers.",
+        "traceTo": [
+          "DOC"
+        ]
+      },
+      {
+        "path": "governance/",
+        "owner": "ROLE_ORCHESTRATOR",
+        "rule": "Frozen Agent Framework v1 baseline, profile, adapters, evidence. Read-mostly.",
+        "traceTo": [
+          "AGENT",
+          "DOD"
+        ],
+        "protected": true
+      },
+      {
+        "path": ".github/",
+        "owner": "ROLE_SECURITY_RELEASE",
+        "rule": "CODEOWNERS, workflows, branch protection config, PR/issue templates. This is where the declarative tool-permission matrix becomes ENFORCED.",
+        "traceTo": [
+          "CPM-5",
+          "CPM-6"
+        ],
+        "protected": true
+      }
+    ],
+    "acyclicityRule": "Dependency direction is one-way: slices -> contracts -> platform -> data. A slice never imports another slice directly; platform never imports a slice (VSA-3).",
+    "reviewStatus": "Architecture-reviewed against VSA-1..10; traceability recorded per directory"
+  },
+  "step58_sliceStructure": {
+    "principle": "Each slice owns its full stack. Everything needed to test the slice independently lives inside it (VSA-1).",
+    "template": {
+      "path": "slices/<slice-name>/",
+      "contents": [
+        {
+          "path": "api/",
+          "desc": "Slice-owned HTTP surface"
+        },
+        {
+          "path": "domain/",
+          "desc": "Slice-owned business logic and feature policy (VSA-5: slices own feature policy)"
+        },
+        {
+          "path": "data/",
+          "desc": "Slice-owned data objects ONLY. Canonical shared data is platform-owned and lives in /data (VSA-4)"
+        },
+        {
+          "path": "ui/",
+          "desc": "Slice-owned components; consumes the design system, never forks it"
+        },
+        {
+          "path": "tests/",
+          "desc": "unit/, integration/, contract/ \u2014 slice-owned, runnable in isolation"
+        },
+        {
+          "path": "docs/",
+          "desc": "Slice-level developer and behaviour documentation"
+        },
+        {
+          "path": "slice.manifest.json",
+          "desc": "REQUIRED. Declares slice id, owner role, consumed contracts (with versions), produced contracts, platform extension points used, lifecycle state, and risk class."
+        }
+      ]
+    },
+    "manifestRule": "A slice without a valid slice.manifest.json is not a slice \u2014 it is ungoverned code. The manifest is what makes ownership and dependencies machine-checkable rather than conventional.",
+    "boundaryRule": "Cross-slice import is a build failure, not a code review comment. Enforced by a deterministic check in CI (Step 69)."
+  },
+  "step59_platformStructure": {
+    "principle": "The shared platform stays deliberately small (VSA-2). Small is the feature, not a limitation \u2014 the cost of changing shared things is why they must be few.",
+    "contents": [
+      {
+        "path": "platform/tenancy/",
+        "desc": "Tenant context resolution and isolation enforcement",
+        "invariant": "tenant_isolation"
+      },
+      {
+        "path": "platform/auth/",
+        "desc": "Authentication and authorization primitives",
+        "invariant": "authentication_authorization_integrity"
+      },
+      {
+        "path": "platform/persistence/",
+        "desc": "Data access foundations; every path tenant-scoped"
+      },
+      {
+        "path": "platform/observability/",
+        "desc": "Logging, metrics, tracing; never logs secrets",
+        "invariant": "secret_protection"
+      },
+      {
+        "path": "platform/theming/",
+        "desc": "Design tokens and theme registry. Appearance only \u2014 no feature logic (UX/theming policy)"
+      },
+      {
+        "path": "platform/extension-points/",
+        "desc": "Declared extension points slices bind to (VSA-5)"
+      }
+    ],
+    "promotionRule": "Moving code into platform/ is a governed promotion requiring architecture review, impact analysis, consumer identification, retest of affected consumers, and human approval (MATERIAL_ARCHITECTURE_SHARED_PLATFORM). Convenience is never a promotion basis.",
+    "prohibition": "Platform must not absorb feature behaviour. If a change to platform/ is driven by one slice's requirement, that is a signal the code belongs in the slice."
+  },
+  "step60_configuration": {
+    "hierarchy": [
+      "config/defaults/ \u2014 safe defaults, committed",
+      "config/environments/<env>/ \u2014 per-environment overrides, committed, no secrets",
+      "runtime injection \u2014 secret VALUES only, never committed, never logged"
+    ],
+    "environments": [
+      "LOCAL",
+      "DEV",
+      "STAGING",
+      "PRODUCTION"
+    ],
+    "secretsRule": "Configuration files contain secret NAMES/references only. Secret VALUES arrive at runtime through an injection interface the application reads and no agent ever sees. This is architecture, not exception \u2014 secret_protection is a global non-waivable invariant.",
+    "validationRule": "Every configuration surface has a schema. Startup fails loudly on an invalid or incomplete configuration; it never starts with a silently defaulted security-relevant value.",
+    "safeDefaultRule": "Defaults fail closed: absent configuration yields the most restrictive behaviour, never the most permissive.",
+    "traceTo": [
+      "CONFIG",
+      "SEC"
+    ]
+  },
+  "step61_testStructure": {
+    "principle": "Test location follows ownership. Slice-owned tests live in the slice; cross-cutting suites live centrally (VSA-6/VSA-7).",
+    "sliceOwned": [
+      "slices/<slice>/tests/unit/",
+      "slices/<slice>/tests/integration/",
+      "slices/<slice>/tests/contract/"
+    ],
+    "central": [
+      {
+        "path": "tests/contract/",
+        "desc": "Cross-slice contract conformance \u2014 verifies VSA-3 directionality and versioning"
+      },
+      {
+        "path": "tests/security/",
+        "desc": "Auth/authz, secret handling, dependency and static security scans"
+      },
+      {
+        "path": "tests/tenant/",
+        "desc": "Tenant isolation \u2014 every canonical access path proven tenant-scoped"
+      },
+      {
+        "path": "tests/gui/",
+        "desc": "Visual regression baselines and accessibility checks; deterministic output required"
+      },
+      {
+        "path": "tests/performance/",
+        "desc": "Performance contracts against versioned representative workloads"
+      },
+      {
+        "path": "tests/e2e/",
+        "desc": "End-to-end journeys across slices"
+      },
+      {
+        "path": "tests/fixtures/",
+        "desc": "Shared fixtures. Chart/widget fixtures must cover: zero rows, one row, all-equal, extreme outlier, long labels, too many categories, negatives, nulls mid-series"
+      },
+      {
+        "path": "tests/governance/",
+        "desc": "The framework's own regression portfolios, runnable independently of application code"
+      }
+    ],
+    "verificationMapLink": "Test locations map to the 360-decision verification map: each decision's required evidence class resolves to a concrete suite here, so evidence is linkable by decision ID.",
+    "traceTo": [
+      "TEST",
+      "VSA-7",
+      "CPM-4"
+    ]
+  },
+  "step62_documentation": {
+    "structure": [
+      {
+        "path": "docs/developer/",
+        "owner": "ROLE_TECH_DOC",
+        "updateTrigger": "Any change to build, run, or test procedure"
+      },
+      {
+        "path": "docs/architecture/",
+        "owner": "ROLE_ARCHITECTURE",
+        "updateTrigger": "Any approved architecture decision or contract version change"
+      },
+      {
+        "path": "docs/api/",
+        "owner": "ROLE_TECH_DOC",
+        "updateTrigger": "Any public contract change \u2014 same PR, not later"
+      },
+      {
+        "path": "docs/data/",
+        "owner": "ROLE_ARCHITECTURE",
+        "updateTrigger": "Any canonical data or field catalog change"
+      },
+      {
+        "path": "docs/operations/",
+        "owner": "ROLE_ADMIN_DOC",
+        "updateTrigger": "Any deployment, job, or recovery procedure change"
+      },
+      {
+        "path": "docs/user/",
+        "owner": "ROLE_ENDUSER_DOC",
+        "updateTrigger": "Any user-visible behaviour change"
+      },
+      {
+        "path": "docs/admin/",
+        "owner": "ROLE_ADMIN_DOC",
+        "updateTrigger": "Any administrative capability change"
+      },
+      {
+        "path": "docs/onboarding/",
+        "owner": "ROLE_ONBOARDING",
+        "updateTrigger": "Any data contract or onboarding procedure change"
+      },
+      {
+        "path": "docs/release/",
+        "owner": "ROLE_SECURITY_RELEASE",
+        "updateTrigger": "Every release"
+      },
+      {
+        "path": "docs/evidence/",
+        "owner": "ROLE_QUALITY",
+        "updateTrigger": "Every gate closure \u2014 evidence is linked, not narrated"
+      },
+      {
+        "path": "docs/continuity/",
+        "owner": "ROLE_ORCHESTRATOR",
+        "updateTrigger": "Every major run and before any context transition"
+      }
+    ],
+    "rule": "Documentation never creates or changes a decision. It reflects an approved source. Where documentation and its governing source diverge, the source wins and the divergence is a defect.",
+    "traceTo": [
+      "DOC"
+    ]
+  }
+}

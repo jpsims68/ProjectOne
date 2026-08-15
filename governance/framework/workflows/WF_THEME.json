@@ -1,0 +1,92 @@
+{
+  "header": {
+    "artifactId": "WF_THEME",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_THEME",
+  "displayName": "Design System / Theme Change",
+  "appliesToWorkTypes": [
+    "THEME_CHANGE",
+    "SHARED_CONTROL_CHANGE"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "DESIGN",
+      "owningRole": "ROLE_UX_DESIGN"
+    },
+    {
+      "stageClass": "IMPLEMENTATION",
+      "owningRole": "ROLE_CODING"
+    },
+    {
+      "stageClass": "VERIFICATION",
+      "owningRole": "ROLE_GUI_GOVERNANCE"
+    },
+    {
+      "stageClass": "OWNER_APPROVAL",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_TH_DESIGN",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DESIGN_SPECIFICATION",
+        "ACCESSIBILITY_CONFORMANCE_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_TH_VISUAL",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "VISUAL_REGRESSION_RESULT",
+        "ACCESSIBILITY_CHECK_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_TH_APPROVED",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false,
+      "humanApprovalCategoryRef": "MATERIAL_GUI_BASELINE"
+    }
+  ],
+  "terminalConditions": [
+    "Baseline updated and approved"
+  ],
+  "stopConditions": [
+    "Feature logic would be placed in the theme or token layer"
+  ]
+}

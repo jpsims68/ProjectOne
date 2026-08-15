@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.security-standard.schema.json",
+  "title": "PAF Security Standard Contract (Step 22)",
+  "description": "Baseline security requirements binding the global non-waivable invariants (tenant_isolation, authentication_authorization_integrity, secret_protection) to concrete controls.",
+  "type": "object",
+  "required": ["header", "invariantBindings", "secretHandlingRule", "tenantIsolationRule", "scanningRequirements"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "invariantBindings": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["invariant", "controls"],
+        "properties": { "invariant": { "type": "string" }, "controls": { "type": "array", "items": { "type": "string" } } },
+        "additionalProperties": false
+      }
+    },
+    "secretHandlingRule": {
+      "const": "Secrets are never committed, never logged, never placed in a configuration surface, and never entered as plaintext by an agent. Injection happens through an unbound interface the agent never reads the value of."
+    },
+    "tenantIsolationRule": {
+      "const": "Every canonical data access path must be demonstrably scoped to a tenant boundary. A path whose isolation cannot be demonstrated is treated as a violation, not an open question."
+    },
+    "scanningRequirements": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

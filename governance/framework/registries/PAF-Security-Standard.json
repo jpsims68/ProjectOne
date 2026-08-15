@@ -1,0 +1,48 @@
+{
+  "header": {
+    "artifactId": "PAF-SECURITY-STANDARD",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "invariantBindings": [
+    {
+      "invariant": "tenant_isolation",
+      "controls": [
+        "Every canonical data query scoped by tenant key at the data-access layer",
+        "Cross-tenant query paths structurally absent, not merely permission-checked",
+        "Tenant isolation verification required at every security_release_review gate"
+      ]
+    },
+    {
+      "invariant": "authentication_authorization_integrity",
+      "controls": [
+        "Authorization decisions made server-side only",
+        "No client-supplied identity claim trusted without server verification",
+        "Role/permission checks fail closed"
+      ]
+    },
+    {
+      "invariant": "secret_protection",
+      "controls": [
+        "Secrets never committed to version control",
+        "Secrets never logged, including in evidence records",
+        "Secrets injected via unbound interface agents cannot read"
+      ]
+    }
+  ],
+  "secretHandlingRule": "Secrets are never committed, never logged, never placed in a configuration surface, and never entered as plaintext by an agent. Injection happens through an unbound interface the agent never reads the value of.",
+  "tenantIsolationRule": "Every canonical data access path must be demonstrably scoped to a tenant boundary. A path whose isolation cannot be demonstrated is treated as a violation, not an open question.",
+  "scanningRequirements": [
+    "Dependency vulnerability scan before every release gate",
+    "Static application security scan before every release gate",
+    "Secret-pattern scan on every commit path the adapter can enforce"
+  ]
+}

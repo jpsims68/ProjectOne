@@ -1,0 +1,38 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-RISK",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "binding": {
+    "contractId": "paf.risk-standard",
+    "bindingState": "BOUND",
+    "boundInstanceId": "ProjectOne-Risk-and-Materiality-Classification-Standard-v1.1.json",
+    "boundInstanceVersion": "as-packaged",
+    "boundInstanceHash": "7fee9e4aa7c7d9d0f19d4a7997bc1b99ac25147b4dc0d3a2f9aeb7c2cf5e22aa",
+    "conformanceCheckId": "conformance_probe.py"
+  },
+  "workTypeDefaultRisk": {
+    "SECURITY_CHANGE": "R4",
+    "THEME_CHANGE": "R2",
+    "DOCUMENTATION_CHANGE": "R1",
+    "ARCHITECTURE_CHANGE": "R3",
+    "FEATURE_SLICE": "R2",
+    "DEFECT": "R2",
+    "METHODOLOGY_CHANGE": "R3",
+    "COMMERCIAL_CHANGE": "R3",
+    "EMERGENCY": "R4",
+    "DEPENDENCY_UPGRADE": "R2"
+  },
+  "escalationRule": "These are FLOORS, not ceilings. Any R4 trigger from the bound standard raises the class regardless of the work-type default. Uncertainty routes upward. Lowering requires independent agreement + the authority that would apply at the original class.",
+  "r4DowngradeApprovalRef": "RISK_CLASS_DOWNGRADE_FROM_R4"
+}

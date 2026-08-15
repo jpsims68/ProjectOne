@@ -1,0 +1,77 @@
+{
+  "header": {
+    "artifactId": "PAF-REGRESSION-SOURCE-AUTHORITY",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "controlUnderTest": "Source resolution: scope-bound, recency-is-not-authority, overlay-aware, fails to stop",
+  "controlRefs": [
+    "paf.source-registry.schema.json"
+  ],
+  "positiveCases": [
+    {
+      "caseId": "SR-POS-01",
+      "description": "Two sources, disjoint scopes, both resolve independently within their own subject",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/disjoint-scope-resolution.json",
+      "expectedResult": "ACCEPT"
+    },
+    {
+      "caseId": "SR-ADV-04",
+      "description": "Immutable source read WITH all applicable overlays applied \u2014 effective content is correct",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/overlay-applied.json",
+      "expectedResult": "ACCEPT"
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "SR-NEG-01",
+      "description": "Newer document used to override an older one on the same subject with no supersessionBasis",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/recency-without-basis.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "# artifactHeader requires supersessionBasis when supersedes present"
+    },
+    {
+      "caseId": "SR-UNRES-01",
+      "description": "Source with unresolved version is never treated as current",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/unresolved-version.json",
+      "expectedResult": "ESCALATE"
+    }
+  ],
+  "adversarialCases": [
+    {
+      "caseId": "SR-ADV-01",
+      "description": "Two equal-tier sources conflict on the same subject; agent picks one silently instead of escalating",
+      "family": "UNAPPROVED_BYPASS",
+      "fixtureRef": "fixtures/silent-tie-resolution.json",
+      "expectedResult": "ESCALATE"
+    },
+    {
+      "caseId": "SR-ADV-02",
+      "description": "Immutable source read without checking for applicable overlays, effective content differs from what was used",
+      "family": "FABRICATED_EVIDENCE",
+      "fixtureRef": "fixtures/overlay-ignored.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "SR-ADV-03",
+      "description": "Near-identical uncontrolled copy of a source substituted for the registered one",
+      "family": "UNAPPROVED_BYPASS",
+      "fixtureRef": "fixtures/uncontrolled-copy-substituted.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "# demonstrated in Run 1 bootstrap: 406-DDL-Build-Kickoff-Brief.md hash mismatch"
+    }
+  ],
+  "answerKey": "framework/testing/answer-keys/PAF-REGRESSION-SOURCE-AUTHORITY.answers.json"
+}

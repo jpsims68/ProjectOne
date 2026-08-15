@@ -1,0 +1,703 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-SOURCE-REGISTRY",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "tierModel": {
+    "tiers": [
+      {
+        "tier": 1,
+        "sourceClass": "ACTIVE_GOVERNANCE",
+        "governs": "policy, agent authority, registries, overlays",
+        "treatment": "Effective canon = immutable source + approved overlays"
+      },
+      {
+        "tier": 2,
+        "sourceClass": "NORMATIVE_IMMUTABLE",
+        "governs": "product/design sources",
+        "treatment": "Read with applicable overlays; never edited in place"
+      },
+      {
+        "tier": 3,
+        "sourceClass": "EVIDENCE_ONLY",
+        "governs": "derivative/historical/spike",
+        "treatment": "Informs, never determines"
+      }
+    ],
+    "scopeRule": "Precedence is evaluated per subject. DDR wins on design conflicts; Build Policy is the sole home for VSA/CPM/UX and the 330 requirements; Roadmap governs sequence only."
+  },
+  "useClassifications": [
+    {
+      "classification": "ACTIVE_GOVERNANCE",
+      "meaning": "Current governance authority",
+      "mayDetermineResult": true
+    },
+    {
+      "classification": "NORMATIVE_IMMUTABLE",
+      "meaning": "Immutable product/design source",
+      "mayDetermineResult": true
+    },
+    {
+      "classification": "EVIDENCE_ONLY",
+      "meaning": "Evidence: prototype, spike, historical, illustrative",
+      "mayDetermineResult": false
+    }
+  ],
+  "resolutionRules": {
+    "scopeBound": "Precedence is evaluated per subject. A source does not control subjects outside its declared scope.",
+    "recencyIsNotAuthority": "A newer artifact never supersedes an older one by virtue of being newer. Supersession is explicit, recorded, and approved.",
+    "overlayRule": "Effective source = immutable source + all applicable approved overlay entries. Reading the base source alone is an incomplete read.",
+    "conflictBehavior": "STOP_AND_ESCALATE",
+    "unboundBehavior": "MOST_RESTRICTIVE_PLUS_WARNING"
+  },
+  "immutabilityModel": {
+    "immutableClassRule": "Immutable uploaded ProjectOne sources are never edited in place.",
+    "correctionMechanism": "999 overlay entry only.",
+    "directMaintenanceRule": "Assistant-created artifacts (Policy, S&R, registries, Profile, schemas, contracts) are maintained directly and must NOT be routed through the 999 overlay."
+  },
+  "sources": [
+    {
+      "sourceId": "101",
+      "displayName": "101-ProjectOne-Platform-Orientation.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "0b9d7ab7b78f071b608c836c01a3df359f002afbdc0da0e4da8d1216df9a8d0c",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "104",
+      "displayName": "104-Delphics-Business-Model-and-GTM.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "62dcec3add89247990d109fd540af4320466583079d4069cab697d9675c93b0b",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "201",
+      "displayName": "201-ProjectOne-Design-Decision-Record.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "46c7036aa83aae6999bbd692a1648e91f79fd2e5574bb38e8717eac72cfa5ece",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "202",
+      "displayName": "202-ProjectOne-Chart-Spec-Convention.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "54a11b290a233736b6a76c74ccce04521177882d5bfadfd61444e709b7cc7963",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "203",
+      "displayName": "203-ProjectOne-Chart-Spec-Interval-Variance-Timeline.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "69ac1247bd864a3e094d73f170548660bee6cc4da3128b5cb6378b49462e3e6f",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "204",
+      "displayName": "204-ProjectOne-Chart-Spec-Ranked-Path-Duration-Flow.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "9955636d8a5444ce7489f407515874295ec7e35ad6f21f6c2cc2560a81211a02",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "205",
+      "displayName": "205-ProjectOne-Data-Dictionary.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "45ba95ccb6d2c93d357b2870770fc555b418f5e1d313b32d9267c463605a6916",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "301",
+      "displayName": "301-Process_Mining_Methodology_Playbook.json",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "8636f4715ac37b85d932fc7c9dcffa599e079c4d4cc8d98af0de1021589608d9",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "401",
+      "displayName": "401-ProjectOne-PRD.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "bd802e4a36c37a73d2f84a7158a354facc6490cff70ad475fe62bdfcb63b1b87",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "402",
+      "displayName": "402-ProjectOne-PRD-Tracker.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "37c91d54f873c103dd48f6eebce849d58406c5961219e66f9c8d6cff467b2a8d",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "403",
+      "displayName": "403-ProjectOne-Project-Manifest.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "18d9945deff5323b2e86a7c6397cef7404f37169b806b7c611dca5ecd938e5c9",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "404",
+      "displayName": "404-ProjectOne-Continuity-Orientation-Brief.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "774e523338419921648fc2f8af278676ee8af35f1c03a746273996d668e4c2f8",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "405",
+      "displayName": "405-ProjectOne-Spike-Kickoff-Brief.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "a0e3d566ac94a09cc8ed21d50c66174338a7efa12dde90b5a4f00eba6682c62e",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "409",
+      "displayName": "409-ProjectOne-Build-Lessons-Learned.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "afa7d0cf8009183903df511d51db1e124c527d27897ec28abfa25326b87b334e",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "410",
+      "displayName": "410-ProjectOne-Build-Roadmap.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "2683dd887f65e19bbed9c259be85c1ef605fd864c293641ba5a20b648953046e",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "411",
+      "displayName": "411-ProjectOne-Prototype-Testing-Design.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "dfe3adf44de566d3005167daeeaeec919354614fd2bc191b1e9cd71b3a51c396",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "501",
+      "displayName": "501-ProjectOne-User-Guide.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "a85125fc99fda724d5db58db49c4fcde13cf081be1f23af6847d21c23b24d746",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "502",
+      "displayName": "502-Delphics-Client-Onboarding-Playbook.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "0a2bab864e590ef30da847ede1095a4a3085ec157350b623de7961b5bb073a62",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "503",
+      "displayName": "503-Delphics-Practice-Methodology.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "310562862ffa234b082f4fc0bc127bd8333d35a3dbb7024c7911781afeaccca2",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "504",
+      "displayName": "504-ProjectOne-Event-Log-Data-Contract.md",
+      "tier": 2,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "contentHash": "02ca0c30cf1892206546b1004daa98d697886293001c71bc30b2cabbce885c9a",
+      "governsSubjects": [
+        "product/design source"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "999-Agent-Build-Canon-Modification-Tracker-v0.4",
+      "displayName": "999-Agent-Build-Canon-Modification-Tracker-v0.4.md",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "3dc19a2dd8ce799abd6a09a32baa90518ea5a97610354a297583bdd4d2f2824e",
+      "governsSubjects": [
+        "overlay authority"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Agent-Source-and-Responsibility-Model-v0.4",
+      "displayName": "ProjectOne-Agent-Source-and-Responsibility-Model-v0.4.md",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "dde0c992a113b2f4112d8738d089e11f3eb4386c2792783b8804cae568aea89a",
+      "governsSubjects": [
+        "agent/source/responsibility"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Build-Requirements-and-Architecture-Policy-v1.2",
+      "displayName": "ProjectOne-Build-Requirements-and-Architecture-Policy-v1.2.docx",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "f5649177525e10afb3edd0199779bbb57636762b2e849faa66ff4e65a63ee546",
+      "governsSubjects": [
+        "build policy + VSA/CPM/UX + 330 requirements"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Build-Requirements-Verification-Map-v1.0",
+      "displayName": "ProjectOne-Build-Requirements-Verification-Map-v1.0.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "44646fb4e376bcae306a70dfcf5f00e213d432289a22e75fcc670509517d2104",
+      "governsSubjects": [
+        "verification mechanisms"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Exception-Eligibility-Registry-v1.1",
+      "displayName": "ProjectOne-Exception-Eligibility-Registry-v1.1.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "624755375a57158614ab9839a37be6df6094fa5904ece21f3b2d1d8badfc66bb",
+      "governsSubjects": [
+        "exception eligibility"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Field-Catalog-Registry-v1.0",
+      "displayName": "ProjectOne-Field-Catalog-Registry-v1.0.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "07094095a2bb71350db16546bd144bbf5dae4898a7e8222179e544936f1704a4",
+      "governsSubjects": [
+        "field catalog / data dictionary continuation"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Governance-Audit-Workflow-v1.0",
+      "displayName": "ProjectOne-Governance-Audit-Workflow-v1.0.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "3a5d62c8510ee1c844b082a97b6143278a167cb3f65681e94643460e9426383f",
+      "governsSubjects": [
+        "audit workflow"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Governance-Dry-Run-Acceptance-Plan-v1.0",
+      "displayName": "ProjectOne-Governance-Dry-Run-Acceptance-Plan-v1.0.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "df9cdcd98d6d0999321e9ff1e6e077ad08be44012fb0f2ef3ecb14a30b3b8352",
+      "governsSubjects": [
+        "dry-run acceptance"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Human-Approval-Authority-and-Continuity-Registry-v1.0",
+      "displayName": "ProjectOne-Human-Approval-Authority-and-Continuity-Registry-v1.0.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "19e095535afc666cf80d9c1cb0b3778e3360c12a80757cc263e4a973a0e49018",
+      "governsSubjects": [
+        "human approval authority"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Lifecycle-State-Registry-v1.1",
+      "displayName": "ProjectOne-Lifecycle-State-Registry-v1.1.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "550ea7e8ba8a9e6c710c04be6393741302d85144e2fb9b7707a994037326de8a",
+      "governsSubjects": [
+        "machine lifecycle states"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Operational-Independence-Standard-v1.0",
+      "displayName": "ProjectOne-Operational-Independence-Standard-v1.0.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "9923bbb2e827467957b25abf921609e5ff2da031cc8bd86ff576a4bbf1b00eeb",
+      "governsSubjects": [
+        "operational independence"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "ProjectOne-Risk-and-Materiality-Classification-Standard-v1.1",
+      "displayName": "ProjectOne-Risk-and-Materiality-Classification-Standard-v1.1.json",
+      "tier": 1,
+      "version": "as-packaged",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "7fee9e4aa7c7d9d0f19d4a7997bc1b99ac25147b4dc0d3a2f9aeb7c2cf5e22aa",
+      "governsSubjects": [
+        "risk & materiality"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT"
+    },
+    {
+      "sourceId": "302",
+      "displayName": "302-Process_Mining_Methodology_Playbook_Analyses_Metrics.md",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "303",
+      "displayName": "303-metric-decomposition-walkthroughs.md",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "408",
+      "displayName": "408-ProjectOne-Phase4-Decisions-Prep.md",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "602",
+      "displayName": "602-ProjectOne-Spike-Finding-Attribute-Mechanism.md",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "603",
+      "displayName": "603-Activities_Groupings_for_Mapping.md",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_ACQUISITION_TRIGGER",
+      "acquisitionTrigger": "Must request exact immutable source before implementing the standard D-38 grouping seed"
+    },
+    {
+      "sourceId": "604",
+      "displayName": "604-mvp_ddl.sql",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "605",
+      "displayName": "605-data-contract.html",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "606ProjectOnePointsofEmphasisDiagram.png",
+      "displayName": "606ProjectOnePointsofEmphasisDiagram.png",
+      "tier": 3,
+      "version": "unavailable",
+      "versionResolved": false,
+      "status": "UNAVAILABLE",
+      "immutable": true,
+      "governsSubjects": [
+        "derivative/historical/evidence"
+      ],
+      "useClassification": "EVIDENCE_ONLY",
+      "overlayRefs": [],
+      "availability": "ABSENT_NON_BLOCKING"
+    }
+  ]
+}

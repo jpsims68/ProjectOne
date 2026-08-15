@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.source-registry.schema.json",
+  "title": "PAF Source Registry Contract",
+  "description": "Authority Interface AI-1. Defines how governing content enters the framework. Contains no project sources.",
+  "type": "object",
+  "required": ["header", "tierModel", "useClassifications", "resolutionRules", "sources"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "tierModel": {
+      "type": "object",
+      "description": "Ordered authority tiers. Tier order is a tie-breaker WITHIN a shared subject scope, never a global override (CR-1).",
+      "required": ["tiers", "scopeRule"],
+      "properties": {
+        "tiers": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["tier", "sourceClass", "governs", "treatment"],
+            "properties": {
+              "tier": { "type": "integer", "minimum": 1 },
+              "sourceClass": { "type": "string" },
+              "governs": { "type": "string" },
+              "treatment": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "scopeRule": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "useClassifications": {
+      "type": "array", "minItems": 1,
+      "description": "Permission label attached to every source handed to an agent.",
+      "items": {
+        "type": "object",
+        "required": ["classification", "meaning", "mayDetermineResult"],
+        "properties": {
+          "classification": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "meaning": { "type": "string" },
+          "mayDetermineResult": {
+            "type": "boolean",
+            "description": "False for evidence-class sources. Evidence may inform a finding; it may never specify the result (no self-promotion of evidence into canon)."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "resolutionRules": {
+      "type": "object",
+      "required": ["scopeBound", "recencyIsNotAuthority", "overlayRule", "conflictBehavior", "unboundBehavior"],
+      "properties": {
+        "scopeBound": { "const": "Precedence is evaluated per subject. A source does not control subjects outside its declared scope." },
+        "recencyIsNotAuthority": { "const": "A newer artifact never supersedes an older one by virtue of being newer. Supersession is explicit, recorded, and approved." },
+        "overlayRule": { "const": "Effective source = immutable source + all applicable approved overlay entries. Reading the base source alone is an incomplete read." },
+        "conflictBehavior": { "const": "STOP_AND_ESCALATE" },
+        "unboundBehavior": { "const": "MOST_RESTRICTIVE_PLUS_WARNING" }
+      },
+      "additionalProperties": false
+    },
+    "immutabilityModel": {
+      "type": "object",
+      "required": ["immutableClassRule", "correctionMechanism", "directMaintenanceRule"],
+      "properties": {
+        "immutableClassRule": { "type": "string" },
+        "correctionMechanism": { "type": "string" },
+        "directMaintenanceRule": {
+          "type": "string",
+          "description": "Artifacts created by the framework itself are maintained directly and must NOT be routed through the immutable-source overlay. Misrouting is itself a defect."
+        }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "description": "Populated only in a PROFILE instance. A CORE instance carries an empty array.",
+      "items": {
+        "type": "object",
+        "required": ["sourceId", "tier", "version", "status", "immutable", "governsSubjects", "useClassification"],
+        "properties": {
+          "sourceId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "displayName": { "type": "string" },
+          "tier": { "type": "integer", "minimum": 1 },
+          "version": { "type": "string" },
+          "versionResolved": {
+            "type": "boolean",
+            "description": "False forces an interrupt. An unresolved version is never treated as current (CR-4)."
+          },
+          "status": { "enum": ["ACTIVE", "SUPERSEDED", "HISTORICAL", "UNAVAILABLE", "PROHIBITED_FOR_CURRENT_USE"] },
+          "immutable": { "type": "boolean" },
+          "contentHash": { "$ref": "paf.common.schema.json#/$defs/sha256" },
+          "governsSubjects": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "useClassification": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "overlayRefs": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+          "availability": { "enum": ["PRESENT", "ABSENT_NON_BLOCKING", "ABSENT_ACQUISITION_TRIGGER", "ABSENT_BLOCKING"] },
+          "acquisitionTrigger": {
+            "type": "string",
+            "description": "The specific future condition under which an absent source must be requested before work proceeds."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

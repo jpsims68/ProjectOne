@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.exception.schema.json",
+  "title": "PAF Exception Record",
+  "description": "An instance of a granted exception. Eligibility is decided by the Exception Registry contract; this record captures a specific grant.",
+  "type": "object",
+  "required": ["exceptionId", "workItemId", "targetControlId", "eligibilityClass", "rationale", "compensatingControls", "expiresAt", "approvedBy", "timestamp"],
+  "properties": {
+    "exceptionId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "workItemId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "targetControlId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "eligibilityClass": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "emergency": { "type": "boolean" },
+    "rationale": { "type": "string", "minLength": 1 },
+    "compensatingControls": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "heightenedReviewRecordId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "expiresAt": { "$ref": "paf.common.schema.json#/$defs/timestamp" },
+    "reviewAt": { "$ref": "paf.common.schema.json#/$defs/timestamp" },
+    "approvedBy": { "$ref": "paf.common.schema.json#/$defs/actorRef" },
+    "closureState": { "enum": ["OPEN", "CLOSED", "EXPIRED", "REVOKED"] },
+    "releaseGateVisible": { "type": "boolean" },
+    "timestamp": { "$ref": "paf.common.schema.json#/$defs/timestamp" }
+  },
+  "additionalProperties": false
+}

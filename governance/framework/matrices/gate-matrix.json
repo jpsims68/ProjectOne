@@ -1,0 +1,887 @@
+{
+  "header": {
+    "artifactId": "PAF-MATRIX-GATE",
+    "version": "0.1",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "generatedFrom": [
+      "framework/contracts/*.json",
+      "framework/workflows/*.json"
+    ],
+    "note": "Every lifecycle gate with its evidence, closure authority, and stop conditions."
+  },
+  "gateCount": 45,
+  "gates": [
+    {
+      "gateId": "G_ARCH_IMPACT",
+      "workflowId": "WF_ARCHITECTURE",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "IMPACT_ANALYSIS",
+        "CONSUMER_IDENTIFICATION",
+        "DEFERRAL_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW",
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Structural design would be deferred without declaration",
+        "Shared platform would absorb feature behavior"
+      ]
+    },
+    {
+      "gateId": "G_ARCH_VERIFIED",
+      "workflowId": "WF_ARCHITECTURE",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "CONTRACT_COMPARISON_RESULT",
+        "REGRESSION_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Structural design would be deferred without declaration",
+        "Shared platform would absorb feature behavior"
+      ]
+    },
+    {
+      "gateId": "G_ARCH_APPROVED",
+      "workflowId": "WF_ARCHITECTURE",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD",
+        "RESIDUAL_RISK_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "MATERIAL_ARCHITECTURE",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Structural design would be deferred without declaration",
+        "Shared platform would absorb feature behavior"
+      ]
+    },
+    {
+      "gateId": "G_AU_SOURCE_FROZEN",
+      "workflowId": "WF_AUDIT",
+      "afterStageClass": "INTAKE",
+      "requiredEvidenceClasses": [
+        "SOURCE_FREEZE_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A criterion would be reported PASS without the branch being examined",
+        "A frozen audit would be rewritten to match later evidence"
+      ]
+    },
+    {
+      "gateId": "G_AU_CHALLENGED",
+      "workflowId": "WF_AUDIT",
+      "afterStageClass": "AUDIT",
+      "requiredEvidenceClasses": [
+        "INDEPENDENT_REVIEW_RECORD",
+        "FINDING_REGISTER"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A criterion would be reported PASS without the branch being examined",
+        "A frozen audit would be rewritten to match later evidence"
+      ]
+    },
+    {
+      "gateId": "G_AU_DISPOSITIONED",
+      "workflowId": "WF_AUDIT",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "MATERIAL_RESIDUAL_RISK",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A criterion would be reported PASS without the branch being examined",
+        "A frozen audit would be rewritten to match later evidence"
+      ]
+    },
+    {
+      "gateId": "G_CO_PROPOSED",
+      "workflowId": "WF_COMMERCIAL",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DECISION_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_CO_APPROVED",
+      "workflowId": "WF_COMMERCIAL",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "COMMERCIAL_POLICY",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_DF_REPRODUCED",
+      "workflowId": "WF_DEFECT",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "DEFECT_REPRODUCTION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A test would be weakened to make the fix pass"
+      ]
+    },
+    {
+      "gateId": "G_DF_FIXED",
+      "workflowId": "WF_DEFECT",
+      "afterStageClass": "INTEGRATION",
+      "requiredEvidenceClasses": [
+        "TEST_RESULT",
+        "REGRESSION_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A test would be weakened to make the fix pass"
+      ]
+    },
+    {
+      "gateId": "G_DOC_SYNC",
+      "workflowId": "WF_DOCUMENTATION",
+      "afterStageClass": "DOCUMENTATION",
+      "requiredEvidenceClasses": [
+        "SOURCE_SYNCHRONIZATION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": true,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_DOC_VERIFIED",
+      "workflowId": "WF_DOCUMENTATION",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "DOCUMENTATION_UPDATE_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": true,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_EM_CONTAINED",
+      "workflowId": "WF_EMERGENCY",
+      "afterStageClass": "IMPLEMENTATION",
+      "requiredEvidenceClasses": [
+        "CONTAINMENT_RECORD",
+        "RECOVERY_VERIFICATION"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be treated as waived because of urgency"
+      ]
+    },
+    {
+      "gateId": "G_EM_REVIEWED",
+      "workflowId": "WF_EMERGENCY",
+      "afterStageClass": "SECURITY_RELEASE_REVIEW",
+      "requiredEvidenceClasses": [
+        "SECURITY_REVIEW_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be treated as waived because of urgency"
+      ]
+    },
+    {
+      "gateId": "G_EM_RETROSPECTIVE",
+      "workflowId": "WF_EMERGENCY",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD",
+        "RESIDUAL_RISK_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "MATERIAL_RESIDUAL_RISK",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be treated as waived because of urgency"
+      ]
+    },
+    {
+      "gateId": "G_EX_ELIGIBLE",
+      "workflowId": "WF_EXCEPTION",
+      "afterStageClass": "CLASSIFICATION",
+      "requiredEvidenceClasses": [
+        "ELIGIBILITY_DETERMINATION"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "The target control is non-waivable",
+        "A global non-waivable invariant would be pierced",
+        "No expiry or compensating control can be defined"
+      ]
+    },
+    {
+      "gateId": "G_EX_COMPENSATED",
+      "workflowId": "WF_EXCEPTION",
+      "afterStageClass": "SECURITY_RELEASE_REVIEW",
+      "requiredEvidenceClasses": [
+        "COMPENSATING_CONTROL_RECORD",
+        "EXPIRY_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "The target control is non-waivable",
+        "A global non-waivable invariant would be pierced",
+        "No expiry or compensating control can be defined"
+      ]
+    },
+    {
+      "gateId": "G_EX_APPROVED",
+      "workflowId": "WF_EXCEPTION",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "GOVERNANCE_EXCEPTION",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "The target control is non-waivable",
+        "A global non-waivable invariant would be pierced",
+        "No expiry or compensating control can be defined"
+      ]
+    },
+    {
+      "gateId": "G_ME_DEFINED",
+      "workflowId": "WF_METHODOLOGY",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "METHODOLOGY_DEFINITION_RECORD",
+        "RECOMPUTABILITY_EVIDENCE"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A metric could not be recomputed from its stated additive components"
+      ]
+    },
+    {
+      "gateId": "G_ME_APPROVED",
+      "workflowId": "WF_METHODOLOGY",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "CANONICAL_METHODOLOGY_DEFINITION",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A metric could not be recomputed from its stated additive components"
+      ]
+    },
+    {
+      "gateId": "G_PE_BASELINE",
+      "workflowId": "WF_PERFORMANCE",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "PERFORMANCE_BASELINE",
+        "WORKLOAD_DEFINITION"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_PE_MEASURED",
+      "workflowId": "WF_PERFORMANCE",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "PERFORMANCE_MEASUREMENT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_PE_OBSERVED",
+      "workflowId": "WF_PERFORMANCE",
+      "afterStageClass": "OBSERVATION",
+      "requiredEvidenceClasses": [
+        "OBSERVATION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_PF_DESIGN",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DESIGN_RECORD",
+        "IMPACT_ANALYSIS"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_TESTS",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "TEST_DEFINITION",
+      "requiredEvidenceClasses": [
+        "TEST_SPECIFICATION",
+        "ACCEPTANCE_CRITERIA"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_IMPL",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "INTEGRATION",
+      "requiredEvidenceClasses": [
+        "TEST_RESULT",
+        "STATIC_CHECK_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_VERIFIED",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "VERIFICATION_RECORD",
+        "COVERAGE_REPORT",
+        "VISUAL_REGRESSION_RESULT",
+        "RECOVERY_VERIFICATION"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_DOCS",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "DOCUMENTATION",
+      "requiredEvidenceClasses": [
+        "DOCUMENTATION_UPDATE_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_SECURITY",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "SECURITY_RELEASE_REVIEW",
+      "requiredEvidenceClasses": [
+        "SECURITY_REVIEW_RECORD",
+        "TENANT_ISOLATION_VERIFICATION",
+        "SECURITY_SCAN_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_RELEASE",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "RELEASE_READINESS_RECORD",
+        "RESIDUAL_RISK_RECORD",
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "PRODUCTION_RELEASE",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_OBSERVED",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "OBSERVATION",
+      "requiredEvidenceClasses": [
+        "OBSERVATION_RECORD",
+        "PERFORMANCE_MEASUREMENT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PF_STABLE",
+      "workflowId": "WF_PRODUCTION_FEATURE",
+      "afterStageClass": "STABILIZATION",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "STABLE_STATUS",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Tenant isolation cannot be demonstrated",
+        "Recovery procedure is unverified",
+        "Evidence would have to be assumed"
+      ]
+    },
+    {
+      "gateId": "G_PD_CLASSIFIED",
+      "workflowId": "WF_PRODUCT_DECISION",
+      "afterStageClass": "CLASSIFICATION",
+      "requiredEvidenceClasses": [
+        "RISK_CLASSIFICATION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_PD_OPTIONS",
+      "workflowId": "WF_PRODUCT_DECISION",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DECISION_RECORD",
+        "IMPACT_ANALYSIS"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_PD_APPROVED",
+      "workflowId": "WF_PRODUCT_DECISION",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "PRODUCT_SCOPE_ACCEPTANCE",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_SEC_DESIGN",
+      "workflowId": "WF_SECURITY",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DESIGN_RECORD",
+        "THREAT_ANALYSIS"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW",
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A global non-waivable invariant would be pierced"
+      ]
+    },
+    {
+      "gateId": "G_SEC_VERIFIED",
+      "workflowId": "WF_SECURITY",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "SECURITY_SCAN_RESULT",
+        "TENANT_ISOLATION_VERIFICATION"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A global non-waivable invariant would be pierced"
+      ]
+    },
+    {
+      "gateId": "G_SEC_APPROVED",
+      "workflowId": "WF_SECURITY",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "SECURITY_POLICY",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A global non-waivable invariant would be pierced"
+      ]
+    },
+    {
+      "gateId": "G_SP_BOUNDED",
+      "workflowId": "WF_SPIKE",
+      "afterStageClass": "INTAKE",
+      "requiredEvidenceClasses": [
+        "SPIKE_CHARTER"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Spike output would be promoted directly to canon or production"
+      ]
+    },
+    {
+      "gateId": "G_SP_FINDINGS",
+      "workflowId": "WF_SPIKE",
+      "afterStageClass": "SPIKE",
+      "requiredEvidenceClasses": [
+        "SPIKE_FINDINGS_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Spike output would be promoted directly to canon or production"
+      ]
+    },
+    {
+      "gateId": "G_TH_DESIGN",
+      "workflowId": "WF_THEME",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DESIGN_SPECIFICATION",
+        "ACCESSIBILITY_CONFORMANCE_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Feature logic would be placed in the theme or token layer"
+      ]
+    },
+    {
+      "gateId": "G_TH_VISUAL",
+      "workflowId": "WF_THEME",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "VISUAL_REGRESSION_RESULT",
+        "ACCESSIBILITY_CHECK_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Feature logic would be placed in the theme or token layer"
+      ]
+    },
+    {
+      "gateId": "G_TH_APPROVED",
+      "workflowId": "WF_THEME",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": "MATERIAL_GUI_BASELINE",
+      "exceptionEligible": false,
+      "stopConditions": [
+        "Feature logic would be placed in the theme or token layer"
+      ]
+    },
+    {
+      "gateId": "G_UP_REGRESSION",
+      "workflowId": "WF_UPGRADE",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "REGRESSION_RESULT",
+        "COVERAGE_REPORT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    },
+    {
+      "gateId": "G_UP_SECURITY",
+      "workflowId": "WF_UPGRADE",
+      "afterStageClass": "SECURITY_RELEASE_REVIEW",
+      "requiredEvidenceClasses": [
+        "SECURITY_SCAN_RESULT"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "humanApprovalCategoryRef": null,
+      "exceptionEligible": false,
+      "stopConditions": [
+        "A non-waivable control would be weakened",
+        "Required human approval unavailable",
+        "Required independent review unachievable",
+        "Equal-authority source conflict on a material subject"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "header": {
+    "artifactId": "PAF-VALIDATION-CANDIDATE",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "step": 43,
+  "assemblyState": "COMPLETE_VALIDATION_CANDIDATE",
+  "threeLayerInventory": {
+    "CORE_generic": 86,
+    "PROFILE_projectone": 10,
+    "ADAPTER": 5
+  },
+  "boundaryAssertions": [
+    "CORE layer contains no project or vendor name (validated R5-15, R4-14)",
+    "PROFILE binds by hash reference; lifecycle equality holds with zero invented states (R4-03)",
+    "ADAPTERS translate only; none originates authority or carries project governance (R5-04..08)",
+    "Every declared capability gap carries mitigation + named risk acceptor (R5-06, R5-10)"
+  ],
+  "readyForRun6Validation": true,
+  "notApproved": "This is a validation CANDIDATE. Framework approval is Step 54; freeze is Step 55; fresh downloadable package is Step 56. Activation checkpoint runs before Step 57."
+}

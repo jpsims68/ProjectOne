@@ -15,6 +15,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  repository-layout:
+    name: Repository layout
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refuse flattened or misplaced files
+        run: python3 governance/scripts/check_repository_layout.py
+
   slice-boundaries:
     name: Slice boundaries (VSA-1 / VSA-3)
     runs-on: ubuntu-latest
@@ -68,9 +80,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify frozen framework baseline hashes
-        run: |
-          if [ -f governance/framework/SHA256SUMS.txt ]; then
-            cd governance/framework && sha256sum -c SHA256SUMS.txt
-          else
-            echo "Framework baseline not yet committed — skipping (scaffold stage)"
-          fi
+        run: python3 governance/scripts/check_baseline_integrity.py

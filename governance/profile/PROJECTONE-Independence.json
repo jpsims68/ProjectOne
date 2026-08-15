@@ -1,0 +1,33 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-INDEPENDENCE",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "binding": {
+    "contractId": "paf.independence-standard",
+    "bindingState": "BOUND",
+    "boundInstanceId": "ProjectOne-Operational-Independence-Standard-v1.0.json",
+    "boundInstanceVersion": "as-packaged",
+    "boundInstanceHash": "9923bbb2e827467957b25abf921609e5ff2da031cc8bd86ff576a4bbf1b00eeb",
+    "conformanceCheckId": "conformance_probe.py"
+  },
+  "platformMechanismAvailability": {
+    "SEPARATE_INVOCATION_CLEAN_CONTEXT": "AVAILABLE \u2014 fresh conversation, curated bundle, no scratch context",
+    "DETERMINISTIC_NONJUDGMENTAL_CHECK": "AVAILABLE \u2014 in-container scripts",
+    "HUMAN_REVIEW": "AVAILABLE \u2014 John",
+    "DIFFERENT_MODEL_OR_MODEL_FAMILY": "LIMITED \u2014 different Claude tiers available; a different model FAMILY is not, without owner running it elsewhere",
+    "ROLE_RELABEL_ONLY": "NON-QUALIFYING \u2014 never satisfies a gate"
+  },
+  "provabilityAssertion": "Independence is proven by recorded mechanism + evidence fields, never by role label. On this platform, gates requiring cross-family independence must route to HUMAN_REVIEW or a different platform.",
+  "capabilityGapRef": "G-3 (bootstrap report) \u2014 corrected to Adapter Needed; clean-context invocation discipline built into the Anthropic adapter at Step 38"
+}

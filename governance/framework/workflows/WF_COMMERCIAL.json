@@ -1,0 +1,74 @@
+{
+  "header": {
+    "artifactId": "WF_COMMERCIAL",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_COMMERCIAL",
+  "displayName": "Commercial / Service Change",
+  "appliesToWorkTypes": [
+    "COMMERCIAL_CHANGE",
+    "PACKAGING_CHANGE",
+    "SLA_CHANGE"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "DESIGN",
+      "owningRole": "ROLE_BUSINESS_DOC"
+    },
+    {
+      "stageClass": "OWNER_APPROVAL",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_CO_PROPOSED",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "DECISION_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_CO_APPROVED",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false,
+      "humanApprovalCategoryRef": "COMMERCIAL_POLICY"
+    }
+  ],
+  "terminalConditions": [
+    "Owner approves the commercial change"
+  ],
+  "stopConditions": [
+    "A non-waivable control would be weakened",
+    "Required human approval unavailable",
+    "Required independent review unachievable",
+    "Equal-authority source conflict on a material subject"
+  ]
+}

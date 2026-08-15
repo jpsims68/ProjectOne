@@ -1,0 +1,612 @@
+{
+  "header": {
+    "artifactId": "PAF-MATRIX-OWNERSHIP",
+    "version": "0.1",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "generatedFrom": [
+      "framework/contracts/*.json",
+      "framework/workflows/*.json"
+    ],
+    "note": "Steward, reviewers, and change authority for every framework artifact. No orphans."
+  },
+  "entityCount": 64,
+  "entities": [
+    {
+      "entityId": "framework/contracts/ROLE_ADMIN_DOC.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_ARCHITECTURE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_BUSINESS_DOC.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_CODING.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_CONSULTING.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_ENDUSER_DOC.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_GUI_GOVERNANCE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_METHODOLOGY.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_ONBOARDING.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_ORCHESTRATOR.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_QUALITY.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_SECURITY_RELEASE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_SPIKE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_TECH_DOC.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_TEST_DEBUG.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/contracts/ROLE_UX_DESIGN.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_ARCHITECTURE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_AUDIT.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_COMMERCIAL.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_DEFECT.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_DOCUMENTATION.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_EMERGENCY.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_EXCEPTION.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_METHODOLOGY.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_PERFORMANCE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_PRODUCTION_FEATURE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_PRODUCT_DECISION.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_SECURITY.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_SPIKE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_THEME.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/workflows/WF_UPGRADE.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.adapter-contract.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.common.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.continuity-snapshot.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.decision.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.design-system.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.environment-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.escalation.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.evidence.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.exception-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.exception.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.handoff.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.human-approval-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.independence-standard.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.lifecycle-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.ownership-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.performance-operations.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.recovery.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.regression-portfolio.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.risk-standard.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.role-contract.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.security-standard.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.source-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.technology-registry.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.verification-execution.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.work-item.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/schemas/paf.workflow.schema.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER"
+    },
+    {
+      "entityId": "framework/matrices/dependency-map.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    },
+    {
+      "entityId": "framework/matrices/evidence-matrix.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    },
+    {
+      "entityId": "framework/matrices/gate-matrix.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    },
+    {
+      "entityId": "framework/matrices/ownership-matrix.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    },
+    {
+      "entityId": "framework/matrices/role-source-bundle-matrix.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    },
+    {
+      "entityId": "framework/matrices/role-tool-permission-matrix.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    },
+    {
+      "entityId": "framework/matrices/role-workflow-matrix.json",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "steward": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "GENERATED - change the source contract, never the matrix"
+    }
+  ]
+}

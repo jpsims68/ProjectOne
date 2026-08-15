@@ -1,0 +1,947 @@
+{
+  "header": {
+    "artifactId": "PAF-CONFIGURATION-MANIFEST",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "componentCount": 101,
+  "countsByKind": {
+    "SCHEMA": 26,
+    "MODEL": 3,
+    "BINDING": 1,
+    "ROLE_CONTRACT": 16,
+    "WORKFLOW": 15,
+    "MATRIX": 7,
+    "TEST_PORTFOLIO": 12,
+    "REGISTRY": 3,
+    "GUI": 1,
+    "OPERATIONS": 1,
+    "SPEC": 1,
+    "PROFILE_CONFIG": 10,
+    "ADAPTER": 5
+  },
+  "countsByLayer": {
+    "CORE": 86,
+    "PROFILE": 10,
+    "ADAPTER": 5
+  },
+  "components": [
+    {
+      "path": "framework/schemas/paf.adapter-contract.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "977f2931bb0144f800d1b0b352f41c30c4f0c7a8348e026bc61a654e682ff6e0"
+    },
+    {
+      "path": "framework/schemas/paf.common.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "434641f0dce20ec4292ed5d7c0133ced7629f712a52d2c2203fc91b7dadca4a5"
+    },
+    {
+      "path": "framework/schemas/paf.continuity-snapshot.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "f5a942cb8e19b39de5e763aed96342021ca547c838ae45de071f09d017de3599"
+    },
+    {
+      "path": "framework/schemas/paf.decision.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "165e7f9e6b39fe29a5c6ef21496de2255a4caeb5ffd70bc7afc990d76799c771"
+    },
+    {
+      "path": "framework/schemas/paf.design-system.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "13e2eb7068ba1254068d6a886a240c5302ec6961c291dd66cd622338c239e8cb"
+    },
+    {
+      "path": "framework/schemas/paf.environment-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "cedcfe4302cfa434ec9683ad3ff4af6c04910afa09ed3c7e0b654b769e09c1bf"
+    },
+    {
+      "path": "framework/schemas/paf.escalation.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "1f5cbd0a0375b9102dc523ed4e51486eeb0fb980fd18cf055ac49ec07c83d945"
+    },
+    {
+      "path": "framework/schemas/paf.evidence.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "7643f38538475b7cf3aaec03aacead6b6329f5348e6497d29dc2398eddf0d362"
+    },
+    {
+      "path": "framework/schemas/paf.exception-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "5445ff78a4bc8a22476accdf74da2a0c95cc3b6c72f5da9d1edb4d4be7f7258f"
+    },
+    {
+      "path": "framework/schemas/paf.exception.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "e2d13b0a3a763952a78d19acec7e244734a05215c8ac1e3fda8b62e8b350e810"
+    },
+    {
+      "path": "framework/schemas/paf.handoff.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "d7d610379fd03fd494bc98d172212a3917791386ac59a2e58bad7d038a28cd3b"
+    },
+    {
+      "path": "framework/schemas/paf.human-approval-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "051065fd327f1fc16ee1c962ff4f6757d71339ee4498b8f8d49fb5ea8eb57c03"
+    },
+    {
+      "path": "framework/schemas/paf.independence-standard.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "b6b2dbfb312aa20e9a5b65ff85d0aa5fba9997b57dddf99b5f18c4595dbbaec4"
+    },
+    {
+      "path": "framework/schemas/paf.lifecycle-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "15578bc0df79a18199a8733eb67d85525e71643d768c0efbc9cabf520930c6b1"
+    },
+    {
+      "path": "framework/schemas/paf.ownership-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "f9a608c9647085cd78acf5c7b8e6c7114488e1cb6a4d45b2aebe09d982bdecf1"
+    },
+    {
+      "path": "framework/schemas/paf.performance-operations.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "71674ccc4080eb1e1efce620b5feff521273570cf9b1a19fb6df2a684a744ff7"
+    },
+    {
+      "path": "framework/schemas/paf.recovery.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "9f08846d1be0557898e4dbcc8a14df9c05a3fa1fe107bd2e3504eeeda8bc7766"
+    },
+    {
+      "path": "framework/schemas/paf.regression-portfolio.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "8965bab5ca227dc1dadd2a5762791d2dd0451bcaec0e109bbd459ff06de71974"
+    },
+    {
+      "path": "framework/schemas/paf.risk-standard.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "71ea356d5b84e0552117d3c3dbfa4691d89a1ee9d24dd3ac02599ad1655e184a"
+    },
+    {
+      "path": "framework/schemas/paf.role-contract.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "41a8fa95d78ee339c79db0c80766750bebb16df8a7903b1d0c2e7084e9169372"
+    },
+    {
+      "path": "framework/schemas/paf.security-standard.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "2fa702e8eb6548772dba456b944add3ee69e1dabc5a7f0ecf88d5233850862ff"
+    },
+    {
+      "path": "framework/schemas/paf.source-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "95816df81301fa70b2cf256ad28643827700f96c0913a783833c241f399c1a3e"
+    },
+    {
+      "path": "framework/schemas/paf.technology-registry.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "1b99ace137c8ca60966c6156ed14785d197364bf5cf289b8c2161f07a4e218b5"
+    },
+    {
+      "path": "framework/schemas/paf.verification-execution.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "980cd598627b2a8c09273790aa9ae3c3073f8f6b1d6eba9c2f0cbc9d69451d49"
+    },
+    {
+      "path": "framework/schemas/paf.work-item.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "667a91ea644fccdc3ccfd6423ebe101981405cab362b330a6fe658d285dcd063"
+    },
+    {
+      "path": "framework/schemas/paf.workflow.schema.json",
+      "kind": "SCHEMA",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "8e6cfff13eeda19eb5f71be033906bdd5709c51e998158bba2cdc6eed6667373"
+    },
+    {
+      "path": "framework/models/verification-execution-model.json",
+      "kind": "MODEL",
+      "layer": "CORE",
+      "artifactId": "PAF-VERIFICATION-EXECUTION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "13d215acdeaed5a803185570117f18645485df57454146eca8f95063f6b00d92"
+    },
+    {
+      "path": "framework/models/ownership-model.md",
+      "kind": "MODEL",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "85353470f3dacbf040d111a387a95d9a76c8a6dcb9a6f6649759f44875a49454"
+    },
+    {
+      "path": "framework/models/source-authority-model.md",
+      "kind": "MODEL",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "b092ab9e2252611b6306a80a9cbba8c1e5dcbb6fcc36bf6d49486ec0eff4b64d"
+    },
+    {
+      "path": "framework/binding/REGISTRY-BINDING-MODEL.md",
+      "kind": "BINDING",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "1009a596e854047af9b69270d98877548b1f087d169916fb63e691a621fa030a"
+    },
+    {
+      "path": "framework/contracts/ROLE_ADMIN_DOC.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_ADMIN_DOC",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "fedfd4566eb779cf2f6406918a45496c9b80264724284e15f66608916a927596"
+    },
+    {
+      "path": "framework/contracts/ROLE_ARCHITECTURE.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_ARCHITECTURE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4885f2321c46b9781f9649464fb290985edbdff0aeaeded579cadce8f005bd2f"
+    },
+    {
+      "path": "framework/contracts/ROLE_BUSINESS_DOC.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_BUSINESS_DOC",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "a352d4b0eaef85c904b9f2da5fc0cdd4f5d5c8754d4206846f1ed84e5fe09058"
+    },
+    {
+      "path": "framework/contracts/ROLE_CODING.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_CODING",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "a228a8e0a0658053a314274acb18cbb3f17bdb18dbcefc1cafe128fa2219abab"
+    },
+    {
+      "path": "framework/contracts/ROLE_CONSULTING.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_CONSULTING",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "8349e3d55c6b7862115c637412bda4112a425df136cd385aba6d35c341cf4853"
+    },
+    {
+      "path": "framework/contracts/ROLE_ENDUSER_DOC.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_ENDUSER_DOC",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "90fac351359c8747e1ce5a7de84ca7d2ea585574cc2a2ca6cbbd71fd2cf5b99e"
+    },
+    {
+      "path": "framework/contracts/ROLE_GUI_GOVERNANCE.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_GUI_GOVERNANCE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4507ce1e10345e8b62e3d24aec8293f6d7d8aa84313eabf4deb453691bce2ee1"
+    },
+    {
+      "path": "framework/contracts/ROLE_METHODOLOGY.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_METHODOLOGY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "d8a72ab7de449b5514864dc6fc1744f65a0b86360d1b6bb5fcae72ef5e0b3d4a"
+    },
+    {
+      "path": "framework/contracts/ROLE_ONBOARDING.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_ONBOARDING",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "e89fb8f12438b6b0fb86dc6d44bf8b78f33660cd04ad16702d1c1118c89b065a"
+    },
+    {
+      "path": "framework/contracts/ROLE_ORCHESTRATOR.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_ORCHESTRATOR",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "2b38888e66177210ec8bf3bc37cee3dfc2ca6febfded5087b0a7580487dd8000"
+    },
+    {
+      "path": "framework/contracts/ROLE_QUALITY.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_QUALITY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "349c1fede14a2048cdb0da400bb33c97a4226033d825d3a05658949c5ddbd5d7"
+    },
+    {
+      "path": "framework/contracts/ROLE_SECURITY_RELEASE.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_SECURITY_RELEASE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "1a665559d948394075598fd829be676f51fa67d5f0b9ab2f7404082c666616ee"
+    },
+    {
+      "path": "framework/contracts/ROLE_SPIKE.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_SPIKE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "3aa0f0171d21b248ad11fcd54b4c1ef2d5d55970c4366154b7baa1318a27acff"
+    },
+    {
+      "path": "framework/contracts/ROLE_TECH_DOC.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_TECH_DOC",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "e1bc15c676a1c6222e0129d70b6b855c3b105c3020f1aca4a616e5b9f4524fd5"
+    },
+    {
+      "path": "framework/contracts/ROLE_TEST_DEBUG.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_TEST_DEBUG",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "23463e1d317ee8dda02db349a58c27b00f86df563eb77add5a5ad2ebb3ea4e11"
+    },
+    {
+      "path": "framework/contracts/ROLE_UX_DESIGN.json",
+      "kind": "ROLE_CONTRACT",
+      "layer": "CORE",
+      "artifactId": "ROLE_UX_DESIGN",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "6e779383c673dff8fbbfb429dabb15a9ac09977f4926d07fef88d28149fdd86c"
+    },
+    {
+      "path": "framework/workflows/WF_ARCHITECTURE.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_ARCHITECTURE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "77b9533ebfd2988ce19945c73d740b914a879c100c0fbef0069b7c206bfc91fc"
+    },
+    {
+      "path": "framework/workflows/WF_AUDIT.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_AUDIT",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "f0c6059a2274d89b9861ea133ad04ac8c7a0d56d5fbeed78ece57ad5d1c15633"
+    },
+    {
+      "path": "framework/workflows/WF_COMMERCIAL.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_COMMERCIAL",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "945b12d705ccd684bb00d892166470afa8daecb0cb1866ba0914c83dbadd7f82"
+    },
+    {
+      "path": "framework/workflows/WF_DEFECT.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_DEFECT",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "cc7d0012c9a48042746f817dde3564b9655dcda7d29591653c621f86aededbb8"
+    },
+    {
+      "path": "framework/workflows/WF_DOCUMENTATION.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_DOCUMENTATION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4aa11a08e95f2dd3963bd508713374d135204a4472bf305cab984bce5781d32b"
+    },
+    {
+      "path": "framework/workflows/WF_EMERGENCY.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_EMERGENCY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "8ccef77b6c3637822de90bde404f151c7335cf6cae204ee4a70884430dafc94c"
+    },
+    {
+      "path": "framework/workflows/WF_EXCEPTION.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_EXCEPTION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "0369d6dcdb5dd2988fe79a3b26622b02822fa4542ce39d3babc649fb2f982449"
+    },
+    {
+      "path": "framework/workflows/WF_METHODOLOGY.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_METHODOLOGY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "db96b2aa5fb0736222457340eb2071008c5e6e2a5a8e83fcad45fe223a4f201a"
+    },
+    {
+      "path": "framework/workflows/WF_PERFORMANCE.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_PERFORMANCE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "12ab3e38f73496adaa769b7ec35fe429fde99ab6c9a0b45585d0541b7c625c07"
+    },
+    {
+      "path": "framework/workflows/WF_PRODUCTION_FEATURE.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_PRODUCTION_FEATURE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4492465cd13b8eeb04d6b50a82bb940c2b7c39d8c31bbf438568eae70e2f8a18"
+    },
+    {
+      "path": "framework/workflows/WF_PRODUCT_DECISION.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_PRODUCT_DECISION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4c529ecc3c2d2750904dab7c0319ba1f42cfcf97c5e9198d7805c646a047c85e"
+    },
+    {
+      "path": "framework/workflows/WF_SECURITY.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_SECURITY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "ee0623206149ebdfb8de96976a44cf15972feaa79e5bb1980ba6a9d4ced44750"
+    },
+    {
+      "path": "framework/workflows/WF_SPIKE.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_SPIKE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "f58c13a431bade0d4f731aa14eaafc605614b0302f6a8c86c19d5bac33cc49db"
+    },
+    {
+      "path": "framework/workflows/WF_THEME.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_THEME",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "fafe4906a1c00e3325e32b8b8259bc67459be2e13f9e5ce91ec6e4ca6cc84fe6"
+    },
+    {
+      "path": "framework/workflows/WF_UPGRADE.json",
+      "kind": "WORKFLOW",
+      "layer": "CORE",
+      "artifactId": "WF_UPGRADE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "04294860c6972987ed3e8f23e70251db2459de6fa08f94a078f64ec4967e6171"
+    },
+    {
+      "path": "framework/matrices/dependency-map.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-DEPENDENCY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "43a5d6001c3445cbc0c7775eb00a0658323a7ac5031e70a488d6b4241b6f62d2"
+    },
+    {
+      "path": "framework/matrices/evidence-matrix.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-EVIDENCE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "e7b6f5e1b71abee3b5aa7fa8b4c49162a58558324154458cd446b182ab2d8921"
+    },
+    {
+      "path": "framework/matrices/gate-matrix.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-GATE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "19d8f56b827215022be89b1377dbbd89ab6a6b7c2a7b67c7389b9d623f71f475"
+    },
+    {
+      "path": "framework/matrices/ownership-matrix.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-OWNERSHIP",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "3236d612888393abddf57d2d6b7c2f672729112a96bc99eba26170078bc52b3e"
+    },
+    {
+      "path": "framework/matrices/role-source-bundle-matrix.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-SOURCE-BUNDLE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "d76d20a91d4539cdf907f6833a440bea46471b27ded2ee59013e217ceff9ec63"
+    },
+    {
+      "path": "framework/matrices/role-tool-permission-matrix.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-TOOL-PERMISSION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "48f629408f37eb40470d702de892ce520ecf81b8f76344a909b9aa6392164dda"
+    },
+    {
+      "path": "framework/matrices/role-workflow-matrix.json",
+      "kind": "MATRIX",
+      "layer": "CORE",
+      "artifactId": "PAF-MATRIX-ROLE-WORKFLOW",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "9f8111e468cb73291e2bdb53ba1d2c6ce032c48a7fd4bfccc207afefeccd34d6"
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-BYPASS.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": "PAF-REGRESSION-BYPASS",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "f197164373c629a1ca3ba9752bda146c37ef1444d12ff692b3d9e23e48fc84a7"
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-CONTINUITY-CHAIN.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": "PAF-REGRESSION-CONTINUITY-CHAIN",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "2499bb01c6c89b238c312ed03447cc7586e4dcefce29ef3201edb36681c21660"
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-EVIDENCE.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": "PAF-REGRESSION-EVIDENCE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "eec618b371744d99d31a30aa0704ef1a34cc173f964b00917eeb1889f2c662d3"
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-EXCEPTION.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": "PAF-REGRESSION-EXCEPTION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4b502086b91c8e75482e3e20656868d89138069bf6a2da099fdeff6575ebd46c"
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-SELF-APPROVAL.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": "PAF-REGRESSION-SELF-APPROVAL",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "a24698699f4cebb632860ab4b3312c8aab78129dadf87ea24794cd38738fb65b"
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-SOURCE-AUTHORITY.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": "PAF-REGRESSION-SOURCE-AUTHORITY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "a389b5a1b700af61a4e138ae8b9f04a589dd240eb78b2806446f49baceb62fc0"
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-BYPASS.answers.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "2a1df8d4cf25ee5d8c1891050868a0882b0d43f29339b95b687975fdeb2692cd"
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-CONTINUITY-CHAIN.answers.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "5e993437899f1176b141fc6e291028f2afdd9da61b89828cbb77bdb24447a11c"
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-EVIDENCE.answers.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "ee3cfd27e77398df37be3ef91299c609723d9300e08d1d4f6151a9e2d889e5b1"
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-EXCEPTION.answers.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "e326c10b20acccf3ea819ab9b6b3fa64f4fc6650a39d2e306c3a36cc25349c64"
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-SELF-APPROVAL.answers.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "8c648543256c4cda6aa7f9679ddcc0388a4d98fe3d926d6fc08a89985af45513"
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-SOURCE-AUTHORITY.answers.json",
+      "kind": "TEST_PORTFOLIO",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "9d1094ff5c437a917852f9994ddd92dbbce583ab1d348f28ff58071dea7917c2"
+    },
+    {
+      "path": "framework/registries/PAF-Environment-Registry.json",
+      "kind": "REGISTRY",
+      "layer": "CORE",
+      "artifactId": "PAF-ENVIRONMENT-REGISTRY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "c1f73c0d6af23b4f1d20cd16134496c1bbf3a583fc3bec32eca42f3d69fcb8c2"
+    },
+    {
+      "path": "framework/registries/PAF-Security-Standard.json",
+      "kind": "REGISTRY",
+      "layer": "CORE",
+      "artifactId": "PAF-SECURITY-STANDARD",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "6bba335186dc662d9df54d0ece1a5ca0dc2608aef9ce0cb05962b4e3e7e5d5fa"
+    },
+    {
+      "path": "framework/registries/PAF-Technology-Registry.json",
+      "kind": "REGISTRY",
+      "layer": "CORE",
+      "artifactId": "PAF-TECHNOLOGY-REGISTRY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "29c71b015f34c633f00eb3235122ae943aa74f2d59aad50e5693f4124600f5ac"
+    },
+    {
+      "path": "framework/gui/PAF-Design-System.json",
+      "kind": "GUI",
+      "layer": "CORE",
+      "artifactId": "PAF-DESIGN-SYSTEM",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "823622e493fd0ba741822185fc0074835ab6398e65ed3051996b3dc09a1ce8ad"
+    },
+    {
+      "path": "framework/operations/PAF-Performance-Operations.json",
+      "kind": "OPERATIONS",
+      "layer": "CORE",
+      "artifactId": "PAF-PERFORMANCE-OPERATIONS",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "0b2e9a6787dcb74815d796e661c66da2e5f2603a82b4538eb6fb6c64311dc946"
+    },
+    {
+      "path": "framework/spec/PAF-Framework-Specification-v0.2.md",
+      "kind": "SPEC",
+      "layer": "CORE",
+      "artifactId": null,
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "4307fe61f3d6443cb84c71ab4ab273de5511e100877a7bb731e23d12c836a4fe"
+    },
+    {
+      "path": "profile/PROJECTONE-Build-Requirements.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-BUILD-REQUIREMENTS",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "b9aa265911ce08f52445f4787aa87c05af9503b8c83e5fbcbfddb5a37a662e6e"
+    },
+    {
+      "path": "profile/PROJECTONE-Exception.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-EXCEPTION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "a6c76f0d4c0cfb2ecee5706bc8892122b6eac492795fa7ade7dfba69cd4d1139"
+    },
+    {
+      "path": "profile/PROJECTONE-Human-Approval.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-HUMAN-APPROVAL",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "abe544a88eabc0e88243027de9a82fe703d19a92b400bc0c0ea57c7c0938207a"
+    },
+    {
+      "path": "profile/PROJECTONE-Independence.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-INDEPENDENCE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "956c477ebbc57042d49edaca3239042ef1fb0ae604ad08b029211dd4ff042c2d"
+    },
+    {
+      "path": "profile/PROJECTONE-Lifecycle.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-LIFECYCLE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "292e3eb8019b3079f924fb5e8c13726038477d1a2ccce384b635c096623f17a1"
+    },
+    {
+      "path": "profile/PROJECTONE-Ownership.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-OWNERSHIP",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "481a4ffaac8b28606de18aed7a0fc56ff6721d74f6fd9a15f5bac1641a372008"
+    },
+    {
+      "path": "profile/PROJECTONE-Profile.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-PROFILE",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "0823cb391e6a9e6459afa2c2cb8c507e3518326c647fcbca2ec4721209474cd2"
+    },
+    {
+      "path": "profile/PROJECTONE-Risk.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-RISK",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "cf5f2549cd3aa876a2c1de93d44f2b9c7a84c5fd30691b07e0a96349ff22b702"
+    },
+    {
+      "path": "profile/PROJECTONE-Source-Registry.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-SOURCE-REGISTRY",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "2d1c36fc49b5d4f0cd5af85a5a07bc4131604dae3ad902c7d9aec3d5d73c6d14"
+    },
+    {
+      "path": "profile/PROJECTONE-Verification.json",
+      "kind": "PROFILE_CONFIG",
+      "layer": "PROFILE",
+      "artifactId": "PROJECTONE-VERIFICATION",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "e4694f525b53c07d9d8e710d359ce257956f8ba85db973081b3b02af75cd72e5"
+    },
+    {
+      "path": "adapters/PAF-Adapter-Anthropic.json",
+      "kind": "ADAPTER",
+      "layer": "ADAPTER",
+      "artifactId": "PAF-ADAPTER-ANTHROPIC",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "924b31ac12b57609146033370124219b2cec02055f364b9946ffc8eba6e107ba"
+    },
+    {
+      "path": "adapters/PAF-Adapter-ChatGPT.json",
+      "kind": "ADAPTER",
+      "layer": "ADAPTER",
+      "artifactId": "PAF-ADAPTER-CHATGPT",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "d152946a3de46bada9812c85f0f628df5b736d23233e93109bf829747b0d67ff"
+    },
+    {
+      "path": "adapters/PAF-Adapter-Coding-Workbench.json",
+      "kind": "ADAPTER",
+      "layer": "ADAPTER",
+      "artifactId": "PAF-ADAPTER-CODING-WORKBENCH",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "47ef54bba6511ed8f4ae06f83643562adbebf0f929aa7de0a0b89c71e3b015c4"
+    },
+    {
+      "path": "adapters/PAF-Adapter-Contract.json",
+      "kind": "ADAPTER",
+      "layer": "ADAPTER",
+      "artifactId": "PAF-ADAPTER-CONTRACT",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "7d906db6daccffae645c3aebb80fa7a72ba9cbacc05483d3929f8ecefbd1f3bd"
+    },
+    {
+      "path": "adapters/PAF-Adapter-GitHub.json",
+      "kind": "ADAPTER",
+      "layer": "ADAPTER",
+      "artifactId": "PAF-ADAPTER-GITHUB",
+      "version": "0.1",
+      "status": "DRAFT",
+      "hash": "d01733757ec140428cac41e0a1b19b1538925e4c1afb95aa0f5c1e1f222e0060"
+    }
+  ]
+}

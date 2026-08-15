@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.escalation.schema.json",
+  "title": "PAF Escalation Record",
+  "type": "object",
+  "required": ["escalationId", "workItemId", "trigger", "raisedBy", "escalatedTo", "blocking", "timestamp"],
+  "properties": {
+    "escalationId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "workItemId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "trigger": {
+      "enum": [
+        "SOURCE_UNAVAILABLE", "SOURCE_VERSION_UNRESOLVABLE", "EQUAL_AUTHORITY_CONFLICT",
+        "OWNERSHIP_UNRESOLVED", "CAPABILITY_CANNOT_SATISFY_CONTROL", "INDEPENDENT_REVIEW_UNACHIEVABLE",
+        "HUMAN_APPROVAL_UNAVAILABLE", "WOULD_WEAKEN_NON_WAIVABLE_CONTROL", "DECISION_REQUIRED",
+        "EVIDENCE_INSUFFICIENT", "UNGOVERNED_MATERIAL_DECISION"
+      ]
+    },
+    "description": { "type": "string" },
+    "raisedBy": { "$ref": "paf.common.schema.json#/$defs/actorRef" },
+    "escalatedTo": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "blocking": { "type": "boolean" },
+    "resolutionState": { "enum": ["OPEN", "RESOLVED", "WITHDRAWN"] },
+    "resolution": { "type": "string" },
+    "timestamp": { "$ref": "paf.common.schema.json#/$defs/timestamp" }
+  },
+  "additionalProperties": false
+}

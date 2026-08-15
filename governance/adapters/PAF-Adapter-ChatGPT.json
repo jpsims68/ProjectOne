@@ -1,0 +1,84 @@
+{
+  "header": {
+    "artifactId": "PAF-ADAPTER-CHATGPT",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "ADAPTER",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-ADAPTER-CONTRACT"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "adapterId": "PAF-ADAPTER-CHATGPT",
+  "surfaceClass": "CONVERSATIONAL_WORKBENCH",
+  "displayName": "ChatGPT / Conversational-Workbench Adapter",
+  "translationRules": {
+    "translatesNeverRedefines": "An adapter maps framework behavior onto a native surface. It never changes what a control means, only how it is expressed.",
+    "noAuthorityOrigination": "An adapter never becomes an authority. It cannot approve, cannot classify risk, and cannot resolve a source conflict.",
+    "noProjectGovernance": "An adapter carries no project-specific governance. Project rules live in the Profile, not the adapter.",
+    "noStateInvention": "An adapter may not invent, rename, merge, skip, or reorder a governed lifecycle state or gate.",
+    "noIndependenceCollapse": "An adapter may not collapse required independent steps into one invocation for convenience."
+  },
+  "capabilityMap": [
+    {
+      "capability": "Conversational execution -> framework work items",
+      "support": "TRANSLATED",
+      "translationNote": "Turns map to work on a work item; the item, not the thread, holds state"
+    },
+    {
+      "capability": "File handling -> artifact export/import",
+      "support": "TRANSLATED",
+      "translationNote": "Files exchanged as artifacts; durable state is externalized packages, not thread memory"
+    },
+    {
+      "capability": "Context management",
+      "support": "TRANSLATED",
+      "translationNote": "Continuity snapshots carry state across context limits"
+    },
+    {
+      "capability": "Tool use -> permission-mapped tools",
+      "support": "TRANSLATED",
+      "translationNote": "Tool availability mapped to role permissions where the surface allows"
+    },
+    {
+      "capability": "Independent review via clean context",
+      "support": "TRANSLATED",
+      "translationNote": "Fresh conversation with curated bundle satisfies SEPARATE_INVOCATION_CLEAN_CONTEXT"
+    },
+    {
+      "capability": "Handoff -> exported package",
+      "support": "TRANSLATED"
+    },
+    {
+      "capability": "Persistent per-role tool sandboxing",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "Conversational surface has no per-role tool isolation",
+      "mitigation": "Tool-permission matrix is declarative here; enforcement via the GitHub/CI adapter. Declared in the Step 41 compatibility matrix.",
+      "riskAcceptor": "John (owner)"
+    },
+    {
+      "capability": "Remote GitHub/CI operations",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "Not a repository surface",
+      "mitigation": "Delegate to the GitHub adapter",
+      "riskAcceptor": "John (owner)"
+    }
+  ],
+  "prohibitions": [
+    "Thread memory is never treated as durable state",
+    "Conversational fluency is never treated as evidence",
+    "A relabeled continuation of the same thread never satisfies independent review"
+  ],
+  "evidenceTranslation": {
+    "rule": "Evidence is produced by reproducible scripts and exported as artifacts, never asserted in prose. A claim in the conversation is not an evidence record."
+  },
+  "handoffTranslation": {
+    "rule": "Handoff = exported continuation package with SHA256SUMS. Receiver validates the package before resuming.",
+    "cleanContextSupport": true
+  },
+  "lifecycleSyncRule": "The conversation reflects the work item's state; it never holds a competing state."
+}

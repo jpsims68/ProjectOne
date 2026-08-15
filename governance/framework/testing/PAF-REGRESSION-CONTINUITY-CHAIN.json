@@ -1,0 +1,55 @@
+{
+  "header": {
+    "artifactId": "PAF-REGRESSION-CONTINUITY-CHAIN",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "controlUnderTest": "Externalized state chain integrity across session boundaries",
+  "controlRefs": [
+    "paf.continuity-snapshot.schema.json"
+  ],
+  "positiveCases": [
+    {
+      "caseId": "CC-POS-01",
+      "description": "Successor session verifies predecessorPackageHash and immutableCorpusHash before resuming work",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/valid-chain-resume.json",
+      "expectedResult": "ACCEPT",
+      "reproductionCommand": "sha256sum -c SHA256SUMS.txt"
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "CC-NEG-01",
+      "description": "Continuation package missing SHA256SUMS.txt",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/package-no-checksums.json",
+      "expectedResult": "REFUSE"
+    }
+  ],
+  "adversarialCases": [
+    {
+      "caseId": "CC-ADV-01",
+      "description": "A stale or wrong-generation package is re-uploaded; predecessorPackageHash does not match the chain",
+      "family": "CHAIN_INTEGRITY",
+      "fixtureRef": "fixtures/wrong-generation-package.json",
+      "expectedResult": "STOP"
+    },
+    {
+      "caseId": "CC-ADV-02",
+      "description": "Core corpus re-uploaded does not match immutableCorpusHash (drifted or substituted)",
+      "family": "CHAIN_INTEGRITY",
+      "fixtureRef": "fixtures/drifted-core-corpus.json",
+      "expectedResult": "STOP"
+    }
+  ],
+  "answerKey": "framework/testing/answer-keys/PAF-REGRESSION-CONTINUITY-CHAIN.answers.json"
+}
