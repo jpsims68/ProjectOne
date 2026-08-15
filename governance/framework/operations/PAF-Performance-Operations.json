@@ -1,0 +1,21 @@
+{
+  "header": {
+    "artifactId": "PAF-PERFORMANCE-OPERATIONS",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "performanceContracts": [],
+  "workloadDefinitionRule": "A performance contract without a representative, versioned workload definition is unverifiable and does not count as a contract.",
+  "observationRecordRule": "Production observation after deployment is required evidence, not optional monitoring. Absence of an observation record blocks Stable status.",
+  "stableApprovalRule": "STABLE status requires explicit human approval (approval class STABLE_STATUS) and cannot be inferred from elapsed time without incident.",
+  "deploymentEvidenceRule": "Every deployment produces a deployment record linking the release readiness record, the artifact version deployed, and the environment.",
+  "rollbackRule": "Deployment evidence is incomplete without a verified recovery/rollback procedure per paf.recovery.schema.json. An untested recovery is not a recovery."
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.role-contract.schema.json",
+  "title": "PAF Role Contract (Step 11)",
+  "description": "A portable agent role contract. Contracts REFERENCE normative policy by identifier and never restate it: duplicated policy text drifts from its source and becomes a second, unowned authority.",
+  "type": "object",
+  "required": [
+    "header", "roleId", "displayName", "purpose", "authority", "prohibitions",
+    "stageParticipation", "sourceBundleClasses", "toolPermissions", "evidenceObligations",
+    "independenceProfile", "escalationTriggers", "stopWorkAuthority", "retryPolicy"
+  ],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "roleId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "displayName": { "type": "string", "minLength": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "roleClass": {
+      "type": "array", "minItems": 1,
+      "items": { "enum": ["ORCHESTRATION", "IMPLEMENTATION", "REVIEW", "DOCUMENTATION", "RELEASE_ASSURANCE", "EXPLORATION", "CURATION"] }
+    },
+    "authority": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "prohibitions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "normativeRefs": {
+      "type": "array",
+      "description": "Policy identifiers this role must comply with. References only — restating normative text here is a defect.",
+      "items": { "type": "string" }
+    },
+    "stageParticipation": {
+      "type": "array", "minItems": 1,
+      "description": "Generic lifecycle stage CLASSES, not state names. Concrete states bind at Profile (D-PAF-01).",
+      "items": {
+        "type": "object",
+        "required": ["stageClass", "participation"],
+        "properties": {
+          "stageClass": {
+            "enum": ["INTAKE", "CLASSIFICATION", "DESIGN", "TEST_DEFINITION", "IMPLEMENTATION",
+                     "INTEGRATION", "VERIFICATION", "DOCUMENTATION", "SECURITY_RELEASE_REVIEW",
+                     "OWNER_APPROVAL", "DEPLOYMENT", "OBSERVATION", "STABILIZATION", "AUDIT", "SPIKE"]
+          },
+          "participation": { "enum": ["OWNS", "CONTRIBUTES", "REVIEWS", "APPROVES_WITHIN_AUTHORITY", "INFORMED"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sourceBundleClasses": {
+      "type": "array", "minItems": 1,
+      "description": "Generic source classes this role receives. Least-authority: a role receives only what its work requires. Concrete source IDs bind at Profile.",
+      "items": {
+        "type": "object",
+        "required": ["sourceClass", "necessity"],
+        "properties": {
+          "sourceClass": { "type": "string" },
+          "necessity": { "enum": ["MANDATORY", "CONDITIONAL"] },
+          "condition": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "toolPermissions": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["permission", "grant"],
+        "properties": {
+          "permission": {
+            "enum": ["READ_SOURCES", "WRITE_FRAMEWORK_ARTIFACT", "WRITE_PROFILE", "WRITE_APPLICATION_CODE",
+                     "WRITE_TEST", "WRITE_DOCUMENTATION", "EXECUTE_TESTS", "EXECUTE_DETERMINISTIC_CHECK",
+                     "VCS_READ", "VCS_WRITE_BRANCH", "VCS_MERGE", "VCS_ADMIN", "DB_READ_DEV", "DB_WRITE_DEV",
+                     "DB_PRODUCTION_ACCESS", "SECRET_READ", "RELEASE_EXECUTE", "EVIDENCE_WRITE", "EVIDENCE_AMEND"]
+          },
+          "grant": { "enum": ["ALLOWED", "ALLOWED_WITH_APPROVAL", "DENIED"] },
+          "approvalCategoryRef": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "inputs": { "type": "array", "items": { "type": "string" } },
+    "outputs": { "type": "array", "items": { "type": "string" } },
+    "evidenceObligations": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "independenceProfile": {
+      "type": "object",
+      "description": "Per the owner clarification on D-PAF-04: role separation alone never establishes independence. Each role declares which mechanism its reviews require.",
+      "required": ["mayReviewOwnWork", "providesIndependentReviewFor", "requiredMechanisms"],
+      "properties": {
+        "mayReviewOwnWork": { "const": false },
+        "providesIndependentReviewFor": { "type": "array", "items": { "type": "string" } },
+        "requiredMechanisms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scope", "mechanisms"],
+            "properties": {
+              "scope": { "type": "string" },
+              "mechanisms": {
+                "type": "array", "minItems": 1,
+                "items": { "enum": ["SEPARATE_INVOCATION_CLEAN_CONTEXT", "DIFFERENT_MODEL_OR_MODEL_FAMILY", "DETERMINISTIC_NONJUDGMENTAL_CHECK", "HUMAN_REVIEW"] }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "handoffsTo": { "type": "array", "items": { "type": "string" } },
+    "handoffsFrom": { "type": "array", "items": { "type": "string" } },
+    "humanApprovalCategoryRefs": { "type": "array", "items": { "type": "string" } },
+    "escalationTriggers": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "stopWorkAuthority": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "retryPolicy": {
+      "type": "object",
+      "required": ["maxAttempts", "onExhaustion", "mayNotRetry"],
+      "properties": {
+        "maxAttempts": { "type": "integer", "minimum": 1 },
+        "onExhaustion": { "type": "string" },
+        "mayNotRetry": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

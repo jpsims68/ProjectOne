@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.recovery.schema.json",
+  "title": "PAF Recovery Record",
+  "description": "How a governed change is undone. Recovery is part of completion, not a postscript.",
+  "type": "object",
+  "required": ["recoveryId", "workItemId", "recoveryClass", "recoveryPoint", "procedure", "verified"],
+  "properties": {
+    "recoveryId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "workItemId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "recoveryClass": { "enum": ["ROLLBACK", "ROLL_FORWARD", "CONTAINMENT", "NOT_RECOVERABLE_BY_DESIGN"] },
+    "recoveryPoint": { "type": "string", "minLength": 1 },
+    "procedure": { "type": "string", "minLength": 1 },
+    "verified": { "type": "boolean", "description": "False means the procedure is documented but untested. An untested recovery is not a recovery." },
+    "verificationEvidenceRef": { "$ref": "paf.common.schema.json#/$defs/evidenceRef" },
+    "dataTransformationRequired": {
+      "type": "boolean",
+      "description": "True escalates: undoing this change requires transforming accumulated state, which is a structural event, not an ordinary rollback."
+    }
+  },
+  "additionalProperties": false
+}

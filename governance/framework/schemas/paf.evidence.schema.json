@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.evidence.schema.json",
+  "title": "PAF Evidence Record",
+  "description": "Completion is a function of recorded evidence. Evidence honesty is non-waivable: a criterion is never PASS if the branch was not examined.",
+  "type": "object",
+  "required": ["evidenceId", "evidenceClass", "workItemId", "producedBy", "productionMethod", "result", "timestamp"],
+  "properties": {
+    "evidenceId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "evidenceClass": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "workItemId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "requirementRefs": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "producedBy": { "$ref": "paf.common.schema.json#/$defs/actorRef" },
+    "productionMethod": {
+      "enum": ["DETERMINISTIC_CHECK", "AGENT_JUDGMENT", "HUMAN_REVIEW", "MEASUREMENT", "OBSERVATION"],
+      "description": "Distinguishes validation from review. Both are legitimate; conflating them is not."
+    },
+    "reproducible": { "type": "boolean" },
+    "reproductionCommand": { "type": "string" },
+    "result": { "enum": ["PASS", "FAIL", "PARTIAL", "NOT_EXAMINED", "UNKNOWN"] },
+    "notExaminedReason": { "type": "string" },
+    "contentHash": { "$ref": "paf.common.schema.json#/$defs/sha256" },
+    "supersededBy": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "timestamp": { "$ref": "paf.common.schema.json#/$defs/timestamp" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "result": { "const": "NOT_EXAMINED" } }, "required": ["result"] },
+      "then": { "required": ["notExaminedReason"] }
+    },
+    {
+      "if": { "properties": { "reproducible": { "const": true } }, "required": ["reproducible"] },
+      "then": { "required": ["reproductionCommand"] }
+    }
+  ],
+  "additionalProperties": false
+}

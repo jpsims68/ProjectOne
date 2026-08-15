@@ -1,0 +1,22 @@
+{
+  "EV-POS-01": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "EV-NEG-01": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "EV-ADV-01": {
+    "expectedResult": "REFUSE",
+    "family": "FABRICATED_EVIDENCE"
+  },
+  "EV-ADV-02": {
+    "expectedResult": "REFUSE",
+    "family": "FABRICATED_EVIDENCE"
+  },
+  "EV-ADV-03": {
+    "expectedResult": "REFUSE",
+    "family": "FABRICATED_EVIDENCE"
+  }
+}

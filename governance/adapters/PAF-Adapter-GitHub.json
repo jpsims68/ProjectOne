@@ -1,0 +1,117 @@
+{
+  "header": {
+    "artifactId": "PAF-ADAPTER-GITHUB",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "ADAPTER",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-ADAPTER-CONTRACT"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "adapterId": "PAF-ADAPTER-GITHUB",
+  "surfaceClass": "REPOSITORY_VCS",
+  "displayName": "GitHub Implementation Adapter",
+  "translationRules": {
+    "translatesNeverRedefines": "An adapter maps framework behavior onto a native surface. It never changes what a control means, only how it is expressed.",
+    "noAuthorityOrigination": "An adapter never becomes an authority. It cannot approve, cannot classify risk, and cannot resolve a source conflict.",
+    "noProjectGovernance": "An adapter carries no project-specific governance. Project rules live in the Profile, not the adapter.",
+    "noStateInvention": "An adapter may not invent, rename, merge, skip, or reorder a governed lifecycle state or gate.",
+    "noIndependenceCollapse": "An adapter may not collapse required independent steps into one invocation for convenience."
+  },
+  "capabilityMap": [
+    {
+      "capability": "Work item -> Issue",
+      "support": "TRANSLATED",
+      "translationNote": "Framework work item maps to a GitHub Issue with labels for workType, riskClass, lifecycleState"
+    },
+    {
+      "capability": "Lifecycle state -> Issue/PR labels + status",
+      "support": "TRANSLATED",
+      "translationNote": "State reflected as labels; GitHub never holds the authoritative state, the framework does"
+    },
+    {
+      "capability": "Branch/commit isolation",
+      "support": "TRANSLATED",
+      "translationNote": "Slice work on feature branches; implementation role has VCS_WRITE_BRANCH only"
+    },
+    {
+      "capability": "Independent review -> PR review",
+      "support": "TRANSLATED",
+      "translationNote": "PR review by a distinct reviewer; relabel-only does NOT satisfy independence \u2014 the reviewer must be a separate actor"
+    },
+    {
+      "capability": "Merge gate -> branch protection",
+      "support": "TRANSLATED",
+      "translationNote": "VCS_MERGE denied to implementer; protection requires review + checks"
+    },
+    {
+      "capability": "Least-privilege -> CODEOWNERS + protections",
+      "support": "TRANSLATED",
+      "translationNote": "This is where Step 17's declarative tool-permission matrix becomes ENFORCED"
+    },
+    {
+      "capability": "Deterministic checks -> Actions/CI",
+      "support": "TRANSLATED",
+      "translationNote": "Framework deterministic checks run as required status checks"
+    },
+    {
+      "capability": "Evidence -> checks + artifacts + PR links",
+      "support": "TRANSLATED",
+      "translationNote": "Evidence records link to CI run artifacts and check results"
+    },
+    {
+      "capability": "Release -> tags/releases",
+      "support": "TRANSLATED",
+      "translationNote": "Release gate maps to a protected release; RELEASE_EXECUTE with approval only"
+    },
+    {
+      "capability": "Live GitHub operations (clone/push/PR/protection)",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "No credentials, no gh CLI, egress 403 unauthenticated on this platform",
+      "mitigation": "Adapter is fully specified and unit-validated against a local simulated surface. Live validation is DEFERRED to owner execution or a credentialed environment. No GitHub integration is signed off as passing without real execution.",
+      "riskAcceptor": "John (owner) \u2014 must execute Steps 63-72/91/101/110 against real GitHub or provision a credentialed environment",
+      "deferredVerification": true
+    },
+    {
+      "capability": "Secret storage -> GitHub Actions secrets",
+      "support": "CANNOT_SATISFY",
+      "translationNote": "secret_protection is a global non-waivable invariant; secrets must never enter this chat",
+      "mitigation": "Secrets bound in the owner's GitHub environment, never in framework artifacts or conversation. Adapter references secret NAMES only.",
+      "riskAcceptor": "John (owner)",
+      "deferredVerification": true
+    }
+  ],
+  "prohibitions": [
+    "GitHub is an enforcement/translation surface, never a new authority",
+    "A merged PR is not acceptance; acceptance is the framework gate",
+    "Branch protection may not be configured to allow an implementer to self-approve",
+    "CI green is not release approval \u2014 release is a human gate"
+  ],
+  "evidenceTranslation": {
+    "rule": "CI check results and PR artifacts are evidence records with reproduction commands. A check that did not run is NOT_EXAMINED, never PASS.",
+    "evidenceSurfaceMap": [
+      {
+        "frameworkEvidence": "TEST_RESULT",
+        "githubSurface": "Actions run + artifact"
+      },
+      {
+        "frameworkEvidence": "STATIC_CHECK_RESULT",
+        "githubSurface": "required status check"
+      },
+      {
+        "frameworkEvidence": "INDEPENDENT_REVIEW_RECORD",
+        "githubSurface": "PR review by distinct actor"
+      }
+    ]
+  },
+  "handoffTranslation": {
+    "rule": "Handoff = PR + linked issue + evidence links. Receiver refuses a PR missing required evidence rather than inferring.",
+    "cleanContextSupport": false
+  },
+  "lifecycleSyncRule": "Issue/PR labels reflect the canonical state; a label change never drives a state change on its own."
+}

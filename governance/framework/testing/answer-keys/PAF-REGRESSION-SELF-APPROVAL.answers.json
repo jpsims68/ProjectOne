@@ -1,0 +1,18 @@
+{
+  "SA-POS-01": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "SA-NEG-01": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "SA-ADV-01": {
+    "expectedResult": "REFUSE",
+    "family": "SELF_APPROVAL"
+  },
+  "SA-ADV-02": {
+    "expectedResult": "REFUSE",
+    "family": "SELF_APPROVAL"
+  }
+}

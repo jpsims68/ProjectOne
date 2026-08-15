@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.continuity-snapshot.schema.json",
+  "title": "PAF Continuity Snapshot",
+  "description": "Durable externalized state. Must be sufficient to cold-start a successor with zero conversational history, on a different platform, with no access to prior workspace contents.",
+  "type": "object",
+  "required": [
+    "schema", "version", "snapshotDateTime", "packageChain", "frameworkStepRangeCompleted",
+    "currentStep", "currentLifecycleState", "governanceBaseline", "activeArtifactVersions",
+    "nextAuthorizedAction", "doNotDo", "resumeInstructions"
+  ],
+  "properties": {
+    "schema": { "const": "PAFContextContinuitySnapshot" },
+    "version": { "$ref": "paf.common.schema.json#/$defs/semver" },
+    "snapshotDateTime": { "$ref": "paf.common.schema.json#/$defs/timestamp" },
+    "packageChain": {
+      "type": "object",
+      "description": "Makes the externalized-state chain verifiable. On restart the successor checks these before doing any work; a break is a stop condition, not a warning.",
+      "required": ["thisPackageId", "immutableCorpusHash", "predecessorPackageHash"],
+      "properties": {
+        "thisPackageId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+        "immutableCorpusHash": { "type": "string", "description": "Hash of the immutable transfer corpus this work was built against. Detects a substituted or drifted corpus." },
+        "predecessorPackageHash": { "type": ["string", "null"], "description": "SHA-256 of the prior continuation package, or null for the first." },
+        "predecessorPackageId": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "frameworkStepRangeCompleted": { "type": "array", "items": { "type": "integer" } },
+    "currentStep": { "type": ["integer", "null"] },
+    "currentLifecycleState": { "type": ["string", "null"] },
+    "governanceBaseline": { "type": "object" },
+    "activeArtifactVersions": { "type": "object" },
+    "decisionsMadeSincePriorSnapshot": { "type": "array", "items": { "type": "object" } },
+    "openDecisions": { "type": "array", "items": { "type": "object" } },
+    "openRisks": { "type": "array", "items": { "type": "object" } },
+    "openExceptions": { "type": "array", "items": { "type": "object" } },
+    "unconfiguredControlWarnings": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/unconfiguredControlWarning" } },
+    "blockingConditions": { "type": "array", "items": { "type": "object" } },
+    "testsAndEvidenceProduced": { "type": "array", "items": { "type": "object" } },
+    "filesCreatedOrChanged": { "type": "array", "items": { "type": "object" } },
+    "humanApprovalsObtained": { "type": "array", "items": { "type": "object" } },
+    "nextAuthorizedAction": { "type": "string", "minLength": 1 },
+    "doNotDo": { "type": "array", "items": { "type": "string" } },
+    "resumeInstructions": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

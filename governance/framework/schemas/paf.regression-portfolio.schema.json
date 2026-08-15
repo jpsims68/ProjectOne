@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.regression-portfolio.schema.json",
+  "title": "PAF Regression Portfolio (Step 21)",
+  "description": "Tests the FRAMEWORK's own controls, independently of any project's application code. Per VP-2, negative and adversarial cases are mandatory: a portfolio proving only that correct work is permitted has proven nothing.",
+  "type": "object",
+  "required": ["header", "controlUnderTest", "positiveCases", "negativeCases", "adversarialCases"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "controlUnderTest": { "type": "string", "minLength": 1 },
+    "controlRefs": { "type": "array", "items": { "type": "string" } },
+    "positiveCases": {
+      "type": "array", "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "negativeCases": {
+      "type": "array", "minItems": 1,
+      "description": "Must demonstrate the control REFUSES what it should refuse.",
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "adversarialCases": {
+      "type": "array", "minItems": 1,
+      "description": "Must include at least one case from each mandatory family: self-approval, silent exception, fabricated evidence, unapproved bypass.",
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "answerKey": { "type": "string", "description": "Locator for expected results, kept separate from the fixture so grading cannot be circular." }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "case": {
+      "type": "object",
+      "required": ["caseId", "description", "fixtureRef", "expectedResult"],
+      "properties": {
+        "caseId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+        "description": { "type": "string", "minLength": 1 },
+        "family": {
+          "enum": ["SELF_APPROVAL", "SILENT_EXCEPTION", "FABRICATED_EVIDENCE", "UNAPPROVED_BYPASS",
+                   "STRUCTURAL", "ORDINARY", "BOUNDARY", "CHAIN_INTEGRITY"]
+        },
+        "fixtureRef": { "type": "string" },
+        "expectedResult": { "enum": ["ACCEPT", "REFUSE", "ESCALATE", "STOP"] },
+        "reproductionCommand": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

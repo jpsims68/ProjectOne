@@ -1,0 +1,486 @@
+{
+  "header": {
+    "artifactId": "PAF-MATRIX-ROLE-WORKFLOW",
+    "version": "0.1",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "generatedFrom": [
+      "framework/contracts/*.json",
+      "framework/workflows/*.json"
+    ],
+    "note": "Which roles participate in which workflow stages."
+  },
+  "assignments": {
+    "ROLE_ARCHITECTURE": [
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PERFORMANCE",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCT_DECISION",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SPIKE",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_BUSINESS_DOC": [
+      {
+        "workflowId": "WF_COMMERCIAL",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_CODING": [
+      {
+        "workflowId": "WF_DEFECT",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_DEFECT",
+        "stageClass": "INTEGRATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EMERGENCY",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PERFORMANCE",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "INTEGRATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_THEME",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_UPGRADE",
+        "stageClass": "IMPLEMENTATION",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_ENDUSER_DOC": [
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "DOCUMENTATION",
+        "participation": "CONTRIBUTES"
+      }
+    ],
+    "ROLE_GUI_GOVERNANCE": [
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "VERIFICATION",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_THEME",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_METHODOLOGY": [
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "DESIGN",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_METHODOLOGY",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_ORCHESTRATOR": [
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_AUDIT",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_AUDIT",
+        "stageClass": "AUDIT",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_AUDIT",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_COMMERCIAL",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_COMMERCIAL",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_DEFECT",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_DEFECT",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_DOCUMENTATION",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EMERGENCY",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EMERGENCY",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EXCEPTION",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EXCEPTION",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EXCEPTION",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_METHODOLOGY",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_METHODOLOGY",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PERFORMANCE",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCT_DECISION",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCT_DECISION",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCT_DECISION",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SPIKE",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_THEME",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_THEME",
+        "stageClass": "OWNER_APPROVAL",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_UPGRADE",
+        "stageClass": "INTAKE",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_UPGRADE",
+        "stageClass": "CLASSIFICATION",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_QUALITY": [
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_AUDIT",
+        "stageClass": "AUDIT",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_DOCUMENTATION",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_METHODOLOGY",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PERFORMANCE",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "TEST_DEFINITION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_UPGRADE",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_SECURITY_RELEASE": [
+      {
+        "workflowId": "WF_AUDIT",
+        "stageClass": "AUDIT",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_EMERGENCY",
+        "stageClass": "SECURITY_RELEASE_REVIEW",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EXCEPTION",
+        "stageClass": "SECURITY_RELEASE_REVIEW",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PERFORMANCE",
+        "stageClass": "OBSERVATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "SECURITY_RELEASE_REVIEW",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "DEPLOYMENT",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "OBSERVATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "STABILIZATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "DESIGN",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_SECURITY",
+        "stageClass": "SECURITY_RELEASE_REVIEW",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_UPGRADE",
+        "stageClass": "SECURITY_RELEASE_REVIEW",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_SPIKE": [
+      {
+        "workflowId": "WF_SPIKE",
+        "stageClass": "SPIKE",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_TECH_DOC": [
+      {
+        "workflowId": "WF_ARCHITECTURE",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_DEFECT",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_DOCUMENTATION",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_EMERGENCY",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_METHODOLOGY",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCT_DECISION",
+        "stageClass": "DOCUMENTATION",
+        "participation": "OWNS"
+      }
+    ],
+    "ROLE_TEST_DEBUG": [
+      {
+        "workflowId": "WF_DEFECT",
+        "stageClass": "VERIFICATION",
+        "participation": "OWNS"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "INTEGRATION",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "VERIFICATION",
+        "participation": "CONTRIBUTES"
+      }
+    ],
+    "ROLE_UX_DESIGN": [
+      {
+        "workflowId": "WF_PRODUCTION_FEATURE",
+        "stageClass": "DESIGN",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_PRODUCT_DECISION",
+        "stageClass": "DESIGN",
+        "participation": "CONTRIBUTES"
+      },
+      {
+        "workflowId": "WF_THEME",
+        "stageClass": "DESIGN",
+        "participation": "OWNS"
+      }
+    ]
+  }
+}

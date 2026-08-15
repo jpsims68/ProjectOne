@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.adapter-contract.schema.json",
+  "title": "PAF Workbench Adapter Contract (Step 35)",
+  "description": "The interface every workbench adapter implements. An adapter TRANSLATES framework behavior onto an execution surface; it never redefines governance, originates authority, or carries project-specific rules. Capability gaps are first-class: a gap that is merely noted is not mitigated.",
+  "type": "object",
+  "required": ["header", "adapterId", "surfaceClass", "translationRules", "capabilityMap", "prohibitions", "evidenceTranslation", "handoffTranslation"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "adapterId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "surfaceClass": { "enum": ["REPOSITORY_VCS", "CONVERSATIONAL_WORKBENCH", "CODING_WORKBENCH", "CI_CD", "GENERIC"] },
+    "displayName": { "type": "string" },
+    "translationRules": {
+      "type": "object",
+      "required": ["translatesNeverRedefines", "noAuthorityOrigination", "noProjectGovernance", "noStateInvention", "noIndependenceCollapse"],
+      "properties": {
+        "translatesNeverRedefines": { "const": "An adapter maps framework behavior onto a native surface. It never changes what a control means, only how it is expressed." },
+        "noAuthorityOrigination": { "const": "An adapter never becomes an authority. It cannot approve, cannot classify risk, and cannot resolve a source conflict." },
+        "noProjectGovernance": { "const": "An adapter carries no project-specific governance. Project rules live in the Profile, not the adapter." },
+        "noStateInvention": { "const": "An adapter may not invent, rename, merge, skip, or reorder a governed lifecycle state or gate." },
+        "noIndependenceCollapse": { "const": "An adapter may not collapse required independent steps into one invocation for convenience." }
+      },
+      "additionalProperties": false
+    },
+    "capabilityMap": {
+      "type": "array", "minItems": 1,
+      "description": "How this surface handles each framework capability. Every entry with support=CANNOT_SATISFY MUST carry a mitigation and a named risk acceptor.",
+      "items": {
+        "type": "object",
+        "required": ["capability", "support"],
+        "properties": {
+          "capability": { "type": "string" },
+          "support": { "enum": ["NATIVE", "TRANSLATED", "CANNOT_SATISFY"] },
+          "translationNote": { "type": "string" },
+          "mitigation": { "type": "string" },
+          "riskAcceptor": { "type": "string" },
+          "deferredVerification": { "type": "boolean" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "support": { "const": "CANNOT_SATISFY" } }, "required": ["support"] },
+            "then": { "required": ["mitigation", "riskAcceptor"] }
+          }
+        ],
+        "additionalProperties": false
+      }
+    },
+    "prohibitions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "evidenceTranslation": {
+      "type": "object",
+      "required": ["rule"],
+      "properties": {
+        "rule": { "type": "string" },
+        "evidenceSurfaceMap": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "additionalProperties": false
+    },
+    "handoffTranslation": {
+      "type": "object",
+      "required": ["rule"],
+      "properties": {
+        "rule": { "type": "string" },
+        "cleanContextSupport": { "type": "boolean", "description": "Whether this surface can produce a clean-context handoff for SEPARATE_INVOCATION_CLEAN_CONTEXT independence." }
+      },
+      "additionalProperties": false
+    },
+    "lifecycleSyncRule": { "type": "string" }
+  },
+  "additionalProperties": false
+}

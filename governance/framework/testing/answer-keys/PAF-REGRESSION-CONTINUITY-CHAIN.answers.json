@@ -1,0 +1,18 @@
+{
+  "CC-POS-01": {
+    "expectedResult": "ACCEPT",
+    "family": "ORDINARY"
+  },
+  "CC-NEG-01": {
+    "expectedResult": "REFUSE",
+    "family": "STRUCTURAL"
+  },
+  "CC-ADV-01": {
+    "expectedResult": "STOP",
+    "family": "CHAIN_INTEGRITY"
+  },
+  "CC-ADV-02": {
+    "expectedResult": "STOP",
+    "family": "CHAIN_INTEGRITY"
+  }
+}

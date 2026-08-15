@@ -1,0 +1,152 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-OWNERSHIP",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "assignments": [
+    {
+      "entityId": "PRODUCT_SCOPE",
+      "entityClass": "PUBLIC_CONTRACT",
+      "accountableOwnerRole": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "CANONICAL_EVENT_LOG_SCHEMA",
+      "entityClass": "CANONICAL_DATA",
+      "accountableOwnerRole": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "OCPM_SPINE_D35",
+      "entityClass": "SCHEMA_OR_STRUCTURAL_DEFINITION",
+      "accountableOwnerRole": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "SCRIPT_CATALOG_SPINE_D60",
+      "entityClass": "SCHEMA_OR_STRUCTURAL_DEFINITION",
+      "accountableOwnerRole": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "CROSS_TENANT_ACCESS_MODEL_D61",
+      "entityClass": "SCHEMA_OR_STRUCTURAL_DEFINITION",
+      "accountableOwnerRole": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_SECURITY_RELEASE",
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "THEME_TOKEN_LAYER",
+      "entityClass": "SHARED_PLATFORM_COMPONENT",
+      "accountableOwnerRole": "ROLE_UX_DESIGN",
+      "reviewPath": [
+        "ROLE_GUI_GOVERNANCE"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "METHODOLOGY_CATALOG",
+      "entityClass": "CANONICAL_DATA",
+      "accountableOwnerRole": "ROLE_METHODOLOGY",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "FEATURE_SLICE",
+      "entityClass": "CAPABILITY_SLICE",
+      "accountableOwnerRole": "ROLE_CODING",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_TEST_DEBUG"
+      ],
+      "changeAuthority": "ROLE_ARCHITECTURE",
+      "protectedAsset": false
+    },
+    {
+      "entityId": "PUBLIC_API_CONTRACT",
+      "entityClass": "PUBLIC_CONTRACT",
+      "accountableOwnerRole": "ROLE_ARCHITECTURE",
+      "reviewPath": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "GOVERNANCE_CONTROLS",
+      "entityClass": "GOVERNANCE_CONTROL",
+      "accountableOwnerRole": "ROLE_ORCHESTRATOR",
+      "reviewPath": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": true
+    },
+    {
+      "entityId": "TECHNICAL_DOCUMENTATION",
+      "entityClass": "DOCUMENTATION_ARTIFACT",
+      "accountableOwnerRole": "ROLE_TECH_DOC",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "ROLE_ARCHITECTURE",
+      "protectedAsset": false
+    },
+    {
+      "entityId": "ONBOARDING_PROCEDURES",
+      "entityClass": "DOCUMENTATION_ARTIFACT",
+      "accountableOwnerRole": "ROLE_ONBOARDING",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": false
+    },
+    {
+      "entityId": "COMMERCIAL_SERVICE_DOCS",
+      "entityClass": "DOCUMENTATION_ARTIFACT",
+      "accountableOwnerRole": "ROLE_BUSINESS_DOC",
+      "reviewPath": [
+        "ROLE_QUALITY"
+      ],
+      "changeAuthority": "HUMAN_OWNER",
+      "protectedAsset": false
+    }
+  ]
+}

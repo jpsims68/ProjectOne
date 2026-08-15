@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.independence-standard.schema.json",
+  "title": "PAF Operational Independence Standard Contract (Step 9)",
+  "description": "Authority Interface AI-4. Independence is a property of the execution boundary, not of the reviewer's label. The contract requires that at least one mechanism be recorded as non-qualifying, so that relabeling can be named and refused rather than merely discouraged.",
+  "type": "object",
+  "required": ["header", "coreRule", "qualifyingMechanisms", "minimumRules", "evidenceRecordSchema", "antiSelfApprovalRules"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "coreRule": {
+      "type": "string",
+      "description": "Must state that a different role label, prompt section, or continuation of the same reasoning pass does not by itself constitute independent review."
+    },
+    "qualifyingMechanisms": {
+      "type": "array", "minItems": 2,
+      "description": "Must contain at least one mechanism with qualifies=false. A standard that lists only qualifying mechanisms cannot refuse anything.",
+      "items": {
+        "type": "object",
+        "required": ["id", "qualifies", "definition"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "qualifies": { "type": "boolean" },
+          "definition": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": true
+      }
+    },
+    "minimumRules": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["scope", "requirement"],
+        "properties": {
+          "scope": { "type": "string" },
+          "requirement": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "evidenceRecordSchema": {
+      "type": "object",
+      "required": ["requiredFields", "rule"],
+      "properties": {
+        "requiredFields": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rule": { "type": "string", "description": "Must state that a missing required field renders the review NOT_INDEPENDENT and unable to close the gate alone." }
+      },
+      "additionalProperties": true
+    },
+    "antiSelfApprovalRules": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "adapterRule": { "type": "string" }
+  },
+  "additionalProperties": true
+}

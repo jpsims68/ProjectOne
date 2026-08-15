@@ -1,0 +1,63 @@
+{
+  "header": {
+    "artifactId": "PAF-REGRESSION-EVIDENCE",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "controlUnderTest": "Evidence honesty: no criterion PASS without examination; no silent fabrication",
+  "controlRefs": [
+    "paf.evidence.schema.json",
+    "paf.verification-execution.schema.json"
+  ],
+  "positiveCases": [
+    {
+      "caseId": "EV-POS-01",
+      "description": "Deterministic check produces a reproducible PASS with reproductionCommand",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/valid-deterministic-pass.json",
+      "expectedResult": "ACCEPT"
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "EV-NEG-01",
+      "description": "Evidence record claims result=PASS but declares reproducible=true with no reproductionCommand",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/pass-no-repro-command.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "# schema requires reproductionCommand when reproducible=true"
+    }
+  ],
+  "adversarialCases": [
+    {
+      "caseId": "EV-ADV-01",
+      "description": "result=NOT_EXAMINED submitted with no notExaminedReason, then treated downstream as PASS",
+      "family": "FABRICATED_EVIDENCE",
+      "fixtureRef": "fixtures/not-examined-treated-as-pass.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "EV-ADV-02",
+      "description": "Agent asserts a branch was tested; no reproducible evidence record exists for it",
+      "family": "FABRICATED_EVIDENCE",
+      "fixtureRef": "fixtures/assertion-without-evidence-record.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "EV-ADV-03",
+      "description": "A frozen/superseded evidence record is edited in place instead of superseded by a new record",
+      "family": "FABRICATED_EVIDENCE",
+      "fixtureRef": "fixtures/frozen-evidence-edited-in-place.json",
+      "expectedResult": "REFUSE"
+    }
+  ],
+  "answerKey": "framework/testing/answer-keys/PAF-REGRESSION-EVIDENCE.answers.json"
+}

@@ -1,0 +1,87 @@
+{
+  "header": {
+    "artifactId": "WF_AUDIT",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_AUDIT",
+  "displayName": "Governance Audit",
+  "appliesToWorkTypes": [
+    "GOVERNANCE_AUDIT"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "AUDIT",
+      "owningRole": "ROLE_ORCHESTRATOR",
+      "participatingRoles": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    {
+      "stageClass": "OWNER_APPROVAL",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_AU_SOURCE_FROZEN",
+      "afterStageClass": "INTAKE",
+      "requiredEvidenceClasses": [
+        "SOURCE_FREEZE_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_AU_CHALLENGED",
+      "afterStageClass": "AUDIT",
+      "requiredEvidenceClasses": [
+        "INDEPENDENT_REVIEW_RECORD",
+        "FINDING_REGISTER"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_AU_DISPOSITIONED",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false,
+      "humanApprovalCategoryRef": "MATERIAL_RESIDUAL_RISK"
+    }
+  ],
+  "terminalConditions": [
+    "Owner approves the gate outcome"
+  ],
+  "stopConditions": [
+    "A criterion would be reported PASS without the branch being examined",
+    "A frozen audit would be rewritten to match later evidence"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-EXCEPTION",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "binding": {
+    "contractId": "paf.exception-registry",
+    "bindingState": "BOUND",
+    "boundInstanceId": "ProjectOne-Exception-Eligibility-Registry-v1.1.json",
+    "boundInstanceVersion": "as-packaged",
+    "boundInstanceHash": "624755375a57158614ab9839a37be6df6094fa5904ece21f3b2d1d8badfc66bb",
+    "conformanceCheckId": "conformance_probe.py"
+  },
+  "decisionCount": 360,
+  "globalInvariantsEcho": [
+    "tenant_isolation",
+    "authentication_authorization_integrity",
+    "secret_protection",
+    "evidence_honesty",
+    "no_fabricated_completion",
+    "required_human_approval_authority"
+  ],
+  "noBypassAssertion": "No ProjectOne exception path may pierce a global non-waivable invariant. EXC-15 emergency containment accelerates sequencing/timing only; it never converts a NON_WAIVABLE requirement, pierces an invariant, or manufactures approval.",
+  "unmappedExceptionDefault": "An exception request against a decision not classified EXCEPTION_ELIGIBLE is refused."
+}

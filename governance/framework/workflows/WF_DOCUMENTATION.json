@@ -1,0 +1,71 @@
+{
+  "header": {
+    "artifactId": "WF_DOCUMENTATION",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_DOCUMENTATION",
+  "displayName": "Documentation Change",
+  "appliesToWorkTypes": [
+    "DOCUMENTATION_CHANGE"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "DOCUMENTATION",
+      "owningRole": "ROLE_TECH_DOC"
+    },
+    {
+      "stageClass": "VERIFICATION",
+      "owningRole": "ROLE_QUALITY"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_DOC_SYNC",
+      "afterStageClass": "DOCUMENTATION",
+      "requiredEvidenceClasses": [
+        "SOURCE_SYNCHRONIZATION_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": true
+    },
+    {
+      "gateId": "G_DOC_VERIFIED",
+      "afterStageClass": "VERIFICATION",
+      "requiredEvidenceClasses": [
+        "DOCUMENTATION_UPDATE_RECORD"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": true
+    }
+  ],
+  "terminalConditions": [
+    "Documentation matches its governing source"
+  ],
+  "stopConditions": [
+    "A non-waivable control would be weakened",
+    "Required human approval unavailable",
+    "Required independent review unachievable",
+    "Equal-authority source conflict on a material subject"
+  ]
+}

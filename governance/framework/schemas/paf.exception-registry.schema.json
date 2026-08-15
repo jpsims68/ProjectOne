@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.exception-registry.schema.json",
+  "title": "PAF Exception Eligibility Registry Contract (Step 8)",
+  "description": "Defines which controls may be waived, which may never be, and what an emergency may and may not do. Carries no project decision IDs.",
+  "type": "object",
+  "required": ["header", "classes", "globalNonWaivableInvariants", "decisions", "emergencyRule"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "classes": {
+      "type": "object",
+      "description": "Must include a strictly non-waivable class. A registry in which every control is waivable is not an exception registry.",
+      "minProperties": 2,
+      "additionalProperties": { "type": "string" }
+    },
+    "globalNonWaivableInvariants": {
+      "type": "array", "minItems": 1,
+      "description": "Invariants no exception, emergency, or approval may pierce.",
+      "items": {
+        "type": "object",
+        "required": ["name", "rule"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "rule": { "type": "string", "minLength": 1 },
+          "mappedDecisions": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": true
+      }
+    },
+    "familyDefaults": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "decisions": {
+      "type": "array",
+      "description": "Populated in a PROFILE instance. Every governed decision must carry an effective class; an unclassified decision is a coverage gap, not a permitted waiver.",
+      "items": {
+        "type": "object",
+        "required": ["decisionId", "effectiveClass"],
+        "properties": {
+          "decisionId": { "type": "string", "minLength": 1 },
+          "family": { "type": "string" },
+          "title": { "type": "string" },
+          "effectiveClass": { "type": "string", "minLength": 1 },
+          "source": { "type": "string" },
+          "overrideReason": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "emergencyRule": {
+      "type": "string",
+      "description": "Must permit sequencing/timing acceleration ONLY, and must explicitly refuse to convert non-waivable controls, pierce global invariants, or manufacture approval."
+    },
+    "validation": { "type": "object", "additionalProperties": true },
+    "changeHistory": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+  },
+  "additionalProperties": true
+}

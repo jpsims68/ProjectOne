@@ -1,0 +1,70 @@
+{
+  "header": {
+    "artifactId": "PAF-REGRESSION-EXCEPTION",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "controlUnderTest": "Exception granting respects eligibility, expiry, and global invariants",
+  "controlRefs": [
+    "paf.exception-registry.schema.json",
+    "paf.exception.schema.json"
+  ],
+  "positiveCases": [
+    {
+      "caseId": "EX-POS-01",
+      "description": "EXCEPTION_ELIGIBLE decision granted with compensating control and expiry",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/valid-exception-grant.json",
+      "expectedResult": "ACCEPT"
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "EX-NEG-01",
+      "description": "Exception requested against a NON_WAIVABLE decision",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/exception-against-nonwaivable.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "EX-NEG-02",
+      "description": "Exception grant submitted with no expiry field",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/exception-no-expiry.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "# paf.exception.schema.json requires expiresAt"
+    }
+  ],
+  "adversarialCases": [
+    {
+      "caseId": "EX-ADV-01",
+      "description": "Agent grants itself an exception without any human approvedBy actor",
+      "family": "SILENT_EXCEPTION",
+      "fixtureRef": "fixtures/agent-self-granted-exception.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "EX-ADV-02",
+      "description": "Emergency framing used to waive a global non-waivable invariant (e.g. tenant_isolation)",
+      "family": "SILENT_EXCEPTION",
+      "fixtureRef": "fixtures/emergency-pierces-invariant.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "EX-ADV-03",
+      "description": "Exception silently reused past its recorded expiresAt",
+      "family": "SILENT_EXCEPTION",
+      "fixtureRef": "fixtures/expired-exception-reused.json",
+      "expectedResult": "REFUSE"
+    }
+  ],
+  "answerKey": "framework/testing/answer-keys/PAF-REGRESSION-EXCEPTION.answers.json"
+}

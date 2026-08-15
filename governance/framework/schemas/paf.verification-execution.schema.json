@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.verification-execution.schema.json",
+  "title": "PAF Verification Execution Model (Step 13)",
+  "description": "Turns a verification map into executable, recordable behavior WITHOUT altering requirement wording. The map says what must be verified; this model says how a verification is executed, recorded, and counted as satisfied.",
+  "type": "object",
+  "required": ["header", "executionRules", "statusModel", "mechanismTypes", "records"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "executionRules": {
+      "type": "object",
+      "required": ["wordingImmutable", "unmappedIsGap", "mappedIsNotImplemented", "evidenceLinkable"],
+      "properties": {
+        "wordingImmutable": { "const": "The execution model never alters, paraphrases, or reinterprets requirement wording. It attaches execution behavior to it." },
+        "unmappedIsGap": { "const": "A decision with no mapped verification mechanism is a governance coverage gap, not a satisfied requirement." },
+        "mappedIsNotImplemented": { "const": "A mapped mechanism does not count as implemented until the framework actually provides it and evidence can be linked to it." },
+        "evidenceLinkable": { "const": "A verification is satisfied only when a concrete evidence record can be resolved from the decision identifier." }
+      },
+      "additionalProperties": false
+    },
+    "statusModel": {
+      "type": "object",
+      "description": "The progression every governed decision moves through. Advancing a status without its evidence is a fabricated completion.",
+      "required": ["states", "advanceRule"],
+      "properties": {
+        "states": {
+          "type": "array",
+          "items": { "enum": ["UNMAPPED", "DEFINED_IN_MAP", "MECHANISM_IMPLEMENTED", "EVIDENCE_LINKABLE", "EVIDENCE_PRESENT", "VERIFIED"] }
+        },
+        "advanceRule": { "type": "string" },
+        "minimumForFrameworkApproval": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "mechanismTypes": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["mechanismType", "producesEvidenceClass", "isDeterministic", "satisfiesIndependenceAlone"],
+        "properties": {
+          "mechanismType": { "type": "string" },
+          "producesEvidenceClass": { "type": "string" },
+          "isDeterministic": { "type": "boolean" },
+          "satisfiesIndependenceAlone": {
+            "type": "boolean",
+            "description": "Only deterministic non-judgmental checks may be true here. Agent judgment never satisfies independence on its own."
+          },
+          "reproductionRequired": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "records": {
+      "type": "array",
+      "description": "Populated at Profile binding. Each entry binds one governed decision to its execution behavior.",
+      "items": {
+        "type": "object",
+        "required": ["decisionId", "verificationMechanisms", "requiredEvidenceClasses", "currentStatus"],
+        "properties": {
+          "decisionId": { "type": "string" },
+          "verificationMechanisms": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "verifyingRoles": { "type": "array", "items": { "type": "string" } },
+          "requiredEvidenceClasses": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "independenceApplies": { "type": "boolean" },
+          "humanApprovalMayApply": { "type": "boolean" },
+          "currentStatus": { "type": "string" },
+          "evidenceRefs": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/evidenceRef" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

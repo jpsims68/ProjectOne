@@ -1,0 +1,996 @@
+{
+  "header": {
+    "artifactId": "PAF-MATRIX-EVIDENCE",
+    "version": "0.1",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "generatedFrom": [
+      "framework/contracts/*.json",
+      "framework/workflows/*.json"
+    ],
+    "note": "Bidirectional traceability: evidence class -> gates requiring it, roles producing it. Producers are DECLARED (from role contract obligations) or DERIVED (stage-owner rule); both are recorded separately so the basis is always visible."
+  },
+  "evidenceClassCount": 82,
+  "evidence": {
+    "ACCEPTANCE_CRITERIA": {
+      "requiredByGates": [
+        "G_PF_TESTS"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "ACCESSIBILITY_CHECK_RESULT": {
+      "requiredByGates": [
+        "G_TH_VISUAL"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ],
+      "producedByRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ]
+    },
+    "ACCESSIBILITY_CONFORMANCE_RECORD": {
+      "requiredByGates": [
+        "G_TH_DESIGN"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_UX_DESIGN"
+      ],
+      "producedByRoles": [
+        "ROLE_UX_DESIGN"
+      ]
+    },
+    "Accessibility check result": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ]
+    },
+    "Accessibility conformance record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_UX_DESIGN"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_UX_DESIGN"
+      ]
+    },
+    "Baseline conformance record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ]
+    },
+    "COMPENSATING_CONTROL_RECORD": {
+      "requiredByGates": [
+        "G_EX_COMPENSATED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "CONSUMER_IDENTIFICATION": {
+      "requiredByGates": [
+        "G_ARCH_IMPACT"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "CONTAINMENT_RECORD": {
+      "requiredByGates": [
+        "G_EM_CONTAINED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "CONTRACT_COMPARISON_RESULT": {
+      "requiredByGates": [
+        "G_ARCH_VERIFIED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "COVERAGE_REPORT": {
+      "requiredByGates": [
+        "G_PF_VERIFIED",
+        "G_UP_REGRESSION"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "Consistency check result": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_METHODOLOGY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_METHODOLOGY"
+      ]
+    },
+    "Contract version record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "Coverage report": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "DECISION_RECORD": {
+      "requiredByGates": [
+        "G_CO_PROPOSED",
+        "G_PD_OPTIONS"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_BUSINESS_DOC",
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE",
+        "ROLE_BUSINESS_DOC"
+      ]
+    },
+    "DEFECT_REPRODUCTION_RECORD": {
+      "requiredByGates": [
+        "G_DF_REPRODUCED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_TEST_DEBUG"
+      ],
+      "producedByRoles": [
+        "ROLE_TEST_DEBUG"
+      ]
+    },
+    "DEFERRAL_RECORD": {
+      "requiredByGates": [
+        "G_ARCH_IMPACT"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "DESIGN_RECORD": {
+      "requiredByGates": [
+        "G_PF_DESIGN",
+        "G_SEC_DESIGN"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "DESIGN_SPECIFICATION": {
+      "requiredByGates": [
+        "G_TH_DESIGN"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_UX_DESIGN"
+      ],
+      "producedByRoles": [
+        "ROLE_UX_DESIGN"
+      ]
+    },
+    "DOCUMENTATION_UPDATE_RECORD": {
+      "requiredByGates": [
+        "G_DOC_VERIFIED",
+        "G_PF_DOCS"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY",
+        "ROLE_TECH_DOC"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY",
+        "ROLE_TECH_DOC"
+      ]
+    },
+    "Defect records": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "Defect reproduction record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_TEST_DEBUG"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_TEST_DEBUG"
+      ]
+    },
+    "Deferral record with declared class": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "Design record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "Design specification": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_UX_DESIGN"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_UX_DESIGN"
+      ]
+    },
+    "Diagnosis record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_TEST_DEBUG"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_TEST_DEBUG"
+      ]
+    },
+    "Documentation update record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ADMIN_DOC",
+        "ROLE_BUSINESS_DOC",
+        "ROLE_CONSULTING",
+        "ROLE_ENDUSER_DOC",
+        "ROLE_ONBOARDING",
+        "ROLE_TECH_DOC"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ADMIN_DOC",
+        "ROLE_BUSINESS_DOC",
+        "ROLE_CONSULTING",
+        "ROLE_ENDUSER_DOC",
+        "ROLE_ONBOARDING",
+        "ROLE_TECH_DOC"
+      ]
+    },
+    "ELIGIBILITY_DETERMINATION": {
+      "requiredByGates": [
+        "G_EX_ELIGIBLE"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "EXPIRY_RECORD": {
+      "requiredByGates": [
+        "G_EX_COMPENSATED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "Escalation records": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "FINDING_REGISTER": {
+      "requiredByGates": [
+        "G_AU_CHALLENGED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "Gate decision log": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "HUMAN_APPROVAL_RECORD": {
+      "requiredByGates": [
+        "G_ARCH_APPROVED",
+        "G_AU_DISPOSITIONED",
+        "G_CO_APPROVED",
+        "G_EM_RETROSPECTIVE",
+        "G_EX_APPROVED",
+        "G_ME_APPROVED",
+        "G_PF_RELEASE",
+        "G_PF_STABLE",
+        "G_PD_APPROVED",
+        "G_SEC_APPROVED",
+        "G_TH_APPROVED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR",
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "Handoff records": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "IMPACT_ANALYSIS": {
+      "requiredByGates": [
+        "G_ARCH_IMPACT",
+        "G_PF_DESIGN",
+        "G_PD_OPTIONS"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "INDEPENDENT_REVIEW_RECORD": {
+      "requiredByGates": [
+        "G_AU_CHALLENGED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "Impact analysis": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "Implementation record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "Independent review record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "METHODOLOGY_DEFINITION_RECORD": {
+      "requiredByGates": [
+        "G_ME_DEFINED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_METHODOLOGY"
+      ],
+      "producedByRoles": [
+        "ROLE_METHODOLOGY"
+      ]
+    },
+    "Methodology definition record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_METHODOLOGY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_METHODOLOGY"
+      ]
+    },
+    "OBSERVATION_RECORD": {
+      "requiredByGates": [
+        "G_PE_OBSERVED",
+        "G_PF_OBSERVED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "PERFORMANCE_BASELINE": {
+      "requiredByGates": [
+        "G_PE_BASELINE"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "PERFORMANCE_MEASUREMENT": {
+      "requiredByGates": [
+        "G_PE_MEASURED",
+        "G_PF_OBSERVED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "RECOMPUTABILITY_EVIDENCE": {
+      "requiredByGates": [
+        "G_ME_DEFINED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_METHODOLOGY"
+      ],
+      "producedByRoles": [
+        "ROLE_METHODOLOGY"
+      ]
+    },
+    "RECOVERY_VERIFICATION": {
+      "requiredByGates": [
+        "G_EM_CONTAINED",
+        "G_PF_VERIFIED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_CODING",
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_CODING",
+        "ROLE_QUALITY"
+      ]
+    },
+    "REGRESSION_RESULT": {
+      "requiredByGates": [
+        "G_ARCH_VERIFIED",
+        "G_DF_FIXED",
+        "G_UP_REGRESSION"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY",
+        "ROLE_CODING"
+      ],
+      "producedByRoles": [
+        "ROLE_CODING",
+        "ROLE_QUALITY"
+      ]
+    },
+    "RELEASE_READINESS_RECORD": {
+      "requiredByGates": [
+        "G_PF_RELEASE"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "RESIDUAL_RISK_RECORD": {
+      "requiredByGates": [
+        "G_ARCH_APPROVED",
+        "G_EM_RETROSPECTIVE",
+        "G_PF_RELEASE"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "RISK_CLASSIFICATION_RECORD": {
+      "requiredByGates": [
+        "G_PD_CLASSIFIED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "Recomputability evidence": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_METHODOLOGY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_METHODOLOGY"
+      ]
+    },
+    "Recovery procedure reference": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "Release readiness record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "Residual risk record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "Role assignment record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "SECURITY_REVIEW_RECORD": {
+      "requiredByGates": [
+        "G_EM_REVIEWED",
+        "G_PF_SECURITY"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "SECURITY_SCAN_RESULT": {
+      "requiredByGates": [
+        "G_PF_SECURITY",
+        "G_SEC_VERIFIED",
+        "G_UP_SECURITY"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SECURITY_RELEASE",
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "SOURCE_FREEZE_RECORD": {
+      "requiredByGates": [
+        "G_AU_SOURCE_FROZEN"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "SOURCE_SYNCHRONIZATION_RECORD": {
+      "requiredByGates": [
+        "G_DOC_SYNC"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_TECH_DOC"
+      ],
+      "producedByRoles": [
+        "ROLE_TECH_DOC"
+      ]
+    },
+    "SPIKE_CHARTER": {
+      "requiredByGates": [
+        "G_SP_BOUNDED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    },
+    "SPIKE_FINDINGS_RECORD": {
+      "requiredByGates": [
+        "G_SP_FINDINGS"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SPIKE"
+      ],
+      "producedByRoles": [
+        "ROLE_SPIKE"
+      ]
+    },
+    "STATIC_CHECK_RESULT": {
+      "requiredByGates": [
+        "G_PF_IMPL"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "Security review record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "Source synchronization record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ADMIN_DOC",
+        "ROLE_BUSINESS_DOC",
+        "ROLE_CONSULTING",
+        "ROLE_ENDUSER_DOC",
+        "ROLE_ONBOARDING",
+        "ROLE_TECH_DOC"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ADMIN_DOC",
+        "ROLE_BUSINESS_DOC",
+        "ROLE_CONSULTING",
+        "ROLE_ENDUSER_DOC",
+        "ROLE_ONBOARDING",
+        "ROLE_TECH_DOC"
+      ]
+    },
+    "Spike findings record explicitly classified as evidence": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SPIKE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SPIKE"
+      ]
+    },
+    "State and empty/error-case coverage record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_UX_DESIGN"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_UX_DESIGN"
+      ]
+    },
+    "Stated limitations": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SPIKE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SPIKE"
+      ]
+    },
+    "Static check results": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "TENANT_ISOLATION_VERIFICATION": {
+      "requiredByGates": [
+        "G_PF_SECURITY",
+        "G_SEC_VERIFIED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_SECURITY_RELEASE",
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY",
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "TEST_RESULT": {
+      "requiredByGates": [
+        "G_DF_FIXED",
+        "G_PF_IMPL"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "TEST_SPECIFICATION": {
+      "requiredByGates": [
+        "G_PF_TESTS"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "THREAT_ANALYSIS": {
+      "requiredByGates": [
+        "G_SEC_DESIGN"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "Tenant isolation verification": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SECURITY_RELEASE"
+      ]
+    },
+    "Test execution result": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_TEST_DEBUG"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_TEST_DEBUG"
+      ]
+    },
+    "Test results": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_CODING"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_CODING"
+      ]
+    },
+    "Time-box adherence record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_SPIKE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_SPIKE"
+      ]
+    },
+    "VERIFICATION_RECORD": {
+      "requiredByGates": [
+        "G_PF_VERIFIED"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "VISUAL_REGRESSION_RESULT": {
+      "requiredByGates": [
+        "G_PF_VERIFIED",
+        "G_TH_VISUAL"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_QUALITY",
+        "ROLE_GUI_GOVERNANCE"
+      ],
+      "producedByRoles": [
+        "ROLE_GUI_GOVERNANCE",
+        "ROLE_QUALITY"
+      ]
+    },
+    "Verification record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_QUALITY"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_QUALITY"
+      ]
+    },
+    "Visual regression result": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_GUI_GOVERNANCE"
+      ]
+    },
+    "WORKLOAD_DEFINITION": {
+      "requiredByGates": [
+        "G_PE_BASELINE"
+      ],
+      "declaredProducerRoles": [],
+      "derivedProducerRoles": [
+        "ROLE_ARCHITECTURE"
+      ],
+      "producedByRoles": [
+        "ROLE_ARCHITECTURE"
+      ]
+    },
+    "Work classification record": {
+      "requiredByGates": [],
+      "declaredProducerRoles": [
+        "ROLE_ORCHESTRATOR"
+      ],
+      "derivedProducerRoles": [],
+      "producedByRoles": [
+        "ROLE_ORCHESTRATOR"
+      ]
+    }
+  }
+}

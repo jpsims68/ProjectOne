@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.work-item.schema.json",
+  "title": "PAF Work Item",
+  "description": "The central governed record. Classification precedes implementation: a work item without type, risk class, owner and lifecycle state cannot be implemented.",
+  "type": "object",
+  "required": ["workItemId", "title", "workType", "lifecycleState", "riskClass", "accountableOwnerRole", "sourceBundle", "createdAt"],
+  "properties": {
+    "workItemId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "title": { "type": "string", "minLength": 1 },
+    "workType": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "lifecycleState": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "priorLifecycleState": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "riskClass": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "riskClassificationRecordId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "accountableOwnerRole": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+    "participatingRoles": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "sourceBundle": {
+      "type": "array", "minItems": 1,
+      "description": "The authority-bearing sources supplied for this work, each with its use classification. Least-authority: an agent receives only what its role and work type require.",
+      "items": {
+        "type": "object",
+        "required": ["sourceId", "version", "useClassification"],
+        "properties": {
+          "sourceId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "version": { "type": "string" },
+          "useClassification": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "overlaysApplied": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "acceptanceCriteria": { "type": "array", "items": { "type": "string" } },
+    "requiredEvidence": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "producedEvidence": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/evidenceRef" } },
+    "requiredIndependentReviews": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "requiredHumanApprovals": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "openExceptions": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/identifier" } },
+    "deferralRecords": {
+      "type": "array",
+      "description": "No-migration shape enforcement (spec §4.3).",
+      "items": {
+        "type": "object",
+        "required": ["deferralId", "deferralClass", "rationale"],
+        "properties": {
+          "deferralId": { "$ref": "paf.common.schema.json#/$defs/identifier" },
+          "deferralClass": {
+            "enum": ["FUNCTIONALITY_ONLY", "STRUCTURAL_DESIGN", "UNDECLARED"],
+            "description": "FUNCTIONALITY_ONLY is a scheduling decision. STRUCTURAL_DESIGN affects what accumulated state will later require and cannot be reversed without transforming existing data. UNDECLARED is treated as STRUCTURAL_DESIGN (CR-5)."
+          },
+          "designLineItemRetained": {
+            "type": "boolean",
+            "description": "For FUNCTIONALITY_ONLY, asserts the supporting design remains above the cut line. Deferred is never free."
+          },
+          "rationale": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "unconfiguredControlWarnings": { "type": "array", "items": { "$ref": "paf.common.schema.json#/$defs/unconfiguredControlWarning" } },
+    "createdAt": { "$ref": "paf.common.schema.json#/$defs/timestamp" },
+    "updatedAt": { "$ref": "paf.common.schema.json#/$defs/timestamp" }
+  },
+  "additionalProperties": false
+}

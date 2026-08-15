@@ -1,0 +1,69 @@
+{
+  "header": {
+    "artifactId": "WF_SPIKE",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_SPIKE",
+  "displayName": "Build-to-Learn Spike",
+  "appliesToWorkTypes": [
+    "SPIKE",
+    "EXPERIMENT"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "SPIKE",
+      "owningRole": "ROLE_SPIKE"
+    },
+    {
+      "stageClass": "DESIGN",
+      "owningRole": "ROLE_ARCHITECTURE"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_SP_BOUNDED",
+      "afterStageClass": "INTAKE",
+      "requiredEvidenceClasses": [
+        "SPIKE_CHARTER"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_SP_FINDINGS",
+      "afterStageClass": "SPIKE",
+      "requiredEvidenceClasses": [
+        "SPIKE_FINDINGS_RECORD"
+      ],
+      "closureAuthority": [
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "exceptionEligible": false
+    }
+  ],
+  "terminalConditions": [
+    "Findings recorded as evidence and time box closed"
+  ],
+  "stopConditions": [
+    "Spike output would be promoted directly to canon or production"
+  ]
+}

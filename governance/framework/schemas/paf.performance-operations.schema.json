@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.performance-operations.schema.json",
+  "title": "PAF Performance & Operations Contract (Step 24)",
+  "description": "Makes performance and production-observation requirements durable and testable rather than anecdotal.",
+  "type": "object",
+  "required": ["header", "performanceContracts", "workloadDefinitionRule", "observationRecordRule", "stableApprovalRule", "deploymentEvidenceRule", "rollbackRule"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "performanceContracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["contractId", "metric", "threshold", "workloadRef"],
+        "properties": {
+          "contractId": { "type": "string" },
+          "metric": { "type": "string" },
+          "threshold": { "type": "string" },
+          "workloadRef": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "workloadDefinitionRule": {
+      "const": "A performance contract without a representative, versioned workload definition is unverifiable and does not count as a contract."
+    },
+    "observationRecordRule": {
+      "const": "Production observation after deployment is required evidence, not optional monitoring. Absence of an observation record blocks Stable status."
+    },
+    "stableApprovalRule": {
+      "const": "STABLE status requires explicit human approval (approval class STABLE_STATUS) and cannot be inferred from elapsed time without incident."
+    },
+    "deploymentEvidenceRule": {
+      "const": "Every deployment produces a deployment record linking the release readiness record, the artifact version deployed, and the environment."
+    },
+    "rollbackRule": {
+      "const": "Deployment evidence is incomplete without a verified recovery/rollback procedure per paf.recovery.schema.json. An untested recovery is not a recovery."
+    }
+  },
+  "additionalProperties": false
+}

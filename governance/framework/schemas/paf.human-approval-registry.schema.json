@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paf.human-approval-registry.schema.json",
+  "title": "PAF Human Approval Authority & Continuity Registry Contract (Step 10)",
+  "description": "Authority Interface AI-2. Makes human gates machine-resolvable without weakening owner authority. The contract mandates a fail-closed default for unmapped obligations and structurally forbids agent approval.",
+  "type": "object",
+  "required": ["header", "globalRules", "nonDelegableClasses", "approvalClasses", "safeHoldState", "validation"],
+  "properties": {
+    "header": { "$ref": "paf.common.schema.json#/$defs/artifactHeader" },
+    "globalRules": {
+      "type": "array", "minItems": 1,
+      "description": "Must include: approval is never satisfied by silence, elapsed time, agent recommendation, majority, role relabeling, or emergency status; an agent can never be a delegated human authority; unavailable approver forces SAFE_HOLD; unmapped obligations default to non-waivable.",
+      "items": { "type": "string" }
+    },
+    "nonDelegableClasses": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "approvalClasses": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["approvalClassId", "humanApprovalRequirementClass", "delegationPermitted", "preAuthorizationPermitted", "safeHoldBehavior"],
+        "properties": {
+          "approvalClassId": { "type": "string", "minLength": 1 },
+          "governingRefs": { "type": ["array", "string"], "items": { "type": "string" } },
+          "humanApprovalRequirementClass": { "type": "string" },
+          "currentPrimaryApprover": { "type": "string" },
+          "delegationPermitted": { "type": "boolean" },
+          "preAuthorizationPermitted": { "type": "boolean" },
+          "currentDelegate": { "type": ["string", "null"] },
+          "safeHoldBehavior": { "type": "string" },
+          "delegationRule": { "type": "string" },
+          "preAuthorizationRule": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "continuityRecordSchema": {
+      "type": "object",
+      "description": "Delegation/pre-authorization records. Must require a named human, explicit scope, criteria, and an expiry; a record missing any of these is invalid.",
+      "additionalProperties": true
+    },
+    "safeHoldState": { "type": "string", "minLength": 1 },
+    "validation": {
+      "type": "object",
+      "required": ["agentCanApprove"],
+      "properties": {
+        "approvalClassCount": { "type": "integer" },
+        "unmappedExplicitHumanGatePolicy": { "type": "string" },
+        "agentCanApprove": {
+          "const": false,
+          "description": "Structural, not advisory. A registry instance asserting true is rejected by the contract."
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,80 @@
+{
+  "header": {
+    "artifactId": "WF_METHODOLOGY",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PAF-BINDING-MODEL"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "workflowId": "WF_METHODOLOGY",
+  "displayName": "Methodology Catalog Change",
+  "appliesToWorkTypes": [
+    "METHODOLOGY_CHANGE",
+    "METRIC_DEFINITION_CHANGE"
+  ],
+  "riskSensitivity": "Stage sequence is invariant across risk classes. Higher risk thickens the control bundle at each gate: more evidence classes, stricter independence mechanism, and additional human approval.",
+  "stageSequence": [
+    {
+      "stageClass": "INTAKE",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "DESIGN",
+      "owningRole": "ROLE_METHODOLOGY"
+    },
+    {
+      "stageClass": "VERIFICATION",
+      "owningRole": "ROLE_QUALITY"
+    },
+    {
+      "stageClass": "OWNER_APPROVAL",
+      "owningRole": "ROLE_ORCHESTRATOR"
+    },
+    {
+      "stageClass": "DOCUMENTATION",
+      "owningRole": "ROLE_TECH_DOC"
+    }
+  ],
+  "gates": [
+    {
+      "gateId": "G_ME_DEFINED",
+      "afterStageClass": "DESIGN",
+      "requiredEvidenceClasses": [
+        "METHODOLOGY_DEFINITION_RECORD",
+        "RECOMPUTABILITY_EVIDENCE"
+      ],
+      "closureAuthority": [
+        "DETERMINISTIC_CHECK",
+        "INDEPENDENT_REVIEW"
+      ],
+      "independenceRequired": true,
+      "exceptionEligible": false
+    },
+    {
+      "gateId": "G_ME_APPROVED",
+      "afterStageClass": "OWNER_APPROVAL",
+      "requiredEvidenceClasses": [
+        "HUMAN_APPROVAL_RECORD"
+      ],
+      "closureAuthority": [
+        "HUMAN_APPROVAL"
+      ],
+      "independenceRequired": false,
+      "exceptionEligible": false,
+      "humanApprovalCategoryRef": "CANONICAL_METHODOLOGY_DEFINITION"
+    }
+  ],
+  "terminalConditions": [
+    "Owner approves the canonical definition"
+  ],
+  "stopConditions": [
+    "A metric could not be recomputed from its stated additive components"
+  ]
+}

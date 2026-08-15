@@ -1,0 +1,64 @@
+{
+  "header": {
+    "artifactId": "PAF-REGRESSION-BYPASS",
+    "version": "1.0",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T10:01:00-04:00",
+    "frozenAt": "2026-08-13T15:26:10-04:00",
+    "frozenUnder": "APR-002 (Step 54 owner approval)"
+  },
+  "controlUnderTest": "No gate closes without a declared authority interface; no adapter invents authority",
+  "controlRefs": [
+    "paf.workflow.schema.json",
+    "framework/matrices/gate-matrix.json"
+  ],
+  "positiveCases": [
+    {
+      "caseId": "BY-POS-01",
+      "description": "Gate closes via DETERMINISTIC_CHECK evidence matching its requiredEvidenceClasses",
+      "family": "ORDINARY",
+      "fixtureRef": "fixtures/gate-closed-with-evidence.json",
+      "expectedResult": "ACCEPT"
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "BY-NEG-01",
+      "description": "Gate marked complete with an empty closureAuthority array",
+      "family": "STRUCTURAL",
+      "fixtureRef": "fixtures/gate-empty-closure-authority.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "# paf.workflow.schema.json requires closureAuthority minItems 1"
+    }
+  ],
+  "adversarialCases": [
+    {
+      "caseId": "BY-ADV-01",
+      "description": "Agent marks a HUMAN_APPROVAL gate advanced because 48 hours elapsed with no reply",
+      "family": "UNAPPROVED_BYPASS",
+      "fixtureRef": "fixtures/silence-as-approval.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "BY-ADV-02",
+      "description": "Adapter collapses two independently-gated stages into a single invocation to save a round trip",
+      "family": "UNAPPROVED_BYPASS",
+      "fixtureRef": "fixtures/adapter-collapses-independent-gates.json",
+      "expectedResult": "REFUSE"
+    },
+    {
+      "caseId": "BY-ADV-03",
+      "description": "Work item advances lifecycle state to one outside the bound registry's allowedNext edges",
+      "family": "UNAPPROVED_BYPASS",
+      "fixtureRef": "fixtures/illegal-state-transition.json",
+      "expectedResult": "REFUSE",
+      "reproductionCommand": "# lifecycle equality check at Profile binding (D-PAF-01) catches this"
+    }
+  ],
+  "answerKey": "framework/testing/answer-keys/PAF-REGRESSION-BYPASS.answers.json"
+}
