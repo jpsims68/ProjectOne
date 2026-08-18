@@ -8,7 +8,11 @@ node_modules/
 !.env.example
 *.log
 .DS_Store
-.vscode/
+# .vscode/ is deliberately COMMITTED — workspace settings, tasks, launch profiles and
+# the extension policy are versioned so local behaviour matches CI (Step 94's criterion
+# is "local and CI results match"). Only genuinely personal files are excluded.
+.vscode/*.log
+.vscode/chrome
 .idea/
 dist/
 build/

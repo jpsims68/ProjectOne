@@ -16,21 +16,49 @@ Rules:
 
 Exit 0 = clean. Exit 1 = violation.
 """
-import pathlib, re, sys
+
+import pathlib
+import re
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 ALLOWED_ROOT = {
-    "README.md", ".gitignore", "LICENSE", "CONTRIBUTING.md", "SECURITY.md",
-    "requirements.txt", "requirements-dev.txt", "pyproject.toml", ".ruff.toml",
-    "package.json", "package-lock.json", ".editorconfig", ".gitattributes",
+    "README.md",
+    ".gitignore",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "requirements.txt",
+    "requirements-dev.txt",
+    "pyproject.toml",
+    ".ruff.toml",
+    "package.json",
+    "package-lock.json",
+    ".editorconfig",
+    ".gitattributes",
+    # Added Steps 92-100: environment variable TEMPLATE — carries NAMES only.
+    # ".env" itself is deliberately NOT allowed here and is refused outright by
+    # check_no_secrets.py, because it carries VALUES.
+    ".env.example",
+    "uv.lock",
+    "vite.config.ts",
+    "tsconfig.json",
+    "index.html",
 }
 
 # Names that identify governance/framework artifacts wherever they appear.
 GOVERNED_PATTERNS = [
-    r"^paf\..*\.json$", r"^PAF-.*\.(json|md)$", r"^ROLE_.*\.json$", r"^WF_.*\.json$",
-    r"^PROJECTONE-.*\.json$", r"^SHA256SUMS\.txt$", r"^CP-\d+.*\.json$",
-    r".*-matrix\.json$", r"^paf_engine\.py$", r"^validate_run\d\.py$",
+    r"^paf\..*\.json$",
+    r"^PAF-.*\.(json|md)$",
+    r"^ROLE_.*\.json$",
+    r"^WF_.*\.json$",
+    r"^PROJECTONE-.*\.json$",
+    r"^SHA256SUMS\.txt$",
+    r"^CP-\d+.*\.json$",
+    r".*-matrix\.json$",
+    r"^paf_engine\.py$",
+    r"^validate_run\d\.py$",
     r"^run_(all_validation|dryrun|regression|replay)\.py$",
     r"^(conformance_probe|activation_checkpoint|assess_verification_readiness)\.py$",
 ]
@@ -45,9 +73,8 @@ for p in sorted(ROOT.rglob("*")):
     if not p.is_file() or ".git" in p.parts:
         continue
     rel = p.relative_to(ROOT)
-    if any(re.match(pat, p.name) for pat in GOVERNED_PATTERNS):
-        if rel.parts[0] != "governance":
-            viol.append(f"[LAYOUT] governance artifact outside governance/: {rel}")
+    if any(re.match(pat, p.name) for pat in GOVERNED_PATTERNS) and rel.parts[0] != "governance":
+        viol.append(f"[LAYOUT] governance artifact outside governance/: {rel}")
 
 print("=" * 72)
 print("GOVERNANCE CHECK — repository layout")

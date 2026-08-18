@@ -1,0 +1,107 @@
+{
+  // Step 97 — tasks. Every task runs the SAME command CI runs, so that Step 94's
+  // criterion ("local and CI results match") is true by construction rather than
+  // by coincidence. If a task here diverges from CI, that is a defect.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "env: sync (uv)",
+      "type": "shell",
+      "command": "uv sync",
+      "problemMatcher": [],
+      "detail": "Make the local environment match uv.lock exactly. Run after pulling."
+    },
+    {
+      "label": "lint: ruff check",
+      "type": "shell",
+      "command": "uv run ruff check .",
+      "problemMatcher": [],
+      "group": "test",
+      "detail": "Identical to the CI lint step."
+    },
+    {
+      "label": "format: ruff format",
+      "type": "shell",
+      "command": "uv run ruff format .",
+      "problemMatcher": [],
+      "detail": "ruff is the single formatting authority — replaces black and isort."
+    },
+    {
+      "label": "types: mypy",
+      "type": "shell",
+      "command": "uv run mypy .",
+      "problemMatcher": [],
+      "group": "test",
+      "detail": "mypy is the type-checking AUTHORITY. Pylance advises only."
+    },
+    {
+      "label": "test: pytest",
+      "type": "shell",
+      "command": "uv run pytest tests -q",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "security: pip-audit",
+      "type": "shell",
+      "command": "uv run pip-audit",
+      "problemMatcher": [],
+      "detail": "Dependency vulnerability scan — identical to CI."
+    },
+    {
+      "label": "security: bandit",
+      "type": "shell",
+      "command": "uv run bandit -r slices platform -q",
+      "problemMatcher": [],
+      "detail": "Static application security scan — identical to CI."
+    },
+    {
+      "label": "governance: repository layout",
+      "type": "shell",
+      "command": "python governance/scripts/check_repository_layout.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "governance: secret protection",
+      "type": "shell",
+      "command": "python governance/scripts/check_no_secrets.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "governance: slice boundaries",
+      "type": "shell",
+      "command": "python governance/scripts/check_slice_boundaries.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "governance: baseline integrity",
+      "type": "shell",
+      "command": "python governance/scripts/check_baseline_integrity.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "ALL: run every CI check locally",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "governance: repository layout",
+        "governance: secret protection",
+        "governance: slice boundaries",
+        "governance: baseline integrity",
+        "lint: ruff check",
+        "types: mypy",
+        "test: pytest",
+        "security: pip-audit",
+        "security: bandit"
+      ],
+      "problemMatcher": [],
+      "detail": "Run this BEFORE pushing. If it passes here and fails in CI, that mismatch is itself a defect worth reporting."
+    },
+    {
+      "label": "db: connect (local dev)",
+      "type": "shell",
+      "command": "sqlcmd -S \"localhost\\MSSQLSERVERLOCAL\" -E -d master -Q \"SELECT name FROM sys.databases ORDER BY database_id;\"",
+      "problemMatcher": [],
+      "detail": "Windows Integrated Auth — no credential stored anywhere."
+    }
+  ]
+}

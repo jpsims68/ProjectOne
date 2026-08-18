@@ -1,0 +1,94 @@
+{
+  // ProjectOne workspace settings (Steps 93-97)
+  // Versioned in the repository so local behaviour is reproducible, not per-machine.
+  // Step 94's completion criterion is "local and CI results match" — these settings
+  // exist to make that true rather than hoped for.
+
+  // ---- Python interpreter: uv-managed venv in the repo -------------------
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+
+  // ---- Type checking: mypy is the authority, Pylance advises only --------
+  // CI runs mypy. Pylance uses a different engine (Pyright); they disagree in real
+  // cases. Pylance is set to "basic" so it assists without becoming a second,
+  // conflicting arbiter that would produce green-locally / red-in-CI.
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+
+  // ---- Per-language formatting ------------------------------------------
+  // ruff is the single Python authority: it replaces black + isort + flake8,
+  // so one tool produces one result, identical to CI.
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[javascript]":      { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.tabSize": 2 },
+  "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.tabSize": 2 },
+  "[typescript]":      { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.tabSize": 2 },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.tabSize": 2 },
+  "[json]":            { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.tabSize": 2 },
+  "[jsonc]":           { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.tabSize": 2 },
+  "[yaml]":            { "editor.defaultFormatter": "redhat.vscode-yaml",     "editor.tabSize": 2 },
+  "[markdown]":        { "editor.wordWrap": "on", "files.trimTrailingWhitespace": false },
+  "[sql]":             { "editor.formatOnSave": false },
+
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  // SQL connections are configured locally, never committed — a connection entry
+  // here would be a credential reference in version control.
+  "mssql.connections": [],
+
+  // ---- Safe editor defaults --------------------------------------------
+  "editor.tabSize": 4,
+  "editor.rulers": [100],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.eol": "\n",
+  "files.associations": { "*.env.example": "properties" },
+
+  // ---- Exclusions ------------------------------------------------------
+  // Keep the frozen framework baseline out of search and file watchers: it is
+  // large, immutable, and hash-verified in CI. Editing it by accident would fail
+  // the baseline integrity check.
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/node_modules/**": true,
+    "**/__pycache__/**": true,
+    "**/.ruff_cache/**": true,
+    "**/.pytest_cache/**": true,
+    "**/governance/framework/**": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/uv.lock": true,
+    "**/package-lock.json": true
+  },
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.ruff_cache": true,
+    "**/.pytest_cache": true
+  },
+
+  // ---- Testing (Step 95) -----------------------------------------------
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests", "-q"],
+  "python.testing.autoTestDiscoverOnSaveEnabled": true,
+
+  // ---- Git -------------------------------------------------------------
+  // Direct commits to main are refused by branch protection anyway; this stops
+  // VS Code from offering the path in the first place.
+  "git.branchProtection": ["main"],
+  "git.branchProtectionPrompt": "alwaysPrompt",
+  "git.autofetch": true,
+  "git.confirmSync": true,
+  "githubPullRequests.pushBranch": "never"
+}

@@ -7,7 +7,10 @@ recovery, or deferral declaration.
 Usage: python3 check_pr_governance.py <pr_body_file>
 Exit 0 = clean. Exit 1 = violation.
 """
-import re, sys, pathlib
+
+import pathlib
+import re
+import sys
 
 body = pathlib.Path(sys.argv[1]).read_text() if len(sys.argv) > 1 else ""
 low = body.lower()
@@ -19,29 +22,43 @@ if not m:
 risk = m.group(1).upper() if m else None
 
 if not re.search(r"\*\*basis:\*\*\s*\S", body, re.I):
-    viol.append("Risk basis empty — which triggers fired, and which higher-class conditions were checked?")
+    viol.append(
+        "Risk basis empty — which triggers fired, and which higher-class conditions were checked?"
+    )
 
-if not re.search(r"\|\s*\S+.*\|.*http|\|\s*\S+.*\|\s*\S+\s*\|", body):
-    if "no evidence" not in low:
-        viol.append("Evidence table appears empty — a description of a result is not evidence")
+if not re.search(r"\|\s*\S+.*\|.*http|\|\s*\S+.*\|\s*\S+\s*\|", body) and "no evidence" not in low:
+    viol.append("Evidence table appears empty — a description of a result is not evidence")
 
 if "[x] every criterion reported pass was actually examined" not in low:
     viol.append("Evidence-honesty attestation not checked (non-waivable invariant)")
 
-if not re.search(r"\*\*recovery class:\*\*\s*(ROLLBACK|ROLL_FORWARD|CONTAINMENT|NOT_RECOVERABLE_BY_DESIGN)", body, re.I):
+if not re.search(
+    r"\*\*recovery class:\*\*\s*(ROLLBACK|ROLL_FORWARD|CONTAINMENT|NOT_RECOVERABLE_BY_DESIGN)",
+    body,
+    re.I,
+):
     viol.append("Recovery class missing — recovery is part of completion, not a postscript")
 
 if not re.search(r"\[x\].*deferral|\[x\].*deferred", low):
-    viol.append("Design deferral declaration missing — an undeclared deferral is treated as structural")
+    viol.append(
+        "Design deferral declaration missing — an undeclared deferral is treated as structural"
+    )
 
-if risk in ("R3", "R4"):
-    if not re.search(r"\*\*mechanism used:\*\*\s*(SEPARATE_INVOCATION_CLEAN_CONTEXT|DETERMINISTIC_NONJUDGMENTAL_CHECK|HUMAN_REVIEW|DIFFERENT_MODEL_OR_MODEL_FAMILY)", body, re.I):
-        viol.append(f"{risk} requires a declared independence mechanism — a role label alone never qualifies")
+if risk in ("R3", "R4") and not re.search(
+    r"\*\*mechanism used:\*\*\s*(SEPARATE_INVOCATION_CLEAN_CONTEXT|DETERMINISTIC_NONJUDGMENTAL_CHECK|HUMAN_REVIEW|DIFFERENT_MODEL_OR_MODEL_FAMILY)",
+    body,
+    re.I,
+):
+    viol.append(
+        f"{risk} requires a declared independence mechanism — a role label alone never qualifies"
+    )
 if risk == "R4":
     if not re.search(r"DETERMINISTIC_NONJUDGMENTAL_CHECK", body, re.I):
         viol.append("R4 requires a deterministic check in addition to independent judgment")
     if not re.search(r"\*\*approved by / date:\*\*\s*\S", body, re.I):
-        viol.append("R4 requires recorded human approval — never inferred from silence or elapsed time")
+        viol.append(
+            "R4 requires recorded human approval — never inferred from silence or elapsed time"
+        )
 
 print("=" * 72)
 print("GOVERNANCE CHECK — pull request metadata")
