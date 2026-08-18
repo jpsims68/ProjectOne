@@ -137,11 +137,12 @@
       "name": "npm",
       "category": "BUILD_TOOL",
       "status": "ACTIVE",
-      "approvedVersionRange": "bundled with Node 22",
+      "approvedVersionRange": "bundled with Node 24",
       "role": "Frontend dependency management",
       "approvedBy": "John",
       "approvedAt": "2026-08-17T13:43:45-04:00",
-      "notes": "package-lock.json committed. Standard tooling; no benefit to diverging."
+      "notes": "package-lock.json committed. Standard tooling; no benefit to diverging.",
+      "amendmentNote": "Corrected from 'bundled with Node 22' \u2014 stale since the Node range was amended >=22,<23 -> >=24,<25 on 2026-08-17. DOC-LAG, not a new decision."
     },
     {
       "name": "pytest",
@@ -453,6 +454,11 @@
     {
       "date": "2026-08-18T16:22:00-04:00",
       "change": "pytest range amended >=8,<9 -> >=9.0.3,<10 (PYSEC-2026-1845 remediation). Surfaced by the repaired Security scan gate on its first honest run.",
+      "approver": "John"
+    },
+    {
+      "date": "2026-08-18T19:05:00-04:00",
+      "change": "npm entry corrected 'bundled with Node 22' -> 'bundled with Node 24' (DOC-LAG \u2014 text had not tracked the Node amendment)",
       "approver": "John"
     }
   ]
