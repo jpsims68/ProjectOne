@@ -24,6 +24,14 @@ dev = [
 
 # ---- ruff: the single Python formatting and linting authority ---------------
 # Identical configuration is used locally and in CI. One tool, one result.
+[tool.uv]
+# The repository is not a distributable package. It has a flat layout with two
+# top-level directories (app/, governance/), so any build backend would have to
+# be told which one to package — a packaging decision that is premature while
+# production implementation is NOT AUTHORIZED. package = false tells uv to
+# install dependencies only and never attempt to build this project.
+package = false
+
 [tool.ruff]
 line-length = 100
 target-version = "py313"

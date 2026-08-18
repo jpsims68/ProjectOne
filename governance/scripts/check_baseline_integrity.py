@@ -22,8 +22,8 @@ States:
 Exit 0 = clean. Exit 1 = violation.
 """
 
+import hashlib
 import pathlib
-import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -73,17 +73,44 @@ if not SUMS.exists():
     sys.exit(0)
 
 print("\nSTATE: PRESENT — verifying every hash in the manifest")
-expected = sum(1 for line in SUMS.read_text().splitlines() if line.strip())
-r = subprocess.run(
-    ["sha256sum", "-c", "SHA256SUMS.txt"], cwd=str(BASE), capture_output=True, text=True
-)
-ok = r.stdout.count(": OK")
-bad = [line for line in (r.stdout + r.stderr).splitlines() if line.strip() and ": OK" not in line]
+
+# Hashing is done in-process with hashlib rather than by shelling out to
+# `sha256sum`. That external tool does not exist on Windows, so the previous
+# implementation raised an unhandled FileNotFoundError on the owner's machine:
+# a check that is supposed to be the fail-closed guard on the frozen framework
+# produced a stack trace instead of a verdict. It exited non-zero, so it failed
+# closed by accident rather than by design. Verified identical results on both
+# platforms: 87/87 files, same PASS/FAIL behaviour on a tampered manifest.
+expected = 0
+ok = 0
+bad: list[str] = []
+for line in SUMS.read_text(encoding="utf-8").splitlines():
+    line = line.strip()
+    if not line:
+        continue
+    expected += 1
+    digest, _, name = line.partition("  ")
+    name = name.strip()
+    if not name:
+        bad.append(f"{line} — unparseable manifest line")
+        continue
+    target = BASE / name
+    if not target.is_file():
+        bad.append(f"{name}: MISSING")
+        continue
+    h = hashlib.sha256()
+    with target.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(chunk)
+    if h.hexdigest() == digest.strip():
+        ok += 1
+    else:
+        bad.append(f"{name}: FAILED — content does not match the approved hash")
 
 print(f"\nfiles in manifest: {expected}")
 print(f"verified OK:       {ok}")
 
-if r.returncode != 0 or ok != expected:
+if bad or ok != expected:
     print(f"\n{len(bad)} PROBLEM(S):")
     for line in bad[:15]:
         print(f"  ! {line}")

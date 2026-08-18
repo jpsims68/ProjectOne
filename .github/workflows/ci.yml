@@ -60,48 +60,37 @@ jobs:
           done
           echo "Layout verified: pyproject.toml, app/, tests/ present."
 
-      - name: Install dependencies
-        # The project is NOT installed as a package. It has no [build-system] and a
-        # flat layout, so setuptools auto-discovery sees app/ and governance/ as two
-        # top-level packages and errors. Declaring packaging config now would be a
-        # premature decision (production implementation is NOT AUTHORIZED), so
-        # dependencies are read straight from pyproject.toml — still one source of
-        # truth — and app/ is importable because pytest puts rootdir on sys.path.
+      - name: Install dependencies from the lockfile
+        # uv.lock is the reproducibility record required by the technology
+        # registry's versionPinningPolicy. --frozen means CI installs EXACTLY the
+        # locked set and fails if uv.lock is stale relative to pyproject.toml —
+        # so the owner's machine and this runner can no longer silently diverge.
+        # uv is installed via pip rather than a third-party setup action, to keep
+        # no external service in the path of a required status check.
         run: |
-          # pip is upgraded because pip-audit audits the RESOLVED ENVIRONMENT, and
-          # pip is part of it. The pip shipped by setup-python lagged behind the
-          # fixes for PYSEC-2026-1796 / -196 / -2875 / -2876, so an un-upgraded pip
-          # fails the Security scan on its own account. Verified in a clean venv:
-          # pip 24.0 reports 4 vulnerabilities, pip 26.2.1 reports none.
-          python -m pip install --upgrade pip
-          pip --version
-          python - > /tmp/requirements-ci.txt <<'PY'
-          import tomllib
-          d = tomllib.load(open("pyproject.toml", "rb"))
-          print("\n".join(list(d["project"]["dependencies"]) + list(d["dependency-groups"]["dev"])))
-          PY
-          cat /tmp/requirements-ci.txt
-          pip install -r /tmp/requirements-ci.txt
+          pip install uv
+          uv --version
+          uv sync --frozen --all-groups
 
       - name: Verify interpreter matches declared range
         run: |
-          python -c "import sys; assert sys.version_info[:2]==(3,13), f'Expected 3.13.x, got {sys.version.split()[0]}'; print('Interpreter OK:', sys.version.split()[0])"
+          uv run python -c "import sys; assert sys.version_info[:2]==(3,13), f'Expected 3.13.x, got {sys.version.split()[0]}'; print('Interpreter OK:', sys.version.split()[0])"
 
       - name: Lint
-        run: ruff check .
+        run: uv run ruff check .
 
       - name: Format check
-        run: ruff format --check .
+        run: uv run ruff format --check .
 
       - name: Type check
         # governance/scripts is deliberately in scope: those are the active CI
         # enforcement checks, held to the same standard as application code.
-        run: mypy app tests governance/scripts
+        run: uv run mypy app tests governance/scripts
 
       - name: Test
         # local_env marks tests needing the owner's machine (SQL Server, ODBC
         # Driver 18). Everything else must run and pass here.
-        run: pytest -q -m "not local_env"
+        run: uv run pytest -q -m "not local_env"
 
   security-scan:
     name: Security scan
@@ -119,33 +108,22 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq unixodbc
 
-      - name: Install dependencies
-        # The project is NOT installed as a package. It has no [build-system] and a
-        # flat layout, so setuptools auto-discovery sees app/ and governance/ as two
-        # top-level packages and errors. Declaring packaging config now would be a
-        # premature decision (production implementation is NOT AUTHORIZED), so
-        # dependencies are read straight from pyproject.toml — still one source of
-        # truth — and app/ is importable because pytest puts rootdir on sys.path.
+      - name: Install dependencies from the lockfile
+        # uv.lock is the reproducibility record required by the technology
+        # registry's versionPinningPolicy. --frozen means CI installs EXACTLY the
+        # locked set and fails if uv.lock is stale relative to pyproject.toml —
+        # so the owner's machine and this runner can no longer silently diverge.
+        # uv is installed via pip rather than a third-party setup action, to keep
+        # no external service in the path of a required status check.
         run: |
-          # pip is upgraded because pip-audit audits the RESOLVED ENVIRONMENT, and
-          # pip is part of it. The pip shipped by setup-python lagged behind the
-          # fixes for PYSEC-2026-1796 / -196 / -2875 / -2876, so an un-upgraded pip
-          # fails the Security scan on its own account. Verified in a clean venv:
-          # pip 24.0 reports 4 vulnerabilities, pip 26.2.1 reports none.
-          python -m pip install --upgrade pip
-          pip --version
-          python - > /tmp/requirements-ci.txt <<'PY'
-          import tomllib
-          d = tomllib.load(open("pyproject.toml", "rb"))
-          print("\n".join(list(d["project"]["dependencies"]) + list(d["dependency-groups"]["dev"])))
-          PY
-          cat /tmp/requirements-ci.txt
-          pip install -r /tmp/requirements-ci.txt
+          pip install uv
+          uv --version
+          uv sync --frozen --all-groups
 
       - name: Dependency vulnerability scan
         # Audits the resolved environment. The previous revision audited a
         # requirements.txt that does not exist and passed unconditionally.
-        run: pip-audit --strict
+        run: uv run pip-audit --strict
 
       - name: Static security analysis
         # Targets app/. The previous revision targeted slices/ and platform/,
@@ -155,4 +133,4 @@ jobs:
             echo "::error::app/ is missing — nothing to scan. Absent-unexpected."
             exit 1
           fi
-          bandit -r app -q
+          uv run bandit -r app -q
