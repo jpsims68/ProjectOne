@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-17T21:40:22-04:00",
+  "snapshotDateTime": "2026-08-18T19:05:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-100-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -108,9 +108,12 @@
     97,
     98,
     99,
-    100
+    100,
+    101,
+    102,
+    103
   ],
-  "currentStep": 100,
+  "currentStep": 103,
   "currentLifecycleState": "STABLE",
   "governanceBaseline": {
     "buildPolicy": "Build Requirements & Architecture Policy v1.2",
@@ -125,11 +128,11 @@
     "frameworkVersion": "1.0 FROZEN (core byte-identical since freeze)",
     "baselineVersion": "1.2 (v1.0 + CP-001..CP-005)",
     "profile": "1.5 ACTIVE (CP-001..CP-005 applied)",
-    "components": "131 frozen with SHA-256",
-    "approvals": "APR-001, APR-002, CP-001",
+    "components": "155 frozen with SHA-256 (v1.2)",
+    "approvals": "APR-001, APR-002, CP-001, CP-002, CP-003, CP-004, CP-005",
     "activationCheckpoint": "PASS 34/34",
     "validation": "9/9 suites",
-    "repository": "https://github.com/jpsims68/ProjectOne \u2014 main at 165 files; 7 required checks; workspace config committed",
+    "repository": "https://github.com/jpsims68/ProjectOne \u2014 main at 177 files; 7 required checks (all functional, no skip-and-pass); uv.lock committed",
     "technologyRegistry": "1.0 \u2014 29 approved entries (Steps 81-86)",
     "localEnvironment": "VS Code 1.133.0 | Python 3.13.5 | uv 0.11.29 | Node 24.16.0 | SQL Server 2022 Developer (MSSQLSERVERLOCAL) | ODBC 18"
   },
@@ -176,16 +179,6 @@
       "id": "OD-08",
       "subject": "Set required approvals to 1 when a second human joins",
       "status": "OPEN \u2014 change trigger"
-    },
-    {
-      "id": "OD-09",
-      "subject": "Repository resides inside OneDrive; sync locks can conflict with Git",
-      "status": "OPEN \u2014 monitor"
-    },
-    {
-      "id": "OD-13",
-      "subject": "Delete abandoned branch work/SETUP-004-local-workspace-config",
-      "status": "OPEN \u2014 housekeeping"
     }
   ],
   "openRisks": [
@@ -193,7 +186,7 @@
       "id": "R-01",
       "risk": "Remote GitHub/CI unavailable on this platform",
       "impact": "Steps 63-72,91,101,110 require owner execution",
-      "status": "OPEN - disposition due Step 57"
+      "status": "OPEN \u2014 disposition still pending. Steps 101 and 110 (repository verification, CI hardening) required owner hands-on execution as anticipated; no change to the underlying constraint. Carried forward rather than re-dated."
     },
     {
       "id": "R-02",
@@ -278,5 +271,17 @@
     "Do NOT rely on a governance check without negative-testing it; F-R10-01 passed a real secret"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE: (a) Verify the re-uploaded Core package SHA-256 equals packageChain.immutableCorpusHash; a mismatch is a STOP condition. (b) Verify this continuation package against its SHA256SUMS.txt. (c) Confirm predecessorPackageHash chains correctly. (d) Re-run all validators: validate_framework.py (15/15), validate_run2.py (21/21), validate_run3.py (18/18), validate_run4.py <core> (16/16), validate_run5.py (15/15), conformance_probe.py <core> (5/5). All must pass before new work. (e) Read PAF-SPEC v0.2 and PAF-FDR v1.0. (f) Proceed to Run 2 (Steps 11-20). Never assume prior container files exist.",
-  "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json \u2014 6 entries; MUST be checked before any listed target artifact is marked complete"
+  "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json \u2014 10 entries; MUST be checked before any listed target artifact is marked complete",
+  "resolvedDecisions": [
+    {
+      "id": "OD-09",
+      "subject": "Repository resides inside OneDrive; sync locks can conflict with Git",
+      "status": "RESOLVED \u2014 repository relocated outside OneDrive (2026-08-18)"
+    },
+    {
+      "id": "OD-13",
+      "subject": "Delete abandoned branch work/SETUP-004-local-workspace-config",
+      "status": "RESOLVED \u2014 abandoned branch deleted; remote confirmed to hold only main (2026-08-18)"
+    }
+  ]
 }
