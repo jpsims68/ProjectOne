@@ -147,10 +147,11 @@
       "name": "pytest",
       "category": "TESTING_TOOL",
       "status": "ACTIVE",
-      "approvedVersionRange": ">=8,<9",
+      "approvedVersionRange": ">=9.0.3,<10",
       "role": "Unit, component and integration tests",
       "approvedBy": "John",
-      "approvedAt": "2026-08-17T13:43:45-04:00"
+      "approvedAt": "2026-08-18T16:22:00-04:00",
+      "amendmentNote": "Range amended from >=8,<9. pytest 8.4.2 carries PYSEC-2026-1845 / CVE-2025-71176 (predictable /tmp/pytest-of-{user} path on UNIX; local DoS or possible privilege escalation), fixed in 9.0.3. Suite verified against 9.1.1 before amendment: collection, markers and all non-local_env tests behave identically. pip-audit clean after upgrade."
     },
     {
       "name": "pytest-cov",
@@ -447,6 +448,11 @@
     {
       "date": "2026-08-17T17:03:17-04:00",
       "change": "Added Pydantic >=2.8,<3 \u2014 runtime validation at trust boundaries; arrives with FastAPI regardless. Placement constraint recorded to prevent row-wise use over event data.",
+      "approver": "John"
+    },
+    {
+      "date": "2026-08-18T16:22:00-04:00",
+      "change": "pytest range amended >=8,<9 -> >=9.0.3,<10 (PYSEC-2026-1845 remediation). Surfaced by the repaired Security scan gate on its first honest run.",
       "approver": "John"
     }
   ]
