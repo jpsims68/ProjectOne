@@ -1,0 +1,59 @@
+{
+  "header": {
+    "artifactId": "CP-005",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-17T13:43:45-04:00"
+  },
+  "changePackageId": "CP-005",
+  "title": "Bind the ProjectOne technology registry (Steps 81-86)",
+  "rationale": "Steps 81-86 required pinning runtimes, database tooling, package management, testing, static analysis and security scanning. The CORE technology registry ships with zero entries by design (C-R3-03); the concrete stack is Profile content and binds here.",
+  "targetArtifact": "profile/PROJECTONE-Profile.json",
+  "versionTransition": {
+    "from": "1.4 ACTIVE",
+    "to": "1.5 ACTIVE"
+  },
+  "hashBefore": "f464e339a0b55f84b47b22bc3d815cca7f64e376c323338cdbbd0d2d732fb0c0",
+  "riskClass": "R2",
+  "riskBasis": "Tooling selection within an already-approved stack. No R4 or R3 trigger fires \u2014 no change to architecture, canonical data, security posture, or source authority. The three substantive choices inside it (Python 3.13, no migration framework, uv) were each put to the owner and confirmed.",
+  "ownerConfirmedDecisions": [
+    {
+      "id": "A",
+      "decision": "Python 3.13, not 3.14",
+      "confirmed": true
+    },
+    {
+      "id": "B",
+      "decision": "Numbered forward-only SQL scripts; NO migration framework (Alembic rejected as working against P-8)",
+      "confirmed": true
+    },
+    {
+      "id": "C",
+      "decision": "uv for Python dependency and environment management",
+      "confirmed": true,
+      "note": "Owner raised unfamiliarity with uv. Assessment corrected during discussion: pip-tools was equally unfamiliar AND has more concepts, so the learning-curve argument favours uv rather than opposing it."
+    }
+  ],
+  "changes": [
+    {
+      "field": "technologyRegistry",
+      "value": "profile/PROJECTONE-Technology-Registry.json"
+    }
+  ],
+  "reviewPath": [
+    "ROLE_ARCHITECTURE"
+  ],
+  "approvalRequired": true,
+  "approvalClassRef": "MATERIAL_ARCHITECTURE_SHARED_PLATFORM",
+  "approvalStatus": "APPROVED \u2014 owner confirmed A, B, and C",
+  "openItemsUnaffected": [
+    "OQ-13 deployment target remains OPEN",
+    "Observability tooling deliberately deferred pending OQ-13"
+  ],
+  "hashAfter": "91461995848f540624ce181edfbf8d1d73bcc10b32fe1af18ce4fe4b7b5280ca"
+}

@@ -1,0 +1,121 @@
+{
+  "header": {
+    "artifactId": "CP-003",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-17T11:25:07-04:00"
+  },
+  "changePackageId": "CP-003",
+  "title": "Record frontend framework (React) and the DOM ownership boundary constraint",
+  "rationale": "Step 80 Decision 2. Audit found no governed frontend framework: only Cytoscape.js (graph rendering, D-28) and design-token theming were locked. Existing proof-of-concept widgets contain ZERO D3 references and are hand-rolled SVG, so no framework lock-in existed and the choice was unconstrained. Owner selected React. The DOM ownership constraint is recorded at the same time because mixed ownership is the primary defect source in this combination and must bind from the first frontend slice, not be discovered during one.",
+  "targetArtifact": "profile/PROJECTONE-Profile.json",
+  "versionTransition": {
+    "from": "1.2 ACTIVE",
+    "to": "1.3 ACTIVE"
+  },
+  "hashBefore": "7cb9165e547aa53e05ee29ef6a0b15b8b610c92e27a69253f9a381d4529045c4",
+  "riskClass": "R3",
+  "riskBasis": "Material architecture decision affecting all frontend slices. No R4 trigger fires \u2014 no security, tenant-isolation, canonical-data identity/keys/grain, or source-authority impact. Requires human approval under MATERIAL_ARCHITECTURE_SHARED_PLATFORM.",
+  "changes": [
+    {
+      "field": "applicationStack.frontend",
+      "value": {
+        "framework": "React",
+        "status": "APPROVED",
+        "approver": "John",
+        "approvedAt": "2026-08-17T11:25:07-04:00",
+        "basis": "Frontend is simultaneously the owner's weakest area and the product's most complex surface (canvas-first investigation UI, process maps, custom chart library, animation engine, swappable theming). Ecosystem depth and AI assistance therefore matter more here than anywhere else in the stack. React selected for support availability, not elegance.",
+        "graphLibrary": "Cytoscape.js (locked by DDR, D-28)",
+        "chartApproach": "Custom chart library using D3 as pure math (Pattern A per AC-DOM-OWNERSHIP)",
+        "animationEngine": "D-28 direction not hard-locked; D3+GSAP is a candidate. Pattern B applies whichever is chosen.",
+        "theming": "Design tokens; appearance swappable without touching structure",
+        "acknowledgedTradeoff": "React is not the gentlest learning curve of the options considered. Accepted deliberately: when the owner is stuck, ecosystem depth and AI assistance are what resolve it. 'Well-trodden' means the shape of the difficulty is known and documented, not that it is frictionless.",
+        "optionsConsideredAndRejected": [
+          {
+            "framework": "Vue",
+            "reason": "Gentler curve, but smaller ecosystem and less AI assistance where the owner needs both most."
+          },
+          {
+            "framework": "Svelte",
+            "reason": "Fewer charting options; Cytoscape integration difficulty would be UNKNOWN rather than known."
+          },
+          {
+            "framework": "HTMX + server-rendered",
+            "reason": "Superficially attractive as it keeps the owner in Python, but poor fit for a canvas-first UI with graph, playhead, linked charts and drill-downs. Likely outcome is writing JavaScript anyway without a framework helping."
+          }
+        ]
+      }
+    },
+    {
+      "field": "architecturalConstraints.AC-DOM-OWNERSHIP",
+      "value": {
+        "constraintId": "AC-DOM-OWNERSHIP",
+        "title": "DOM ownership boundary between React and direct-DOM libraries",
+        "status": "ACTIVE",
+        "recordedAt": "2026-08-17T11:25:07-04:00",
+        "basis": "Owner decision at Step 80 Decision 2",
+        "governingRule": "ONE OWNER PER CONTAINER, decided upfront, never mixed.",
+        "coreTension": "React maintains a virtual tree and reconciles it; D3 and Cytoscape mutate elements directly. Sharing ownership of the same nodes produces flicker, lost updates, and defects that appear only on re-render. The defect source is mixed ownership, not the framework choice.",
+        "patterns": [
+          {
+            "id": "PATTERN-A",
+            "name": "D3 for math, React for rendering",
+            "role": "PRIMARY BY VOLUME",
+            "rule": "D3 scales, shapes, layouts and interpolators are used as PURE FUNCTIONS returning numbers and path strings. React renders the SVG. D3 never touches the DOM.",
+            "example": "const x = d3.scaleLinear().domain([0,max]).range([0,width]); const path = d3.line().x(d=>x(d.t)).y(d=>y(d.v))(data); return <path d={path} stroke=\"var(--chart-line)\" />;",
+            "appliesTo": [
+              "the custom chart library \u2014 the majority of components built"
+            ],
+            "satisfiesChartGroundRules": [
+              "10 deterministic output: same input yields identical pixels",
+              "11 no magic numbers in the render layer: colors/bands/thresholds/formats arrive via spec or token",
+              "13 size to container, not viewport"
+            ],
+            "additionalBenefit": "Pure functions are unit-testable and the rendered tree stays inspectable in React DevTools."
+          },
+          {
+            "id": "PATTERN-B",
+            "name": "Hand the library a container and stay out",
+            "role": "CORRECT ANSWER FOR A KNOWN SET \u2014 explicitly NOT a fallback for Pattern A",
+            "rule": "React renders an empty container with a ref. The library owns everything inside it. React never re-renders that subtree.",
+            "appliesTo": [
+              {
+                "component": "Cytoscape.js process maps",
+                "reason": "Cytoscape owns its container by design; there is no alternative. React mounts it and passes data.",
+                "note": "react-cytoscapejs is a thin convenience wrapper, NOT load-bearing. If its limits are reached, mounting Cytoscape directly in a useEffect is a small amount of code. Do not architect around the wrapper."
+              },
+              {
+                "component": "Animation engine (D-28)",
+                "reason": "D-28 decouples animation from Cytoscape and names D3+GSAP as a candidate direction. Animation and transition machinery is precisely where D3 should drive the DOM directly."
+              }
+            ],
+            "knownDifficulties": [
+              "deciding when to update the graph versus rebuild it",
+              "preventing React re-render from wiping the container",
+              "selection state existing in two places"
+            ]
+          }
+        ],
+        "antiPattern": "Mixing React and direct-DOM ownership on the same elements. PROHIBITED.",
+        "clarification": "Pattern A is primary by volume. Pattern B is permanent and correct for a specific, known set of components. Both coexist by design; neither is a workaround."
+      }
+    }
+  ],
+  "reviewPath": [
+    "ROLE_ARCHITECTURE",
+    "ROLE_UX_DESIGN"
+  ],
+  "approvalRequired": true,
+  "approvalClassRef": "MATERIAL_ARCHITECTURE_SHARED_PLATFORM",
+  "approvalStatus": "APPROVED \u2014 owner stated 'I am now decided ... I will go with React'",
+  "closesOpenDecision": "OD-10",
+  "openItemsUnaffected": [
+    "OQ-13 / OD-11 deployment target remains OPEN \u2014 not closed by this change"
+  ],
+  "hashAfter": "6455271a08ec40b6588c795136661f52a3172303f6f56e74cb755a9f7d1b2ae9"
+}

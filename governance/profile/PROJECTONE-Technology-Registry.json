@@ -1,0 +1,453 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-TECHNOLOGY-REGISTRY",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE",
+      "PAF-TECHNOLOGY-REGISTRY"
+    ],
+    "createdAt": "2026-08-17T13:43:45-04:00"
+  },
+  "boundToCoreContract": "framework/registries/PAF-Technology-Registry.json (CORE ships with zero entries; the stack is Profile content)",
+  "steps": "81-86",
+  "approvalRule": "An agent may use only entries listed ACTIVE here. An unlisted technology, tool, or dependency is DENIED by default (CR-5), regardless of convenience, familiarity, or apparent suitability. Adding an entry is a governed change.",
+  "versionPinningPolicy": {
+    "rule": "Minor versions are pinned here. EXACT PATCH VERSIONS ARE NOT ASSERTED IN THIS REGISTRY \u2014 they move monthly and must be captured at install time (Steps 87-100) into committed lockfiles.",
+    "reproducibilitySource": "uv.lock (Python) and package-lock.json (frontend) are the authoritative reproducibility record. Both MUST be committed.",
+    "honestyNote": "Version currency was verified against python.org on 2026-08-14 (Python 3.14.7 latest feature series, 3.13.15 latest maintenance). Other version ranges are minor-version floors based on known-current majors, not verified patch-by-patch. Re-verify at install time rather than trusting this record."
+  },
+  "entryCount": 29,
+  "approvedEntries": [
+    {
+      "name": "Python",
+      "category": "LANGUAGE_RUNTIME",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=3.13,<3.14",
+      "role": "Backend runtime",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Python 3.13 selected over 3.14. 3.14 changed annotation evaluation semantics; 3.13 has a full maintenance year and the best wheel availability for pyodbc and numpy, which matter more here than new syntax. 3.13's experimental free-threaded (GIL-free) build mode is EXPLICITLY NOT RELIED UPON \u2014 library support is unreliable, and AC-MINING-PLACEMENT already removes the need for it by keeping computation in SQL.",
+      "alternativesRejected": [
+        {
+          "option": "Python 3.14",
+          "reason": "Annotation evaluation change plus less mature wheel coverage for critical libraries."
+        }
+      ]
+    },
+    {
+      "name": "Node.js",
+      "category": "LANGUAGE_RUNTIME",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=24,<25",
+      "role": "Frontend build toolchain only \u2014 not an application runtime",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Node 24 LTS. Amended from the initial >=22,<23 entry: Node 24 became LTS after that entry was written, and the owner's machine already had 24.16.0. The registry describes reality; downgrading a machine to match a document written from stale information is backwards. Node is used ONLY to build the React frontend \u2014 it never runs the application \u2014 so runtime risk is nil. Residual risk: some frontend tooling lags on new Node majors. This will be exercised at Step 102 when the build first runs; if it breaks, install nvm-windows and pin 22 THEN, with recorded evidence rather than as a precaution.",
+      "amendedAt": "2026-08-17T16:16:36-04:00",
+      "supersededRange": ">=22,<23"
+    },
+    {
+      "name": "SQL Server",
+      "category": "DATABASE",
+      "status": "ACTIVE",
+      "approvedVersionRange": "2022-compatible T-SQL surface",
+      "role": "Database engine",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Engine locked by DDR. Deployment target OQ-13 remains OPEN between Azure SQL Database and Managed Instance. While open, MI-only capabilities are prohibited \u2014 see OQ-13 design tax."
+    },
+    {
+      "name": "pyodbc",
+      "category": "LIBRARY",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=5.1,<6",
+      "role": "SQL Server driver from Python",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Standard driver. Requires the Microsoft ODBC Driver 18 for SQL Server to be installed separately at OS level (Step 88-90)."
+    },
+    {
+      "name": "Microsoft ODBC Driver for SQL Server",
+      "category": "INFRASTRUCTURE",
+      "status": "ACTIVE",
+      "approvedVersionRange": "18.x",
+      "role": "OS-level ODBC driver",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "sqlcmd / SqlPackage",
+      "category": "BUILD_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "current",
+      "role": "DDL script execution and schema comparison",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Used to run the numbered forward-only DDL scripts and to compare deployed schema against intent."
+    },
+    {
+      "name": "Numbered forward-only SQL scripts (db-build-sop)",
+      "category": "BUILD_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "n/a \u2014 project SOP",
+      "role": "Schema definition and deployment",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "DECISION B. A migration framework was deliberately REJECTED. Alembic exists to make schema churn frictionless \u2014 autogenerate a diff, apply it. DDR P-8 says structural migration against populated tenant data is the thing to avoid. A tool that makes migrations easy works against a principle that says do not need them. Numbered forward-only scripts under the existing db-build-sop (run_all / teardown / manifest / verify) keep DDL reviewable as SQL, which matters when the DDL IS the design.",
+      "alternativesRejected": [
+        {
+          "option": "Alembic",
+          "reason": "Optimises for frequent schema change, which is the opposite of the P-8 no-migration posture. Autogenerated diffs also reduce DDL reviewability."
+        },
+        {
+          "option": "Entity Framework migrations",
+          "reason": "Not applicable \u2014 no .NET in the stack."
+        }
+      ]
+    },
+    {
+      "name": "uv",
+      "category": "BUILD_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=0.5",
+      "role": "Python dependency and virtual environment management, plus Python version pinning",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "DECISION C. Selected over pip-tools. Reasoning corrected during discussion: pip + requirements.txt is NOT reproducible, so a locking tool was mandatory and the real choice was WHICH lock tool. uv is FEWER concepts than pip-tools (one command vs a .in file, a compile step and a .txt file), which matters for an owner learning either tool for the first time. uv also installs and pins the Python interpreter, removing a separate moving part on Windows.",
+      "alternativesRejected": [
+        {
+          "option": "pip + requirements.txt",
+          "reason": "Not reproducible \u2014 fails Step 83's completion criterion outright."
+        },
+        {
+          "option": "pip-tools",
+          "reason": "Mature and community-maintained, but slower and MORE concepts to learn. Remains the documented fallback."
+        },
+        {
+          "option": "Poetry",
+          "reason": "Wants to own project layout and packaging; unnecessary for an application rather than a library."
+        }
+      ]
+    },
+    {
+      "name": "npm",
+      "category": "BUILD_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "bundled with Node 22",
+      "role": "Frontend dependency management",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "package-lock.json committed. Standard tooling; no benefit to diverging."
+    },
+    {
+      "name": "pytest",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=8,<9",
+      "role": "Unit, component and integration tests",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "pytest-cov",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=5",
+      "role": "Coverage reporting \u2014 evidence class: unit/component regression",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "jsonschema",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=4.21",
+      "role": "JSON Schema validation \u2014 evidence class: artifact/version/link/required-section validation",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "schemathesis",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=3.25",
+      "role": "OpenAPI contract testing \u2014 evidence class: OpenAPI/JSON Schema/contract test evidence",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "Playwright",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=1.45",
+      "role": "Visual regression and accessibility \u2014 evidence class: GUI implementation contract / visual-interaction / accessibility-responsive evidence",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Deterministic rendering required per chart ground rule 10: same input yields identical pixels. Playwright chosen over Selenium for reliable waiting and built-in screenshot comparison."
+    },
+    {
+      "name": "axe-core",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=4.9",
+      "role": "Automated accessibility checks, driven via Playwright",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "locust",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=2.29",
+      "role": "Performance and capacity measurement \u2014 evidence class: baseline/after benchmark or capacity evidence",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Performance contracts require a versioned representative workload per PAF-PERFORMANCE-OPERATIONS."
+    },
+    {
+      "name": "Vitest",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=2",
+      "role": "Frontend unit tests",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Pairs with Vite. Chart render functions under Pattern A are pure functions and unit-testable without a browser."
+    },
+    {
+      "name": "ruff",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=0.6",
+      "role": "Python linting AND formatting \u2014 single tool, deterministic",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Replaces flake8 + black + isort. Note vendor concentration with uv (both Astral); accepted because both emit standard artifacts and exit cost is low."
+    },
+    {
+      "name": "mypy",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=1.11",
+      "role": "Python static type checking \u2014 evidence class: lint/type/static checks",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "ESLint",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=9",
+      "role": "JavaScript/TypeScript linting",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "Prettier",
+      "category": "TESTING_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=3.3",
+      "role": "Frontend formatting",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "TypeScript",
+      "category": "LANGUAGE_RUNTIME",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=5.5,<6",
+      "role": "Frontend type checking",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "React written in TypeScript. Type safety matters more in the owner's weakest area, not less."
+    },
+    {
+      "name": "pip-audit",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=2.7",
+      "role": "Python dependency vulnerability scanning \u2014 already enforced in CI",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "bandit",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=1.7",
+      "role": "Python static application security testing \u2014 already enforced in CI",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "npm audit",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "bundled with npm",
+      "role": "Frontend dependency vulnerability scanning",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "check_no_secrets.py",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "project-owned",
+      "role": "Committed-secret detection \u2014 already enforced in CI",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Project-owned rather than third-party: secret_protection is a global non-waivable invariant and the check must be inspectable and modifiable without vendor dependency."
+    },
+    {
+      "name": "check_repository_layout.py",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "project-owned",
+      "role": "Repository layout enforcement \u2014 already enforced in CI",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "check_baseline_integrity.py",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "project-owned",
+      "role": "Frozen framework baseline verification \u2014 already enforced in CI",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00",
+      "notes": "Fail-closed after defect F-R9-01."
+    },
+    {
+      "name": "check_slice_boundaries.py",
+      "category": "SECURITY_TOOL",
+      "status": "ACTIVE",
+      "approvedVersionRange": "project-owned",
+      "role": "VSA-3 boundary and slice manifest enforcement \u2014 already enforced in CI",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T13:43:45-04:00"
+    },
+    {
+      "name": "Pydantic",
+      "category": "LIBRARY",
+      "status": "ACTIVE",
+      "approvedVersionRange": ">=2.8,<3",
+      "role": "Runtime data validation at trust boundaries",
+      "approvedBy": "John",
+      "approvedAt": "2026-08-17T17:03:17-04:00",
+      "notes": "Added on owner query. NEEDED, not optional: FastAPI uses Pydantic for request/response validation, so it arrives with the approved backend framework regardless. Distinct from mypy \u2014 mypy checks types at author time, Pydantic validates data at runtime. Both are used; they cooperate, and mypy understands Pydantic models.\n\nPRIMARY PROJECT ROLE: enforce the event log data contract (504) at the ingestion boundary. Malformed client submissions are rejected with a specific, reportable error rather than admitted and discovered later \u2014 supports the fail-visibly posture and D-31/US-FA23-4 client-facing validation traceability.\n\nPLACEMENT CONSTRAINT: Pydantic validates at trust boundaries (API request bodies, ingestion input, configuration loading). It MUST NOT be used to validate row-by-row over event data in Python \u2014 that would violate AC-MINING-PLACEMENT. Bulk data-quality checks belong in SQL against the loaded set; Pydantic guards the door, not the warehouse floor.",
+      "relatedConstraints": [
+        "AC-MINING-PLACEMENT",
+        "D-62 natural key",
+        "D-63 ingestion lineage",
+        "504 data contract"
+      ]
+    }
+  ],
+  "verificationMapCoverage": {
+    "note": "Step 84 tooling was selected against the evidence classes the verification map actually requires, not chosen generically.",
+    "mapping": [
+      {
+        "evidenceClass": "unit/component regression",
+        "tooling": [
+          "pytest",
+          "pytest-cov",
+          "Vitest"
+        ]
+      },
+      {
+        "evidenceClass": "artifact/version/link/required-section validation",
+        "tooling": [
+          "jsonschema"
+        ]
+      },
+      {
+        "evidenceClass": "OpenAPI/JSON Schema/contract test evidence",
+        "tooling": [
+          "schemathesis",
+          "jsonschema"
+        ]
+      },
+      {
+        "evidenceClass": "GUI implementation contract / visual-interaction / accessibility-responsive",
+        "tooling": [
+          "Playwright",
+          "axe-core"
+        ]
+      },
+      {
+        "evidenceClass": "baseline/after benchmark or capacity evidence",
+        "tooling": [
+          "locust"
+        ]
+      },
+      {
+        "evidenceClass": "lint/type/static/dependency/boundary/secret/license checks",
+        "tooling": [
+          "ruff",
+          "mypy",
+          "ESLint",
+          "pip-audit",
+          "npm audit",
+          "bandit",
+          "check_no_secrets.py",
+          "check_slice_boundaries.py"
+        ]
+      },
+      {
+        "evidenceClass": "security/tenant-isolation negative tests/scans",
+        "tooling": [
+          "pytest (tenant isolation suite)",
+          "bandit",
+          "pip-audit"
+        ]
+      },
+      {
+        "evidenceClass": "schema/constraint/query/data-quality or reconciliation evidence",
+        "tooling": [
+          "sqlcmd/SqlPackage",
+          "pytest"
+        ]
+      },
+      {
+        "evidenceClass": "workflow/role/gate/source/handoff/retry/escalation regression evidence",
+        "tooling": [
+          "paf_engine.py + validation suites (framework-owned, already operating)"
+        ]
+      }
+    ],
+    "gapsAcknowledged": [
+      {
+        "evidenceClass": "log/metric/trace/audit/alert evidence",
+        "status": "TOOLING NOT YET SELECTED",
+        "reason": "Observability stack depends on OQ-13 deployment target. Deferred deliberately, not overlooked.",
+        "requiredBy": "Before first production deployment"
+      },
+      {
+        "evidenceClass": "independent security review evidence",
+        "status": "NOT A TOOL",
+        "reason": "Requires a qualifying independence mechanism per AC/D-PAF-04, not software."
+      }
+    ]
+  },
+  "changeHistory": [
+    {
+      "date": "2026-08-17T13:43:45-04:00",
+      "change": "Initial registry \u2014 Steps 81-86",
+      "approver": "John"
+    },
+    {
+      "date": "2026-08-17T16:16:36-04:00",
+      "change": "Node.js range amended >=22,<23 -> >=24,<25 (Node 24 LTS; matches owner environment). Verified against owner machine: Node v24.16.0, npm 11.13.0.",
+      "approver": "John"
+    },
+    {
+      "date": "2026-08-17T17:03:17-04:00",
+      "change": "Added Pydantic >=2.8,<3 \u2014 runtime validation at trust boundaries; arrives with FastAPI regardless. Placement constraint recorded to prevent row-wise use over event data.",
+      "approver": "John"
+    }
+  ]
+}

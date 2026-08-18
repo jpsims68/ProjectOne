@@ -1,0 +1,123 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-FORWARD-REQUIREMENTS",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE"
+    ],
+    "createdAt": "2026-08-17T11:37:15-04:00"
+  },
+  "purpose": "Requirements placed on artifacts that DO NOT YET EXIST. A decision made now often imposes content on a document written later. Without a register, that obligation lives only in memory and is silently dropped. Each entry names the target artifact, what it must contain, and why.",
+  "checkedWhen": "Before any listed target artifact is marked complete. This register is a completion precondition, not a suggestion.",
+  "requirements": [
+    {
+      "reqId": "FR-001",
+      "targetArtifact": "Implementation Guide",
+      "targetStatus": "NOT YET CREATED",
+      "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
+      "recordedAt": "2026-08-17T11:37:15-04:00",
+      "recordedBy": "Owner direction",
+      "requirement": "The Implementation Guide MUST state both halves of the Fabric position: (a) Microsoft Fabric is EXCLUDED as a deployment target, because Fabric Warehouse cannot enforce uniqueness constraints and therefore cannot satisfy LOCKED decision D-62; and (b) Fabric is NOT excluded as a data SOURCE \u2014 a client lakehouse is a legitimate connector target behind the event log data contract (504).",
+      "whyRequired": "The exclusion and the integration opportunity are easy to conflate. A guide recording only 'Fabric is out' would lead a future reader to decline a legitimate client integration. Both halves must travel together.",
+      "acceptanceTest": "Search the Implementation Guide for 'Fabric'. It must return both the deployment-target exclusion AND the source-side support statement. Either alone is a defect."
+    },
+    {
+      "reqId": "FR-002",
+      "targetArtifact": "Implementation Guide",
+      "targetStatus": "NOT YET CREATED",
+      "sourceDecision": "CP-004 / OQ-13 design tax",
+      "recordedAt": "2026-08-17T11:37:15-04:00",
+      "requirement": "The Implementation Guide MUST carry the OQ-13 design tax: while the deployment target remains open between Azure SQL Database and Managed Instance, nothing may depend on an MI-only capability (SQL Server Agent scheduling, cross-database queries, linked servers, CLR, Database Mail, FILESTREAM, instance-level configuration).",
+      "whyRequired": "Using an MI-only feature silently closes an intentionally open decision. The prohibition must be visible to whoever writes DDL and jobs, not buried in a change package.",
+      "acceptanceTest": "The guide names the prohibited capabilities explicitly and states the consequence of using one."
+    },
+    {
+      "reqId": "FR-003",
+      "targetArtifact": "Implementation Guide",
+      "targetStatus": "NOT YET CREATED",
+      "sourceDecision": "CP-002 / AC-MINING-PLACEMENT",
+      "recordedAt": "2026-08-17T11:37:15-04:00",
+      "requirement": "The Implementation Guide MUST carry the mining placement constraint: computation executes set-based in SQL; numpy only on already-reduced results; no row-wise Python over events; no mining in-request; no client-side computation over raw events.",
+      "whyRequired": "Python cannot parallelize CPU-bound work across threads. A design placing mining in-request cannot be repaired by adding capacity \u2014 it requires restructuring. The constraint must reach whoever writes the first slice.",
+      "acceptanceTest": "The guide states the testable line: if a computation step receives raw event rows outside SQL, it is misplaced."
+    },
+    {
+      "reqId": "FR-004",
+      "targetArtifact": "Implementation Guide",
+      "targetStatus": "NOT YET CREATED",
+      "sourceDecision": "CP-003 / AC-DOM-OWNERSHIP",
+      "recordedAt": "2026-08-17T11:37:15-04:00",
+      "requirement": "The Implementation Guide MUST carry the DOM ownership boundary: one owner per container. Pattern A (D3 as pure math, React renders) is primary for the chart library. Pattern B (library owns its container, React stays out) applies to Cytoscape.js and the D-28 animation engine. Mixing ownership on the same elements is prohibited.",
+      "whyRequired": "Mixed React/direct-DOM ownership is the primary defect source in this combination, and the defects appear only on re-render \u2014 late and hard to diagnose.",
+      "acceptanceTest": "The guide states that Pattern B is not a fallback for Pattern A; both are permanent and apply to different components."
+    },
+    {
+      "reqId": "FR-005",
+      "targetArtifact": "502-Delphics-Client-Onboarding-Playbook",
+      "targetStatus": "EXISTS \u2014 immutable source; change requires a 999 overlay",
+      "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
+      "recordedAt": "2026-08-17T11:37:15-04:00",
+      "requirement": "Source-system options must not imply Fabric is unsupported as a client data source.",
+      "whyRequired": "Mid-market and enterprise clients increasingly land data in Fabric. Implying it is unsupported would forgo a commercial advantage that costs nothing architecturally.",
+      "mechanism": "999 overlay entry \u2014 this is an immutable uploaded source and is never edited in place."
+    },
+    {
+      "reqId": "FR-006",
+      "targetArtifact": "504-ProjectOne-Event-Log-Data-Contract",
+      "targetStatus": "EXISTS \u2014 immutable source; change requires a 999 overlay",
+      "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
+      "recordedAt": "2026-08-17T11:37:15-04:00",
+      "requirement": "When connector work is scoped, a Fabric lakehouse should be listed among candidate source shapes, alongside CSV, database extract, and API.",
+      "whyRequired": "The data contract is the boundary; source technology sits outside it. A Fabric lakehouse is one more source shape behind the same contract.",
+      "mechanism": "999 overlay entry.",
+      "timing": "Post-MVP \u2014 when connector work is scoped, not before."
+    },
+    {
+      "reqId": "FR-007",
+      "targetArtifact": "Implementation Guide",
+      "targetStatus": "NOT YET CREATED",
+      "sourceDecision": "CP-005 / technology registry",
+      "recordedAt": "2026-08-17T13:44:20-04:00",
+      "requirement": "The Implementation Guide MUST state that NO migration framework is used, and why: Alembic and equivalents optimise for frictionless schema churn, which works against DDR P-8. Schema is defined by numbered forward-only SQL scripts under the db-build-sop.",
+      "whyRequired": "A future contributor reaching for Alembic would see it as an obvious omission rather than a deliberate exclusion. The reasoning must travel with the decision.",
+      "acceptanceTest": "The guide names the exclusion AND the P-8 reasoning, not merely the alternative chosen."
+    },
+    {
+      "reqId": "FR-008",
+      "targetArtifact": "Implementation Guide",
+      "targetStatus": "NOT YET CREATED",
+      "sourceDecision": "CP-005 / Python 3.13",
+      "recordedAt": "2026-08-17T13:44:20-04:00",
+      "requirement": "The Implementation Guide MUST state that Python 3.13's experimental free-threaded (GIL-free) build mode is NOT relied upon, and that AC-MINING-PLACEMENT is the mechanism that removes the need for it.",
+      "whyRequired": "Free-threaded mode looks like a direct answer to the GIL tradeoff recorded in CP-002. Relying on it would substitute an experimental runtime feature for a sound architectural constraint.",
+      "acceptanceTest": "The guide states free-threaded mode is out of scope and points to AC-MINING-PLACEMENT."
+    },
+    {
+      "reqId": "FR-009",
+      "targetArtifact": "Observability tooling selection",
+      "targetStatus": "NOT YET SELECTED",
+      "sourceDecision": "CP-005 / verification map gap",
+      "recordedAt": "2026-08-17T13:44:20-04:00",
+      "requirement": "Tooling for the 'log/metric/trace/audit/alert evidence' class MUST be selected before first production deployment. Deferred deliberately pending OQ-13, because the observability stack depends on the deployment target.",
+      "whyRequired": "25 decisions in the verification map require this evidence class. An unselected mechanism is a governance coverage gap, not a satisfied requirement.",
+      "acceptanceTest": "An ACTIVE entry exists in the technology registry covering that evidence class."
+    },
+    {
+      "reqId": "FR-010",
+      "targetArtifact": "governance/scripts/check_cloud_target_compatibility.py",
+      "targetStatus": "NOT YET BUILT",
+      "sourceDecision": "Step 89 environment audit + CP-004 OQ-13 design tax",
+      "recordedAt": "2026-08-17T17:03:17-04:00",
+      "requirement": "A deterministic check MUST scan DDL, T-SQL scripts and migration files for capabilities absent from Azure SQL Database: SQL Server Agent objects (msdb.dbo.sp_add_job, sp_add_jobstep, sysjobs), three-part cross-database names, linked-server syntax (sp_addlinkedserver, OPENQUERY, four-part names), and CLR (sp_configure 'clr enabled', CREATE ASSEMBLY). It must FAIL the build on any hit.",
+      "whyRequired": "The owner's local instance is SQL Server 2022 DEVELOPER EDITION \u2014 the full Enterprise feature set. It will happily run SQL Agent jobs, cross-database queries, linked servers and CLR. Azure SQL Database supports NONE of them. Local success would therefore give false confidence, and the failure would surface only at deployment. This is the CP-004 design tax becoming live: previously a rule about a future choice, now a machine that will let the rule be broken silently.",
+      "acceptanceTest": "Check exists in CI, is a required status check, and fails on a fixture containing each prohibited pattern.",
+      "requiredBy": "Before the first DDL is committed to the repository",
+      "note": "Applies regardless of how OQ-13 resolves for provider. If AWS were ever chosen, D-21/D-26 would need amending first and this check would be revised, not deleted."
+    }
+  ],
+  "note": "No entry here is a commitment to BUILD anything. Each is a requirement that a document, when written, must say something specific."
+}

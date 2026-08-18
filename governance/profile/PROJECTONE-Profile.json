@@ -1,7 +1,7 @@
 {
   "header": {
     "artifactId": "PROJECTONE-PROFILE",
-    "version": "1.1",
+    "version": "1.5",
     "status": "ACTIVE",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
@@ -10,8 +10,8 @@
       "PAF-BINDING-MODEL"
     ],
     "createdAt": "2026-08-13T10:01:00-04:00",
-    "supersedes": "PROJECTONE-PROFILE@1.0",
-    "supersessionBasis": "CP-001 governed change package \u2014 repository binding and OD-01 disposition"
+    "supersedes": "PROJECTONE-PROFILE@1.4",
+    "supersessionBasis": "CP-005 governed change \u2014 technology registry bound"
   },
   "profileId": "PROJECTONE",
   "boundFrameworkVersion": "PAF v0.x (construction baseline; final bind at Step 55 freeze)",
@@ -69,5 +69,204 @@
     "approver": "John",
     "approvedAt": "2026-08-13T15:55:28-04:00",
     "consequence": "Steps 63-72, 91, 101 and 110 are owner-executed. No GitHub result is recorded as passing unless the owner actually ran it and returned output."
-  }
+  },
+  "applicationStack": {
+    "backend": {
+      "language": "Python",
+      "framework": "FastAPI",
+      "status": "APPROVED",
+      "approver": "John",
+      "approvedAt": "2026-08-15T13:52:46-04:00",
+      "basis": "Owner is most familiar with SQL then Python. ProjectOne's workload is SQL-dominant with Python orchestration and native mining \u2014 the owner's two strongest areas align with where the work sits. Choosing an unfamiliar language would mean learning it while building a governed system, two hard things at once for a solo founder.",
+      "acknowledgedTradeoff": "Python cannot parallelize CPU-bound work across threads. Mitigated by construction via AC-MINING-PLACEMENT rather than addressed after the fact."
+    },
+    "frontend": {
+      "framework": "React",
+      "status": "APPROVED",
+      "approver": "John",
+      "approvedAt": "2026-08-17T11:25:07-04:00",
+      "basis": "Frontend is simultaneously the owner's weakest area and the product's most complex surface (canvas-first investigation UI, process maps, custom chart library, animation engine, swappable theming). Ecosystem depth and AI assistance therefore matter more here than anywhere else in the stack. React selected for support availability, not elegance.",
+      "graphLibrary": "Cytoscape.js (locked by DDR, D-28)",
+      "chartApproach": "Custom chart library using D3 as pure math (Pattern A per AC-DOM-OWNERSHIP)",
+      "animationEngine": "D-28 direction not hard-locked; D3+GSAP is a candidate. Pattern B applies whichever is chosen.",
+      "theming": "Design tokens; appearance swappable without touching structure",
+      "acknowledgedTradeoff": "React is not the gentlest learning curve of the options considered. Accepted deliberately: when the owner is stuck, ecosystem depth and AI assistance are what resolve it. 'Well-trodden' means the shape of the difficulty is known and documented, not that it is frictionless.",
+      "optionsConsideredAndRejected": [
+        {
+          "framework": "Vue",
+          "reason": "Gentler curve, but smaller ecosystem and less AI assistance where the owner needs both most."
+        },
+        {
+          "framework": "Svelte",
+          "reason": "Fewer charting options; Cytoscape integration difficulty would be UNKNOWN rather than known."
+        },
+        {
+          "framework": "HTMX + server-rendered",
+          "reason": "Superficially attractive as it keeps the owner in Python, but poor fit for a canvas-first UI with graph, playhead, linked charts and drill-downs. Likely outcome is writing JavaScript anyway without a framework helping."
+        }
+      ]
+    }
+  },
+  "architecturalConstraints": {
+    "AC-MINING-PLACEMENT": {
+      "constraintId": "AC-MINING-PLACEMENT",
+      "title": "Mining computation placement",
+      "status": "ACTIVE",
+      "recordedAt": "2026-08-15T13:52:46-04:00",
+      "basis": "Owner decision during Step 80 stack selection",
+      "rule": {
+        "default": "All process-mining computation over event data executes SET-BASED IN SQL, where the data already lives.",
+        "narrowException": "numpy is permitted ONLY on results already reduced to a small set \u2014 typically percentile/quantile work over pre-aggregated arrays, or an iterative algorithm SQL expresses badly. A numpy step receiving raw event rows is in the wrong place, by definition.",
+        "prohibited": [
+          "Row-wise Python iteration over event data",
+          "Extracting an event log from the database to compute over it in the application tier",
+          "Mining executed inside a request/response cycle",
+          "Client-side computation over raw event data \u2014 the client renders results, it does not compute them"
+        ],
+        "executionTiming": "Mining runs as a scheduled or background job that materializes results the API reads. Never in-request."
+      },
+      "rationale": {
+        "performance": "The dominant cost is data movement, not computation. Extraction bills the database to read and serialize, bills the app tier for compute and memory, and adds transfer latency. Computing in place avoids all three. Columnstore batch-mode execution suits this workload: the DFG is a group-by over stored successor pairs (D-50); variants, durations, throughput and temporal profiles are set-based aggregates; log-skeleton constraints reduce to self-joins over a small activity set, so the expensive dimension (cases) is the one SQL handles best.",
+        "cost": "Serverless bills by vCore-second and pauses when idle. SQL-side work is billed once and the database sleeps. Extract-and-compute pays the database for the extract AND keeps the app tier sized for peak \u2014 paying twice for the same computation.",
+        "languageConstraint": "Python cannot parallelize CPU-bound work across threads (GIL). A design placing mining in-request cannot be repaired by adding capacity; it requires restructuring. This is therefore recorded as a DESIGN CONSTRAINT satisfied by construction, not a performance target measured after the fact.",
+        "clientSide": "Mining in the browser would require shipping event data to the client \u2014 slow at scale and a tenant-isolation exposure, since data leaves the server to be processed. Cytoscape.js renders results client-side, which is correct; it must not compute them."
+      },
+      "testableLine": "If a computation step receives raw event rows outside SQL, it is misplaced. This is checkable in review and in code structure, not only by measurement.",
+      "relatedDecisions": [
+        "D-50 stored successor pairs",
+        "D-66 native analytics, no PM4Py",
+        "D-21 Azure SQL serverless posture",
+        "CR-3/CR-4 non-additivity tiering"
+      ],
+      "notes": "D-66 removes most iterative-algorithm cases: most-frequent-variant (the primary reference-model bootstrap) is a SQL group-by. The numpy exception would only widen if the documented inductive-miner alternative were ever adopted."
+    },
+    "AC-DOM-OWNERSHIP": {
+      "constraintId": "AC-DOM-OWNERSHIP",
+      "title": "DOM ownership boundary between React and direct-DOM libraries",
+      "status": "ACTIVE",
+      "recordedAt": "2026-08-17T11:25:07-04:00",
+      "basis": "Owner decision at Step 80 Decision 2",
+      "governingRule": "ONE OWNER PER CONTAINER, decided upfront, never mixed.",
+      "coreTension": "React maintains a virtual tree and reconciles it; D3 and Cytoscape mutate elements directly. Sharing ownership of the same nodes produces flicker, lost updates, and defects that appear only on re-render. The defect source is mixed ownership, not the framework choice.",
+      "patterns": [
+        {
+          "id": "PATTERN-A",
+          "name": "D3 for math, React for rendering",
+          "role": "PRIMARY BY VOLUME",
+          "rule": "D3 scales, shapes, layouts and interpolators are used as PURE FUNCTIONS returning numbers and path strings. React renders the SVG. D3 never touches the DOM.",
+          "example": "const x = d3.scaleLinear().domain([0,max]).range([0,width]); const path = d3.line().x(d=>x(d.t)).y(d=>y(d.v))(data); return <path d={path} stroke=\"var(--chart-line)\" />;",
+          "appliesTo": [
+            "the custom chart library \u2014 the majority of components built"
+          ],
+          "satisfiesChartGroundRules": [
+            "10 deterministic output: same input yields identical pixels",
+            "11 no magic numbers in the render layer: colors/bands/thresholds/formats arrive via spec or token",
+            "13 size to container, not viewport"
+          ],
+          "additionalBenefit": "Pure functions are unit-testable and the rendered tree stays inspectable in React DevTools."
+        },
+        {
+          "id": "PATTERN-B",
+          "name": "Hand the library a container and stay out",
+          "role": "CORRECT ANSWER FOR A KNOWN SET \u2014 explicitly NOT a fallback for Pattern A",
+          "rule": "React renders an empty container with a ref. The library owns everything inside it. React never re-renders that subtree.",
+          "appliesTo": [
+            {
+              "component": "Cytoscape.js process maps",
+              "reason": "Cytoscape owns its container by design; there is no alternative. React mounts it and passes data.",
+              "note": "react-cytoscapejs is a thin convenience wrapper, NOT load-bearing. If its limits are reached, mounting Cytoscape directly in a useEffect is a small amount of code. Do not architect around the wrapper."
+            },
+            {
+              "component": "Animation engine (D-28)",
+              "reason": "D-28 decouples animation from Cytoscape and names D3+GSAP as a candidate direction. Animation and transition machinery is precisely where D3 should drive the DOM directly."
+            }
+          ],
+          "knownDifficulties": [
+            "deciding when to update the graph versus rebuild it",
+            "preventing React re-render from wiping the container",
+            "selection state existing in two places"
+          ]
+        }
+      ],
+      "antiPattern": "Mixing React and direct-DOM ownership on the same elements. PROHIBITED.",
+      "clarification": "Pattern A is primary by volume. Pattern B is permanent and correct for a specific, known set of components. Both coexist by design; neither is a workaround."
+    }
+  },
+  "openQuestions": {
+    "OQ-13": {
+      "openQuestionId": "OQ-13",
+      "title": "Deployment target",
+      "status": "OPEN \u2014 NARROWED, deliberately late-binding",
+      "narrowedAt": "2026-08-17T11:36:31-04:00",
+      "narrowedBy": "John",
+      "changePackage": "CP-004",
+      "remainsOpenBetween": [
+        "Azure SQL Database (PaaS)",
+        "Azure SQL Managed Instance"
+      ],
+      "providerRemainsOpen": "Azure vs AWS (RDS/Aurora) vs GCP. Both remaining engine options are full SQL Server engines available or equivalent across providers.",
+      "excluded": [
+        {
+          "option": "Microsoft Fabric (Warehouse / SQL analytics endpoint)",
+          "status": "EXCLUDED",
+          "primaryReason": "Conflicts with LOCKED decision D-62. D-62 requires a UNIQUE constraint on the event natural key ENFORCED AT THE STORAGE LAYER \u2014 'duplicates rejected at the storage layer, making D-19 idempotency true at the DB'. Fabric Warehouse supports PRIMARY KEY and UNIQUE only with NONCLUSTERED and NOT ENFORCED; the engine does not check uniqueness and duplicate inserts succeed. Verified against Microsoft documentation (learn.microsoft.com/fabric/data-warehouse/table-constraints).",
+          "consequenceIfAdopted": "The uniqueness guarantee would have to move from the storage layer into loader code \u2014 precisely what D-62 decided against. Retro-fitting to a populated columnstore would be a P-8 migration event.",
+          "secondaryReasons": [
+            "Cost model inverts D-21. D-21 locked serverless posture because the workload is 'light and bursty' and can pause when idle. Fabric bills reserved capacity continuously, converting the cheapest-credible-start into a fixed monthly floor before first revenue.",
+            "Tenant isolation shape mismatch. D-16/D-17 provision isolated clients as separate serverless databases resolved by a single resolver row. Fabric's unit is a workspace on purchased capacity \u2014 not equivalent.",
+            "Category mismatch. Fabric is an analytics platform over a data lake, not a database engine for an application that reads and writes."
+          ],
+          "exclusionScope": "Excluded as a DEPLOYMENT TARGET only. NOT excluded as a data SOURCE \u2014 see OD-12.",
+          "reviewTrigger": "If Microsoft introduces enforced uniqueness in Fabric Warehouse, this exclusion may be revisited. Knowledge current to May 2026; Fabric changes quickly, so re-verify rather than relying on this record if reconsidered."
+        }
+      ],
+      "whyKeptOpen": "Nothing in Steps 81-90 requires it. SQL Server is the engine either way and the tooling is identical. The DDR was authored for late binding: D-21 locks posture while leaving target open, and D-27 explicitly ties partition scheme and tier boundaries to OQ-13.",
+      "latestResponsibleMoment": "Before infrastructure is provisioned for an environment holding real tenant data. Deferring past that point risks a P-8 migration event rather than a configuration choice.",
+      "designTaxToKeepItOpen": {
+        "rule": "While OQ-13 remains open between Azure SQL Database and Managed Instance, nothing may depend on a Managed-Instance-only capability. Using one silently closes the decision without anyone deciding it.",
+        "prohibitedWhileOpen": [
+          "SQL Server Agent for scheduling \u2014 use an external scheduler or an application-tier job runner",
+          "Cross-database queries \u2014 Azure SQL Database does not support them",
+          "Linked servers",
+          "CLR integration",
+          "Database Mail",
+          "FILESTREAM / FileTable",
+          "Instance-level configuration or server-scoped objects"
+        ],
+        "detectionNote": "This is currently enforced by review, not by an automated check. A deterministic check over DDL and migration scripts is buildable once there is schema to check, and should be added then.",
+        "classification": "This is a design-ahead tax, not a deferred design. Per P-8, the design accommodates either target; only the selection is deferred."
+      }
+    }
+  },
+  "architecturalNotes": {
+    "NOTE-FABRIC-AS-SOURCE": {
+      "noteId": "NOTE-FABRIC-AS-SOURCE",
+      "title": "Fabric as a data SOURCE, not a deployment target",
+      "recordedAt": "2026-08-17T11:36:31-04:00",
+      "basis": "Owner directed this be logged separately so it is not lost with the exclusion decision",
+      "sentiment": "Fabric is excluded as a place to HOST ProjectOne. It is not excluded as a place ProjectOne READS FROM. If a client already runs Fabric and wants ProjectOne to consume event data from their lakehouse, that is a connector \u2014 an integration story, not a hosting decision.",
+      "whyItMatters": "The exclusion decision and the integration opportunity are easy to conflate. Recording only the exclusion risks a future reader concluding 'Fabric is out' and declining a legitimate client integration. Mid-market and enterprise clients increasingly land data in Fabric; being able to read from it is a commercial advantage, and it costs nothing architecturally because reading does not require enforced constraints on the source side.",
+      "architecturalFit": "Clean. ProjectOne's data contract (504) defines what an event log must supply. A Fabric lakehouse is one more source shape behind that contract \u2014 the same position as a CSV, a database extract, or an API. The contract is the boundary; the source technology sits outside it.",
+      "constraintsUnaffected": [
+        "D-62 enforced uniqueness applies to ProjectOne's OWN storage, not to a source system",
+        "AC-MINING-PLACEMENT unaffected \u2014 mining still executes in ProjectOne's own SQL, over ingested data"
+      ],
+      "mustAppearIn": [
+        {
+          "artifact": "Implementation Guide",
+          "requirement": "MUST reference this note. The guide must state that Fabric is excluded as a deployment target AND supported in principle as a source, so the distinction survives into build-time documentation."
+        },
+        {
+          "artifact": "Client onboarding documentation (502)",
+          "requirement": "Source-system options should not imply Fabric is unsupported."
+        },
+        {
+          "artifact": "Event log data contract (504)",
+          "requirement": "Fabric lakehouse listed among candidate source shapes when connector work is scoped."
+        }
+      ],
+      "status": "RECORDED \u2014 not yet scheduled. Connector implementation is post-MVP and unscoped; this note establishes the position, not a commitment to build."
+    }
+  },
+  "technologyRegistry": "profile/PROJECTONE-Technology-Registry.json"
 }

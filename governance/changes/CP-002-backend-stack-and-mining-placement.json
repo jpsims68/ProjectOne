@@ -1,0 +1,83 @@
+{
+  "header": {
+    "artifactId": "CP-002",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-15T13:52:46-04:00"
+  },
+  "changePackageId": "CP-002",
+  "title": "Record backend stack (Python + FastAPI) and the mining computation placement constraint",
+  "rationale": "Step 80 required resolving the application technology stack from governing sources. Audit found NO governed backend language or framework: FastAPI/Python appear nowhere in the DDR, PRD, or 999 overlays. Per the Step 80 instruction, earlier MVP stack is historical unless reaffirmed \u2014 so this is a new owner decision, not a restatement. The mining placement constraint is recorded at the same time because it is a design constraint that must shape slices from the first one, not a performance target discovered later.",
+  "targetArtifact": "profile/PROJECTONE-Profile.json",
+  "versionTransition": {
+    "from": "1.1 ACTIVE",
+    "to": "1.2 ACTIVE"
+  },
+  "hashBefore": "976e7b381f3c0f4e4f1a93dbf9dac06f76811761b874efcfa5ae14fe4810fc52",
+  "riskClass": "R3",
+  "riskBasis": "Material architecture decision affecting all subsequent slices. No R4 trigger fires \u2014 no security, tenant-isolation, canonical-data identity/keys/grain, or source-authority impact. Requires human approval under MATERIAL_ARCHITECTURE_SHARED_PLATFORM.",
+  "changes": [
+    {
+      "field": "applicationStack.backend",
+      "value": {
+        "language": "Python",
+        "framework": "FastAPI",
+        "status": "APPROVED",
+        "approver": "John",
+        "approvedAt": "2026-08-15T13:52:46-04:00",
+        "basis": "Owner is most familiar with SQL then Python. ProjectOne's workload is SQL-dominant with Python orchestration and native mining \u2014 the owner's two strongest areas align with where the work sits. Choosing an unfamiliar language would mean learning it while building a governed system, two hard things at once for a solo founder.",
+        "acknowledgedTradeoff": "Python cannot parallelize CPU-bound work across threads. Mitigated by construction via AC-MINING-PLACEMENT rather than addressed after the fact."
+      }
+    },
+    {
+      "field": "architecturalConstraints.AC-MINING-PLACEMENT",
+      "value": {
+        "constraintId": "AC-MINING-PLACEMENT",
+        "title": "Mining computation placement",
+        "status": "ACTIVE",
+        "recordedAt": "2026-08-15T13:52:46-04:00",
+        "basis": "Owner decision during Step 80 stack selection",
+        "rule": {
+          "default": "All process-mining computation over event data executes SET-BASED IN SQL, where the data already lives.",
+          "narrowException": "numpy is permitted ONLY on results already reduced to a small set \u2014 typically percentile/quantile work over pre-aggregated arrays, or an iterative algorithm SQL expresses badly. A numpy step receiving raw event rows is in the wrong place, by definition.",
+          "prohibited": [
+            "Row-wise Python iteration over event data",
+            "Extracting an event log from the database to compute over it in the application tier",
+            "Mining executed inside a request/response cycle",
+            "Client-side computation over raw event data \u2014 the client renders results, it does not compute them"
+          ],
+          "executionTiming": "Mining runs as a scheduled or background job that materializes results the API reads. Never in-request."
+        },
+        "rationale": {
+          "performance": "The dominant cost is data movement, not computation. Extraction bills the database to read and serialize, bills the app tier for compute and memory, and adds transfer latency. Computing in place avoids all three. Columnstore batch-mode execution suits this workload: the DFG is a group-by over stored successor pairs (D-50); variants, durations, throughput and temporal profiles are set-based aggregates; log-skeleton constraints reduce to self-joins over a small activity set, so the expensive dimension (cases) is the one SQL handles best.",
+          "cost": "Serverless bills by vCore-second and pauses when idle. SQL-side work is billed once and the database sleeps. Extract-and-compute pays the database for the extract AND keeps the app tier sized for peak \u2014 paying twice for the same computation.",
+          "languageConstraint": "Python cannot parallelize CPU-bound work across threads (GIL). A design placing mining in-request cannot be repaired by adding capacity; it requires restructuring. This is therefore recorded as a DESIGN CONSTRAINT satisfied by construction, not a performance target measured after the fact.",
+          "clientSide": "Mining in the browser would require shipping event data to the client \u2014 slow at scale and a tenant-isolation exposure, since data leaves the server to be processed. Cytoscape.js renders results client-side, which is correct; it must not compute them."
+        },
+        "testableLine": "If a computation step receives raw event rows outside SQL, it is misplaced. This is checkable in review and in code structure, not only by measurement.",
+        "relatedDecisions": [
+          "D-50 stored successor pairs",
+          "D-66 native analytics, no PM4Py",
+          "D-21 Azure SQL serverless posture",
+          "CR-3/CR-4 non-additivity tiering"
+        ],
+        "notes": "D-66 removes most iterative-algorithm cases: most-frequent-variant (the primary reference-model bootstrap) is a SQL group-by. The numpy exception would only widen if the documented inductive-miner alternative were ever adopted."
+      }
+    }
+  ],
+  "reviewPath": [
+    "ROLE_ARCHITECTURE"
+  ],
+  "approvalRequired": true,
+  "approvalClassRef": "MATERIAL_ARCHITECTURE_SHARED_PLATFORM",
+  "approvalStatus": "APPROVED \u2014 owner confirmed Python + FastAPI and directed the constraint be recorded",
+  "openItemsUnaffected": [
+    "OQ-13 deployment target remains OPEN \u2014 not closed by this change"
+  ],
+  "hashAfter": "7cb9165e547aa53e05ee29ef6a0b15b8b610c92e27a69253f9a381d4529045c4"
+}

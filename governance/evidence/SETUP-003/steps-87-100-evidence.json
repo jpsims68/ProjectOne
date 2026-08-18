@@ -1,0 +1,177 @@
+{
+  "header": {
+    "artifactId": "EVIDENCE-SETUP-003",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE"
+    ],
+    "createdAt": "2026-08-17T21:39:33-04:00"
+  },
+  "workItemId": "SETUP-003",
+  "steps": "87-100",
+  "repository": "https://github.com/jpsims68/ProjectOne",
+  "pullRequest": {
+    "number": 4,
+    "mergedTo": "main",
+    "branch": "work/SETUP-005-local-workspace-config",
+    "checks": "7/7 green"
+  },
+  "executionModel": "OWNER-EXECUTED per OD-01 Option A, via GitHub Desktop. Environment inventory taken from the owner's machine; assistant verified the repository state by independent clone.",
+  "environmentAudit": {
+    "method": "PowerShell inventory on the owner's Windows 11 machine",
+    "finding": "Steps 87-91 were ALREADY SATISFIED. No installation was required.",
+    "detail": {
+      "vsCode": "1.133.0 (PATH added during session)",
+      "python": "3.13.5 \u2014 matches approved >=3.13,<3.14",
+      "uv": "0.11.29",
+      "node": "24.16.0",
+      "npm": "11.13.0",
+      "git": "2.54.0",
+      "gitIdentity": "jpsims68 with GitHub noreply email (privacy-correct)",
+      "sqlServer": "2022 Developer Edition 16.0.1190.2, TWO instances: MSSQLSERVER (18 databases, prior work) and MSSQLSERVERLOCAL (empty)",
+      "odbc": "Driver 17 and 18 both present",
+      "sqlcmd": "present at Client SDK\\ODBC\\170 (PATH added during session)",
+      "ssms": "19"
+    }
+  },
+  "stepResults": [
+    {
+      "step": 87,
+      "name": "VS Code",
+      "result": "PASS",
+      "evidence": "1.133.0; 'code' command added to PATH via command palette."
+    },
+    {
+      "step": 88,
+      "name": "Runtimes",
+      "result": "PASS",
+      "evidence": "Python 3.13.5, uv 0.11.29, Node 24.16.0, npm 11.13.0 \u2014 all within approved ranges after the Node amendment."
+    },
+    {
+      "step": 89,
+      "name": "Database tooling",
+      "result": "PASS",
+      "evidence": "SQL Server 2022 Developer Edition (full Enterprise feature set \u2014 columnstore available), ODBC Driver 18, sqlcmd, SSMS 19."
+    },
+    {
+      "step": 90,
+      "name": "Git",
+      "result": "PASS",
+      "evidence": "git 2.54.0; GitHub Desktop adopted as the file-operation tool after browser upload failed three times."
+    },
+    {
+      "step": 91,
+      "name": "Git identity",
+      "result": "PASS",
+      "evidence": "jpsims68 / 76758826+jpsims68@users.noreply.github.com \u2014 noreply address keeps the personal email out of commit history."
+    },
+    {
+      "step": 92,
+      "name": "Extensions",
+      "result": "PASS",
+      "evidence": ".vscode/extensions.json \u2014 24 approved, 10 disabled IN THIS WORKSPACE ONLY (owner directive: extensions remain available for other projects). Rationale per exclusion in governance/adapter-config/WORKSPACE-EXTENSION-POLICY.md."
+    },
+    {
+      "step": 93,
+      "name": "Workspace settings",
+      "result": "PASS",
+      "evidence": ".vscode/settings.json \u2014 interpreter, formatters, exclusions, safe defaults; framework baseline excluded from file watchers."
+    },
+    {
+      "step": 94,
+      "name": "Local checks match CI",
+      "result": "PASS",
+      "evidence": "ruff is the single Python formatting/linting authority in both. Pylance deliberately set to 'basic' so it advises without becoming a second arbiter conflicting with mypy. Verified: identical ruff invocation passes locally and in CI."
+    },
+    {
+      "step": 95,
+      "name": "Test runner",
+      "result": "PASS",
+      "evidence": "pytest configured in settings.json and pyproject.toml; smoke tests present."
+    },
+    {
+      "step": 96,
+      "name": "Debug profiles",
+      "result": "PASS",
+      "evidence": ".vscode/launch.json \u2014 5 configurations, all loading .env. No credential appears in any committed file."
+    },
+    {
+      "step": 97,
+      "name": "Tasks",
+      "result": "PASS",
+      "evidence": ".vscode/tasks.json \u2014 13 tasks, each running the SAME command CI runs, plus an aggregate 'run every CI check locally' task."
+    },
+    {
+      "step": 98,
+      "name": "Local secrets",
+      "result": "PASS",
+      "evidence": "No secret exists locally: SQL Server uses Windows Integrated Authentication, so the Windows login IS the credential. .env.example carries NAMES only and is committed; .env carries values, is git-ignored, and is now refused outright by check_no_secrets.py."
+    },
+    {
+      "step": 99,
+      "name": "Local run",
+      "result": "PASS",
+      "evidence": "pyproject.toml with approved dependency set; app/config.py loads and validates configuration via Pydantic at startup."
+    },
+    {
+      "step": 100,
+      "name": "Smoke tests",
+      "result": "PASS",
+      "evidence": "tests/test_smoke.py verifies Python version, dependency imports, ODBC Driver 18 presence, configuration validation, and live database connectivity. Includes a guard test asserting NO product code exists under slices/ \u2014 production application implementation is NOT AUTHORIZED."
+    }
+  ],
+  "defectsFoundAndCorrected": [
+    {
+      "id": "F-R10-01",
+      "severity": "MATERIAL",
+      "component": "check_no_secrets.py",
+      "description": "The credential pattern required QUOTED values. The .env / dotenv format is unquoted (KEY=value), so the check was blind to the single most likely place a real secret would ever appear. A test .env containing PROJECTONE_DB_PASSWORD=hunter2supersecret passed the check cleanly.",
+      "impact": "secret_protection is a global non-waivable invariant. A check unable to detect the obvious case protects nothing.",
+      "correction": "Added an unquoted-assignment pattern, and a rule refusing ANY committed .env file regardless of contents (only .env.example may be tracked).",
+      "foundBy": "Negative testing \u2014 deliberately writing a secret and confirming the check caught it, rather than assuming."
+    },
+    {
+      "id": "F-R10-02",
+      "severity": "MODERATE",
+      "component": "check_repository_layout.py",
+      "description": "Root-file allowlist predated the decision to use .env.example, so it rejected a file that legitimately belongs at the repository root.",
+      "impact": "Would have failed the pull request.",
+      "correction": "Allowlist extended to .env.example (and uv.lock, vite.config.ts, tsconfig.json, index.html). .env deliberately NOT added."
+    },
+    {
+      "id": "F-R10-03",
+      "severity": "MODERATE",
+      "component": "pyproject.toml / CI",
+      "description": "Adding pyproject.toml activated the ruff step in CI for the first time (it had been skipped for lack of a config). 24 violations existed, most in assistant-authored governance scripts.",
+      "impact": "The pull request would have failed CI.",
+      "correction": "All violations fixed. Ruff scope narrowed to exclude the frozen framework baseline and its delivered validation/engine tooling, with reasoning recorded in pyproject.toml; governance/scripts remains linted as active project code."
+    },
+    {
+      "id": "F-R10-04",
+      "severity": "MODERATE",
+      "component": ".gitattributes (absent)",
+      "description": "No line-ending normalisation existed. Windows Git converts LF to CRLF on checkout; the 87 framework baseline hashes were computed on LF content.",
+      "impact": "check_baseline_integrity.py would FAIL on the owner's machine while PASSING in CI \u2014 precisely the local/CI divergence Step 94 exists to prevent.",
+      "correction": "Added .gitattributes forcing `* text=auto eol=lf` with binary exclusions."
+    }
+  ],
+  "assistantErrorRecorded": {
+    "id": "AE-01",
+    "severity": "MATERIAL \u2014 process",
+    "description": "The assistant ran governance checks against the OWNER'S BRANCH, found check_baseline_integrity.py absent and the workflow unfixed, and reported to the owner that a previously-claimed fix had never been deployed. That report was WRONG. The fix was in main. The owner's local clone was stale \u2014 created before the Steps 73-79 merge and never pulled \u2014 so the branch was based on a main that predated it, and inherited none of those 125 files.",
+    "consequence": "An unnecessary corrective bundle was issued, which then caused merge conflicts when the branch was updated. Roughly 45 minutes lost. The branch was abandoned and rebuilt from current main.",
+    "rootCause": "The assistant diagnosed from a derived artifact (a branch) without first comparing against the authoritative one (main). Compounding this, the assistant had been verifying against its own container copy rather than the repository \u2014 the two had silently diverged.",
+    "lesson": "When repository state appears wrong, compare against MAIN before concluding anything is missing. A branch is not evidence of what the repository contains. This is the same class of error as reporting a check PASS without examining the branch \u2014 asserting a conclusion from something not actually inspected.",
+    "preventiveMeasure": "Pull after every merge, recorded as a standing instruction. A stale local clone was the root enabler of the entire sequence."
+  },
+  "toolingNote": {
+    "id": "TF-02",
+    "finding": "GitHub Desktop resolved the file-transfer problems that browser upload could not. Its Changes view shows full relative paths BEFORE committing, which is the control that would have caught the earlier flattening.",
+    "residualGap": "Desktop separates Commit (local) from Push (remote). The owner completed a commit without pushing on two occasions, and the assistant initially misread the second as a failed push. Recorded as a standing reminder rather than a defect."
+  },
+  "openItemNote": "Repository resides inside OneDrive (OD-09). No sync conflicts observed during this work, but the risk remains."
+}

@@ -1,0 +1,116 @@
+{
+  "header": {
+    "artifactId": "EVIDENCE-SETUP-002",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE"
+    ],
+    "createdAt": "2026-08-15T13:05:13-04:00"
+  },
+  "workItemId": "SETUP-002",
+  "steps": "73-79",
+  "repository": "https://github.com/jpsims68/ProjectOne",
+  "pullRequest": {
+    "number": 3,
+    "mergedTo": "main",
+    "branch": "work/SETUP-003-framework-and-scaffold"
+  },
+  "executionModel": "OWNER-EXECUTED per OD-01 Option A, via GitHub Desktop after three browser-upload failures.",
+  "stepResults": [
+    {
+      "step": 73,
+      "name": "Repository scaffold",
+      "result": "PASS",
+      "evidence": "docs/architecture/REPOSITORY-STRUCTURE.md documents the Steps 57-62 structure. Directories are created when content lands; Git does not track empty directories, so placeholder files were deliberately abandoned."
+    },
+    {
+      "step": 74,
+      "name": "Framework v1 baseline committed",
+      "result": "PASS",
+      "evidence": "governance/framework/ \u2014 87 files + SHA256SUMS.txt. All 87 hashes verify against the approved frozen baseline. The baseline is now tamper-evident inside the repository."
+    },
+    {
+      "step": 75,
+      "name": "ProjectOne Profile committed",
+      "result": "PASS",
+      "evidence": "governance/profile/ \u2014 11 profile artifacts including the 5 registry bindings and approved sustainability thresholds."
+    },
+    {
+      "step": 76,
+      "name": "GitHub adapter configuration",
+      "result": "PASS",
+      "evidence": "governance/adapters/PAF-Adapter-GitHub.json + governance/adapter-config/ACTIVE-ADAPTERS.md. Records what GitHub actually enforces vs. what is attested."
+    },
+    {
+      "step": 77,
+      "name": "ChatGPT adapter configuration",
+      "result": "PASS",
+      "evidence": "governance/adapters/PAF-Adapter-ChatGPT.json \u2014 AVAILABLE, optional, nothing depends on it."
+    },
+    {
+      "step": 78,
+      "name": "Anthropic adapter configuration",
+      "result": "PASS",
+      "evidence": "governance/adapters/PAF-Adapter-Anthropic.json \u2014 ACTIVE. Encodes clean-context independence protocol, externalized-state discipline, and honest CANNOT_SATISFY declarations."
+    },
+    {
+      "step": 79,
+      "name": "Coding-workbench adapter",
+      "result": "PASS",
+      "evidence": "governance/adapters/PAF-Adapter-Coding-Workbench.json \u2014 contract only, no concrete IDE bound."
+    }
+  ],
+  "verificationOfLiveState": {
+    "method": "Independent clone of merged main by the assistant",
+    "filesInMain": 153,
+    "rootLevelFiles": 2,
+    "checksRerunAgainstMergedMain": {
+      "repository_layout": "PASS",
+      "baseline_integrity": "PASS 87/87",
+      "slice_boundaries": "PASS",
+      "secret_protection": "PASS"
+    },
+    "prChecks": "7/7 green including the new Repository layout check"
+  },
+  "defectsFixedInThisWorkItem": [
+    {
+      "id": "F-R9-01",
+      "severity": "MATERIAL",
+      "description": "Framework baseline integrity check failed OPEN. Implemented as inline shell ('if manifest exists, verify; else skip'), it reported SUCCESS while verifying nothing when 137 files were committed to the repository root instead of governance/framework/.",
+      "impact": "A green tick asserted the approved baseline was intact when the check had not examined a single file. False assurance is worse than no control.",
+      "correction": "Replaced with check_baseline_integrity.py distinguishing three states: ABSENT_EXPECTED (pass, genuine scaffold), ABSENT_UNEXPECTED (FAIL \u2014 framework content exists but not at the expected path), PRESENT (pass only if all hashes match).",
+      "testedAgainst": [
+        "correct structure: PASS 87/87",
+        "scaffold stage: PASS",
+        "flattened upload: FAIL",
+        "one tampered file: FAIL"
+      ]
+    },
+    {
+      "id": "F-R9-02",
+      "severity": "MATERIAL",
+      "description": "No check detected a flattened upload. 137 governance files landed at the repository root with all directory paths discarded; detection depended entirely on the owner requesting a manual file comparison.",
+      "impact": "Structural misplacement was invisible to every automated control.",
+      "correction": "New check_repository_layout.py refuses non-allowlisted files at the repository root and governance artifacts outside governance/. Reports 240 violations against the broken branch.",
+      "foundBy": "Owner asked for a file comparison against the repository rather than accepting the reported commit count."
+    },
+    {
+      "id": "F-R9-03",
+      "severity": "MODERATE",
+      "description": "Assistant supplied the six required status-check names in a single code block; they were entered into the branch ruleset as ONE combined check name that can never report.",
+      "impact": "Merge blocked indefinitely on a permanently pending check. Incidentally prevented the bad merge, but by accident rather than design.",
+      "correction": "Ruleset rebuilt with seven separate check entries, each with source pinned to GitHub Actions."
+    }
+  ],
+  "toolingFinding": {
+    "id": "TF-01",
+    "finding": "Browser-based file upload failed three consecutive times in distinct ways: (1) silently skipped dot-prefixed paths, dropping the entire .github directory; (2) capped at 100 files per upload; (3) silently discarded directory structure, flattening 137 files to the root.",
+    "significance": "Each failure was invisible at the point of action and detectable only by post-hoc comparison. The tool provided no feedback that anything had been lost.",
+    "resolution": "Switched to GitHub Desktop, which shows full relative paths in its Changes view BEFORE committing. The same content committed correctly on the first attempt.",
+    "lesson": "The assistant should have changed tooling after the first failure rather than the third. Repeated adaptation to a tool that silently loses data is a false economy."
+  }
+}
