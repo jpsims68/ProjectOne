@@ -22,10 +22,10 @@ from collections import defaultdict
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SLICES, PLATFORM, CONTRACTS = ROOT / "slices", ROOT / "platform", ROOT / "contracts"
 SRC = {".py", ".ts", ".tsx", ".js", ".jsx"}
-viol = []
+viol: list[str] = []
 
 
-def sources(base):
+def sources(base: pathlib.Path) -> list[pathlib.Path]:
     return [p for p in base.rglob("*") if p.is_file() and p.suffix in SRC] if base.exists() else []
 
 
@@ -83,7 +83,7 @@ for f in sources(PLATFORM):
             )
 
 # Rule 4 — declared contracts resolve, and the graph is acyclic
-produced = {}
+produced: dict[str, list[str]] = {}
 for name, m in manifests.items():
     for c in m.get("producedContracts", []):
         cid = c if isinstance(c, str) else c.get("contractId")
@@ -101,10 +101,10 @@ for name, m in manifests.items():
                 graph[name].add(owner)
 
 WHITE, GREY, BLACK = 0, 1, 2
-color = defaultdict(int)
+color: defaultdict[str, int] = defaultdict(int)
 
 
-def dfs(n, path):
+def dfs(n: str, path: list[str]) -> None:
     color[n] = GREY
     for m in graph[n]:
         if color[m] == GREY:

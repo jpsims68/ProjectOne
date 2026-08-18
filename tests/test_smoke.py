@@ -33,6 +33,7 @@ def test_approved_dependencies_import() -> None:
 
 
 @pytest.mark.smoke
+@pytest.mark.local_env
 def test_odbc_driver_18_present() -> None:
     """ODBC Driver 18 is the approved driver (technology registry)."""
     import pyodbc

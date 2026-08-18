@@ -72,6 +72,7 @@ addopts = "-q --strict-markers"
 markers = [
     "smoke: toolchain verification — must pass before any feature work",
     "tenant_isolation: verifies a canonical access path is tenant-scoped",
+    "local_env: requires the owner's local machine (SQL Server, ODBC driver) — excluded in CI",
 ]
 
 [tool.bandit]

@@ -13,6 +13,21 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# ---------------------------------------------------------------------------
+# GATE DISCIPLINE
+#
+# Every step below either does its work or FAILS. No step may conclude "target
+# absent, therefore pass" — the skip-and-pass pattern prohibited by the
+# framework doNotDo list, and what allowed the previous revision to report
+# green while never running a test, installing a dependency, auditing a
+# package, or scanning a line of source.
+#
+# Absent-expected is asserted explicitly. Absent-unexpected fails the build.
+#
+# Job `name:` values ARE the required-status-check names in the `main
+# protection` ruleset. Renaming a job silently detaches its required check.
+# ---------------------------------------------------------------------------
+
 jobs:
   build-and-test:
     name: Build, lint, test
@@ -20,28 +35,56 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          # Must match pyproject requires-python (>=3.13,<3.14) and the
+          # technology registry. The previous revision pinned 3.12, which the
+          # smoke test would have rejected had it ever run.
+          python-version: '3.13'
+
+      - name: Install unixODBC
+        # pyodbc links libodbc.so.2 at import. Without this the dependency
+        # import test fails for an environmental reason.
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unixodbc
+
+      - name: Verify expected layout
+        run: |
+          for path in pyproject.toml app tests; do
+            if [ ! -e "$path" ]; then
+              echo "::error::Required path '$path' is missing — absent-unexpected."
+              exit 1
+            fi
+          done
+          echo "Layout verified: pyproject.toml, app/, tests/ present."
+
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install --group dev
+
+      - name: Verify interpreter matches declared range
+        run: |
+          python -c "import sys; assert sys.version_info[:2]==(3,13), f'Expected 3.13.x, got {sys.version.split()[0]}'; print('Interpreter OK:', sys.version.split()[0])"
+
       - name: Lint
-        run: |
-          if [ -f .ruff.toml ] || [ -f pyproject.toml ]; then
-            pip install ruff && ruff check . || exit 1
-          else
-            echo "No lint config yet - scaffold stage"
-          fi
+        run: ruff check .
+
+      - name: Format check
+        run: ruff format --check .
+
+      - name: Type check
+        # governance/scripts is deliberately in scope: those are the active CI
+        # enforcement checks, held to the same standard as application code.
+        run: mypy app tests governance/scripts
+
       - name: Test
-        run: |
-          if [ -d tests ] && ls tests/**/*.py >/dev/null 2>&1; then
-            pip install pytest && pytest -q
-          else
-            echo "No tests yet - scaffold stage"
-          fi
+        # local_env marks tests needing the owner's machine (SQL Server, ODBC
+        # Driver 18). Everything else must run and pass here.
+        run: pytest -q -m "not local_env"
 
   security-scan:
     name: Security scan
@@ -49,14 +92,33 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
+
+      - name: Install unixODBC
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unixodbc
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install --group dev
+
       - name: Dependency vulnerability scan
-        run: |
-          pip install pip-audit
-          if [ -f requirements.txt ]; then pip-audit -r requirements.txt || exit 1; else echo "No dependencies yet"; fi
+        # Audits the resolved environment. The previous revision audited a
+        # requirements.txt that does not exist and passed unconditionally.
+        run: pip-audit --strict
+
       - name: Static security analysis
+        # Targets app/. The previous revision targeted slices/ and platform/,
+        # neither of which exists, and passed unconditionally.
         run: |
-          pip install bandit
-          if ls slices platform >/dev/null 2>&1; then bandit -r slices platform -q || exit 1; else echo "No source yet"; fi
+          if [ ! -d app ]; then
+            echo "::error::app/ is missing — nothing to scan. Absent-unexpected."
+            exit 1
+          fi
+          bandit -r app -q

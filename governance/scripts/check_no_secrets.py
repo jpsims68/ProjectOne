@@ -39,7 +39,24 @@ ALLOW = re.compile(
     r"(\$\{|\$\(|process\.env|os\.environ|<[A-Z_]+>|CHANGEME|EXAMPLE|placeholder|\bREPLACE_ME\b)",
     re.I,
 )
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "governance"}
+SKIP_DIRS = {
+    ".git",
+    "node_modules",
+    "__pycache__",
+    ".venv",
+    "governance",
+    # Tool caches are gitignored build artefacts, not repository content. Scanning
+    # them produced false positives locally after any mypy/pytest/ruff run, which
+    # trains the reader to disregard a real finding. CI never sees them (fresh
+    # checkout), so this only ever misfired on the owner's machine.
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "htmlcov",
+    ".tox",
+    "dist",
+    "build",
+}
 SKIP_SUFFIX = {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".ico", ".woff", ".woff2"}
 
 hits = []
