@@ -1,0 +1,129 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-FRONTEND-DECISION-SUPPORT",
+    "version": "1.0",
+    "status": "DRAFT",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC",
+      "PROJECTONE-PROFILE"
+    ],
+    "createdAt": "2026-08-15T19:42:00-04:00"
+  },
+  "decisionId": "OD-10",
+  "step": 80,
+  "subject": "Frontend framework selection (Decision 2 of 3)",
+  "status": "CLOSED \u2014 DECIDED. React approved by owner via CP-003.",
+  "surfaceWhen": "Step 80 Decision 2, before any frontend slice is designed or built.",
+  "warning": "SUPERSEDED BY DECISION. React is now APPROVED (CP-003). The integration patterns are BINDING as AC-DOM-OWNERSHIP, no longer advisory.",
+  "workloadCharacterisation": "Canvas-first investigation UI: Cytoscape.js process maps, a custom chart library, a separate animation engine (D-28), swappable theming via design tokens. A rich client application, not a page with widgets.",
+  "findingOnExistingWidgets": {
+    "checked": [
+      "ranked-path-duration-flow.html",
+      "interval-variance-timeline.html"
+    ],
+    "result": "ZERO D3 references. Both are hand-rolled SVG.",
+    "consequence": "There is no existing D3 investment to preserve, and no framework-lock from prior work. Owner has confirmed these are proof-of-concept and will be partly rebuilt regardless. Framework choice is unconstrained by them."
+  },
+  "options": [
+    {
+      "framework": "React",
+      "ecosystem": "largest",
+      "cytoscapeIntegration": "well-trodden",
+      "chartingLibraries": "most options",
+      "learningCurve": "steeper",
+      "aiAssistanceQuality": "best",
+      "canvasFirstFit": "strong",
+      "keepsOwnerInPython": false
+    },
+    {
+      "framework": "Vue",
+      "ecosystem": "good",
+      "cytoscapeIntegration": "fine",
+      "chartingLibraries": "good",
+      "learningCurve": "gentlest",
+      "aiAssistanceQuality": "good",
+      "canvasFirstFit": "strong",
+      "keepsOwnerInPython": false
+    },
+    {
+      "framework": "Svelte",
+      "ecosystem": "smaller",
+      "cytoscapeIntegration": "fine",
+      "chartingLibraries": "fewer",
+      "learningCurve": "gentle",
+      "aiAssistanceQuality": "middle",
+      "canvasFirstFit": "strong",
+      "keepsOwnerInPython": false
+    },
+    {
+      "framework": "HTMX + server-rendered",
+      "ecosystem": "minimal",
+      "cytoscapeIntegration": "awkward",
+      "chartingLibraries": "n/a",
+      "learningCurve": "lowest",
+      "aiAssistanceQuality": "weakest",
+      "canvasFirstFit": "POOR",
+      "keepsOwnerInPython": true,
+      "caution": "Superficially attractive because it keeps the owner in Python. But an investigation canvas with a graph, playhead, linked charts and drill-downs is exactly the rich interactive state HTMX handles badly. The likely outcome is writing JavaScript anyway, without a framework helping."
+    }
+  ],
+  "recommendation": {
+    "framework": "React",
+    "status": "RECOMMENDATION ONLY \u2014 not approved",
+    "reasoning": "Frontend is simultaneously the owner's weakest area and the product's most complex surface. Ecosystem depth and AI assistance therefore matter more here than anywhere else in the stack, because both will be leaned on heavily. React is chosen for support availability, not elegance.",
+    "counterweight": "If the owner has meaningful existing experience in Vue or Svelte, familiarity outweighs ecosystem depth \u2014 the same reasoning that decided the backend."
+  },
+  "d3IntegrationPatterns": {
+    "coreTension": "React and D3 both want to own the DOM. React maintains a virtual tree and reconciles; D3 mutates elements directly. Sharing ownership of the same nodes produces flicker, lost updates, and defects that appear only on re-render.",
+    "governingRule": "ONE OWNER PER CONTAINER, decided upfront, never mixed.",
+    "patterns": [
+      {
+        "id": "PATTERN-A",
+        "name": "D3 for math, React for rendering",
+        "role": "PRIMARY BY VOLUME",
+        "description": "Use D3 scales, shapes, layouts and interpolators as PURE FUNCTIONS returning numbers and path strings. React renders the SVG. D3 never touches the DOM.",
+        "example": "const x = d3.scaleLinear().domain([0,max]).range([0,width]); const path = d3.line().x(d=>x(d.t)).y(d=>y(d.v))(data); return <path d={path} stroke=\"var(--chart-line)\" />;",
+        "appliesTo": [
+          "custom chart library \u2014 the majority of components built"
+        ],
+        "whyItFitsProjectOne": [
+          "Deterministic output: same input yields identical pixels (chart ground rule 10)",
+          "Colors and formats arrive via design tokens, not hardcoded in the render layer (rule 11)",
+          "Sizes to container, not viewport (rule 13)",
+          "Everything remains inspectable in React DevTools and unit-testable as pure functions"
+        ]
+      },
+      {
+        "id": "PATTERN-B",
+        "name": "Hand D3 a container and stay out",
+        "role": "CORRECT ANSWER FOR A KNOWN SET \u2014 not a fallback",
+        "description": "React renders an empty container with a ref; D3 (or another library) owns everything inside it; React never re-renders that subtree.",
+        "appliesTo": [
+          {
+            "component": "Cytoscape.js process maps",
+            "reason": "Cytoscape owns its container by design. No alternative \u2014 React mounts it and passes data."
+          },
+          {
+            "component": "Animation engine (D-28)",
+            "reason": "D-28 decouples animation from Cytoscape and names D3+GSAP as a candidate direction. Animation and transition machinery is precisely where D3 should drive the DOM directly."
+          }
+        ]
+      }
+    ],
+    "clarificationRecorded": "Pattern B is NOT a backup for when Pattern A fails. The two serve different jobs and both are permanent. Pattern A is primary by volume; Pattern B is correct for a specific, known set of components.",
+    "antiPattern": "Mixing React and D3 ownership on the same elements. This is the defect source, not the framework choice."
+  },
+  "openQuestionForOwner": "How much JavaScript does the owner want to own? This is the honest question underneath the framework choice and only the owner can answer it.",
+  "relatedDecisions": [
+    "D-28 animation engine decoupled from Cytoscape",
+    "chart ground rules 10, 11, 13",
+    "CP-002 backend stack"
+  ],
+  "decisionOutcome": {
+    "framework": "React",
+    "changePackage": "CP-003",
+    "approvedAt": "2026-08-17T11:25:07-04:00"
+  }
+}

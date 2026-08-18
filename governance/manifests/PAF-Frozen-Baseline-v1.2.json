@@ -1,0 +1,849 @@
+{
+  "header": {
+    "artifactId": "PAF-FROZEN-BASELINE",
+    "version": "1.2",
+    "status": "FROZEN",
+    "schemaVersion": "1.0",
+    "layer": "CORE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-13T15:56:03-04:00",
+    "frozenAt": "2026-08-18T15:12:00-04:00",
+    "frozenUnder": "APR-002 (Framework v1) + CP-002..CP-005 (governed changes)",
+    "supersedes": "PAF-FROZEN-BASELINE@1.1",
+    "supersessionBasis": "CP-002 (backend stack + AC-MINING-PLACEMENT), CP-003 (frontend React + AC-DOM-OWNERSHIP), CP-004 (OQ-13 narrowed, Fabric excluded as source), CP-005 (technology registry). Explicit, recorded, and reviewed; not supersession by recency. Corrects a version-number reuse defect in which these four change packages were applied to the v1.1 manifest in place."
+  },
+  "frameworkVersion": "1.0",
+  "baselineVersion": "1.2",
+  "releaseState": "APPROVED_FROZEN_BASELINE",
+  "baselineChain": [
+    {
+      "version": "1.0",
+      "frozenAt": "2026-08-13T15:41:20-04:00",
+      "componentCount": 128,
+      "basis": "APR-002 owner approval"
+    },
+    {
+      "version": "1.1",
+      "frozenAt": "2026-08-13T15:56:03-04:00",
+      "componentCount": 132,
+      "basis": "CP-001 governed change (repository binding)"
+    },
+    {
+      "version": "1.2",
+      "frozenAt": "2026-08-18T15:12:00-04:00",
+      "componentCount": 155,
+      "basis": "CP-002..CP-005 governed changes (+23 components, 0 removed)"
+    }
+  ],
+  "changesSinceV10": [
+    "CP-001 repository binding",
+    "CP-002 backend + AC-MINING-PLACEMENT",
+    "CP-003 frontend React + AC-DOM-OWNERSHIP",
+    "CP-004 OQ-13 narrowed + Fabric-as-source",
+    "CP-005 technology registry (29 entries)",
+    "Forward requirements register (9 entries)"
+  ],
+  "frameworkCoreUnchanged": "The generic framework core (framework/) is byte-identical to v1.0. Only the ProjectOne Profile and additive design artifacts changed.",
+  "approvalRefs": [
+    "APR-001",
+    "APR-002",
+    "CP-001",
+    "CP-002",
+    "CP-003",
+    "CP-004",
+    "CP-005"
+  ],
+  "approver": "John",
+  "componentCount": 155,
+  "freezeProcedureRule": "The freeze manifest MUST be the terminal action. Nothing may be written to the baseline after it is generated (F-R7-02).",
+  "immutabilityRule": "v1.0 remains immutable and is retained as the approved reference. This baseline supersedes it for current work; neither is edited in place.",
+  "components": [
+    {
+      "path": "framework/binding/REGISTRY-BINDING-MODEL.md",
+      "sha256": "1009a596e854047af9b69270d98877548b1f087d169916fb63e691a621fa030a",
+      "bytes": 4186
+    },
+    {
+      "path": "framework/contracts/ROLE_ADMIN_DOC.json",
+      "sha256": "8e80d3d7c8ec06ecffad3ce7433ac171f5d2635deff569c31cfc3a3b038e681a",
+      "bytes": 3391
+    },
+    {
+      "path": "framework/contracts/ROLE_ARCHITECTURE.json",
+      "sha256": "6dc63158702516005ef216fa109c4e7bf4ed9720129b0239d916013b6df2872a",
+      "bytes": 4469
+    },
+    {
+      "path": "framework/contracts/ROLE_BUSINESS_DOC.json",
+      "sha256": "5488b0f3a3eec47ea097d51dababe48a5294f775c73f0733e13def725a6e8b2e",
+      "bytes": 3442
+    },
+    {
+      "path": "framework/contracts/ROLE_CODING.json",
+      "sha256": "a8389656bb3ea65273abb32fd0f804287a769534197266d72bc3068892d3804b",
+      "bytes": 4309
+    },
+    {
+      "path": "framework/contracts/ROLE_CONSULTING.json",
+      "sha256": "091ecc8094e1eb1ac9e7b69f40f8610772cbd4333178bd39c29cf1915dc07554",
+      "bytes": 3393
+    },
+    {
+      "path": "framework/contracts/ROLE_ENDUSER_DOC.json",
+      "sha256": "956087681069ffd067b0411ce1a6329f6ea35ba9d698ad5ec2cdd5ed27da8742",
+      "bytes": 3354
+    },
+    {
+      "path": "framework/contracts/ROLE_GUI_GOVERNANCE.json",
+      "sha256": "5d118f3d106e6fadbb06103e554ec4e551f6abd3a0e0c5bb1b0c65c1b74d92e1",
+      "bytes": 3845
+    },
+    {
+      "path": "framework/contracts/ROLE_METHODOLOGY.json",
+      "sha256": "3ebb246ceb2e25d17e8671cebb8307df4b3e2bc0c516e871995518c4c42e8255",
+      "bytes": 3843
+    },
+    {
+      "path": "framework/contracts/ROLE_ONBOARDING.json",
+      "sha256": "f314a4b98dd04c0febc582a01bfd1f48ef1177774d43d794646907898ee5164a",
+      "bytes": 3392
+    },
+    {
+      "path": "framework/contracts/ROLE_ORCHESTRATOR.json",
+      "sha256": "25d6a9059bbef273529f0319c11476e286f13d2cd38c88774d3fcbe9e841d716",
+      "bytes": 4456
+    },
+    {
+      "path": "framework/contracts/ROLE_QUALITY.json",
+      "sha256": "f13c62c01a901df7218909e3b964dce7971938997531178538e153b866e5bf04",
+      "bytes": 4064
+    },
+    {
+      "path": "framework/contracts/ROLE_SECURITY_RELEASE.json",
+      "sha256": "b085a9a7d23067461a7869bf119cf08e9b622bea1bdcd85828ccf946d7baf5d9",
+      "bytes": 4929
+    },
+    {
+      "path": "framework/contracts/ROLE_SPIKE.json",
+      "sha256": "91150224c5d855ab031f80331c4e5b7cb0aaa7ecd05fbc51969775fb7ff02922",
+      "bytes": 3568
+    },
+    {
+      "path": "framework/contracts/ROLE_TECH_DOC.json",
+      "sha256": "9172f6e3cea03236df343701a47f34c347a18cdef02f83dbca8054fd0544be37",
+      "bytes": 3404
+    },
+    {
+      "path": "framework/contracts/ROLE_TEST_DEBUG.json",
+      "sha256": "c8bcb20a3a83c13f6f412580121e87e52e4fb5fd4608eee0262970d951552b69",
+      "bytes": 3590
+    },
+    {
+      "path": "framework/contracts/ROLE_UX_DESIGN.json",
+      "sha256": "d6fec6fe9f0996d005dcc31e7dd2b299dad78ce72cf7a0ae113758a76d9c6d1a",
+      "bytes": 3654
+    },
+    {
+      "path": "framework/gui/PAF-Design-System.json",
+      "sha256": "2dc80c30642cbda7280d72194f9738e0d4cd57a287cb1797650b06964c2de8cd",
+      "bytes": 2408
+    },
+    {
+      "path": "framework/matrices/dependency-map.json",
+      "sha256": "43a5d6001c3445cbc0c7775eb00a0658323a7ac5031e70a488d6b4241b6f62d2",
+      "bytes": 2686
+    },
+    {
+      "path": "framework/matrices/evidence-matrix.json",
+      "sha256": "e7b6f5e1b71abee3b5aa7fa8b4c49162a58558324154458cd446b182ab2d8921",
+      "bytes": 22789
+    },
+    {
+      "path": "framework/matrices/gate-matrix.json",
+      "sha256": "19d8f56b827215022be89b1377dbbd89ab6a6b7c2a7b67c7389b9d623f71f475",
+      "bytes": 26441
+    },
+    {
+      "path": "framework/matrices/generate_matrices.py",
+      "sha256": "03ad029d46679bb7571b9efe313ba59a91088b61b69601e8b51f632acd27beca",
+      "bytes": 8781
+    },
+    {
+      "path": "framework/matrices/ownership-matrix.json",
+      "sha256": "8a861a525a0aa4dfe57bec3e83d3587cf92b3f9fba3a22fb676befc05bb32820",
+      "bytes": 17439
+    },
+    {
+      "path": "framework/matrices/role-source-bundle-matrix.json",
+      "sha256": "d76d20a91d4539cdf907f6833a440bea46471b27ded2ee59013e217ceff9ec63",
+      "bytes": 6256
+    },
+    {
+      "path": "framework/matrices/role-tool-permission-matrix.json",
+      "sha256": "48f629408f37eb40470d702de892ce520ecf81b8f76344a909b9aa6392164dda",
+      "bytes": 12229
+    },
+    {
+      "path": "framework/matrices/role-workflow-matrix.json",
+      "sha256": "9f8111e468cb73291e2bdb53ba1d2c6ce032c48a7fd4bfccc207afefeccd34d6",
+      "bytes": 11999
+    },
+    {
+      "path": "framework/models/ownership-model.md",
+      "sha256": "85353470f3dacbf040d111a387a95d9a76c8a6dcb9a6f6649759f44875a49454",
+      "bytes": 2128
+    },
+    {
+      "path": "framework/models/source-authority-model.md",
+      "sha256": "b092ab9e2252611b6306a80a9cbba8c1e5dcbb6fcc36bf6d49486ec0eff4b64d",
+      "bytes": 3506
+    },
+    {
+      "path": "framework/models/verification-execution-model.json",
+      "sha256": "98b505cdaecd156c4cba7687a9c88ae0ce569149df7100526c9c5809f3d3ba70",
+      "bytes": 4240
+    },
+    {
+      "path": "framework/operations/PAF-Performance-Operations.json",
+      "sha256": "782af790a006f19922e88aa6df30e0881b96dd3ceaf0ea8ab9b9407077abccab",
+      "bytes": 1218
+    },
+    {
+      "path": "framework/registries/PAF-Environment-Registry.json",
+      "sha256": "5bdec1b1fb039b6efb5f0299ab163a40c9d9a614ef2c8d1b0884f1c4c8748c70",
+      "bytes": 2038
+    },
+    {
+      "path": "framework/registries/PAF-Security-Standard.json",
+      "sha256": "1e3b4be172715ba15ab2b9de08b9cdd7408373204b380a4d06164c03fb73fd82",
+      "bytes": 1943
+    },
+    {
+      "path": "framework/registries/PAF-Technology-Registry.json",
+      "sha256": "16aacf2c7f4c01e9961bb215f28d1e1f99269d94750bb115ff0de1719a0383a6",
+      "bytes": 1089
+    },
+    {
+      "path": "framework/schemas/paf.adapter-contract.schema.json",
+      "sha256": "977f2931bb0144f800d1b0b352f41c30c4f0c7a8348e026bc61a654e682ff6e0",
+      "bytes": 3812
+    },
+    {
+      "path": "framework/schemas/paf.common.schema.json",
+      "sha256": "b334d1c35491391b74b7f43ba8bdb35364b2b64abab0b5cfcf807d812431ae11",
+      "bytes": 7390
+    },
+    {
+      "path": "framework/schemas/paf.continuity-snapshot.schema.json",
+      "sha256": "f5a942cb8e19b39de5e763aed96342021ca547c838ae45de071f09d017de3599",
+      "bytes": 3013
+    },
+    {
+      "path": "framework/schemas/paf.decision.schema.json",
+      "sha256": "165e7f9e6b39fe29a5c6ef21496de2255a4caeb5ffd70bc7afc990d76799c771",
+      "bytes": 1564
+    },
+    {
+      "path": "framework/schemas/paf.design-system.schema.json",
+      "sha256": "13e2eb7068ba1254068d6a886a240c5302ec6961c291dd66cd622338c239e8cb",
+      "bytes": 3306
+    },
+    {
+      "path": "framework/schemas/paf.environment-registry.schema.json",
+      "sha256": "cedcfe4302cfa434ec9683ad3ff4af6c04910afa09ed3c7e0b654b769e09c1bf",
+      "bytes": 2457
+    },
+    {
+      "path": "framework/schemas/paf.escalation.schema.json",
+      "sha256": "1f5cbd0a0375b9102dc523ed4e51486eeb0fb980fd18cf055ac49ec07c83d945",
+      "bytes": 1281
+    },
+    {
+      "path": "framework/schemas/paf.evidence.schema.json",
+      "sha256": "7643f38538475b7cf3aaec03aacead6b6329f5348e6497d29dc2398eddf0d362",
+      "bytes": 1920
+    },
+    {
+      "path": "framework/schemas/paf.exception-registry.schema.json",
+      "sha256": "5445ff78a4bc8a22476accdf74da2a0c95cc3b6c72f5da9d1edb4d4be7f7258f",
+      "bytes": 2598
+    },
+    {
+      "path": "framework/schemas/paf.exception.schema.json",
+      "sha256": "e2d13b0a3a763952a78d19acec7e244734a05215c8ac1e3fda8b62e8b350e810",
+      "bytes": 1523
+    },
+    {
+      "path": "framework/schemas/paf.handoff.schema.json",
+      "sha256": "d7d610379fd03fd494bc98d172212a3917791386ac59a2e58bad7d038a28cd3b",
+      "bytes": 1681
+    },
+    {
+      "path": "framework/schemas/paf.human-approval-registry.schema.json",
+      "sha256": "051065fd327f1fc16ee1c962ff4f6757d71339ee4498b8f8d49fb5ea8eb57c03",
+      "bytes": 2926
+    },
+    {
+      "path": "framework/schemas/paf.independence-standard.schema.json",
+      "sha256": "b6b2dbfb312aa20e9a5b65ff85d0aa5fba9997b57dddf99b5f18c4595dbbaec4",
+      "bytes": 2428
+    },
+    {
+      "path": "framework/schemas/paf.lifecycle-registry.schema.json",
+      "sha256": "15578bc0df79a18199a8733eb67d85525e71643d768c0efbc9cabf520930c6b1",
+      "bytes": 4203
+    },
+    {
+      "path": "framework/schemas/paf.ownership-registry.schema.json",
+      "sha256": "f9a608c9647085cd78acf5c7b8e6c7114488e1cb6a4d45b2aebe09d982bdecf1",
+      "bytes": 2957
+    },
+    {
+      "path": "framework/schemas/paf.performance-operations.schema.json",
+      "sha256": "71674ccc4080eb1e1efce620b5feff521273570cf9b1a19fb6df2a684a744ff7",
+      "bytes": 2010
+    },
+    {
+      "path": "framework/schemas/paf.recovery.schema.json",
+      "sha256": "9f08846d1be0557898e4dbcc8a14df9c05a3fa1fe107bd2e3504eeeda8bc7766",
+      "bytes": 1247
+    },
+    {
+      "path": "framework/schemas/paf.regression-portfolio.schema.json",
+      "sha256": "8965bab5ca227dc1dadd2a5762791d2dd0451bcaec0e109bbd459ff06de71974",
+      "bytes": 2227
+    },
+    {
+      "path": "framework/schemas/paf.risk-standard.schema.json",
+      "sha256": "71ea356d5b84e0552117d3c3dbfa4691d89a1ee9d24dd3ac02599ad1655e184a",
+      "bytes": 3895
+    },
+    {
+      "path": "framework/schemas/paf.role-contract.schema.json",
+      "sha256": "41a8fa95d78ee339c79db0c80766750bebb16df8a7903b1d0c2e7084e9169372",
+      "bytes": 5905
+    },
+    {
+      "path": "framework/schemas/paf.security-standard.schema.json",
+      "sha256": "2fa702e8eb6548772dba456b944add3ee69e1dabc5a7f0ecf88d5233850862ff",
+      "bytes": 1546
+    },
+    {
+      "path": "framework/schemas/paf.source-registry.schema.json",
+      "sha256": "95816df81301fa70b2cf256ad28643827700f96c0913a783833c241f399c1a3e",
+      "bytes": 5194
+    },
+    {
+      "path": "framework/schemas/paf.technology-registry.schema.json",
+      "sha256": "1b99ace137c8ca60966c6156ed14785d197364bf5cf289b8c2161f07a4e218b5",
+      "bytes": 1828
+    },
+    {
+      "path": "framework/schemas/paf.verification-execution.schema.json",
+      "sha256": "980cd598627b2a8c09273790aa9ae3c3073f8f6b1d6eba9c2f0cbc9d69451d49",
+      "bytes": 3886
+    },
+    {
+      "path": "framework/schemas/paf.work-item.schema.json",
+      "sha256": "667a91ea644fccdc3ccfd6423ebe101981405cab362b330a6fe658d285dcd063",
+      "bytes": 3953
+    },
+    {
+      "path": "framework/schemas/paf.workflow.schema.json",
+      "sha256": "8e6cfff13eeda19eb5f71be033906bdd5709c51e998158bba2cdc6eed6667373",
+      "bytes": 2924
+    },
+    {
+      "path": "framework/spec/PAF-Framework-Specification-v0.2.md",
+      "sha256": "4307fe61f3d6443cb84c71ab4ab273de5511e100877a7bb731e23d12c836a4fe",
+      "bytes": 27947
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-BYPASS.json",
+      "sha256": "9e1e9b4ed5181e23e3b812f1eb3aa6a85bb00784012ed8f0b06449a3975b1f7e",
+      "bytes": 2305
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-CONTINUITY-CHAIN.json",
+      "sha256": "707294cc3fb84d107912315b92b6e2cec6bf0f0171fba258a95b24e14085f943",
+      "bytes": 1817
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-EVIDENCE.json",
+      "sha256": "04897384b46e2b5d75a0665cc73033729d70e65b53bfd960c2f96743c3367e86",
+      "bytes": 2239
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-EXCEPTION.json",
+      "sha256": "314317e0376ccd104f66d8d4fb3e486ad00b4a8bdd8702b58c853424d32490bb",
+      "bytes": 2336
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-SELF-APPROVAL.json",
+      "sha256": "07f5093e9f4cb310f53060c20a9dc586492c37be96c50da838faa1b63e64488c",
+      "bytes": 1942
+    },
+    {
+      "path": "framework/testing/PAF-REGRESSION-SOURCE-AUTHORITY.json",
+      "sha256": "73766f88adcd709c56ca4340f61cc25ff17cf9dd1e3a1b6c1207e39074830598",
+      "bytes": 2869
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-BYPASS.answers.json",
+      "sha256": "2a1df8d4cf25ee5d8c1891050868a0882b0d43f29339b95b687975fdeb2692cd",
+      "bytes": 426
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-CONTINUITY-CHAIN.answers.json",
+      "sha256": "5e993437899f1176b141fc6e291028f2afdd9da61b89828cbb77bdb24447a11c",
+      "bytes": 330
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-EVIDENCE.answers.json",
+      "sha256": "ee3cfd27e77398df37be3ef91299c609723d9300e08d1d4f6151a9e2d889e5b1",
+      "bytes": 432
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-EXCEPTION.answers.json",
+      "sha256": "e326c10b20acccf3ea819ab9b6b3fa64f4fc6650a39d2e306c3a36cc25349c64",
+      "bytes": 504
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-SELF-APPROVAL.answers.json",
+      "sha256": "8c648543256c4cda6aa7f9679ddcc0388a4d98fe3d926d6fc08a89985af45513",
+      "bytes": 330
+    },
+    {
+      "path": "framework/testing/answer-keys/PAF-REGRESSION-SOURCE-AUTHORITY.answers.json",
+      "sha256": "6fdcbb02c6f5c25cd79aeabbc4e330759c3e08a90ba48aa612fb7fa5b589083d",
+      "bytes": 594
+    },
+    {
+      "path": "framework/workflows/WF_ARCHITECTURE.json",
+      "sha256": "cd00537e9a1c47bf5d4a3df506d56fea0cb23c030ae81c6775dd0a89060f3b1c",
+      "bytes": 2741
+    },
+    {
+      "path": "framework/workflows/WF_AUDIT.json",
+      "sha256": "6619e412ffaff2836b75ff3cf9913f14294d6443935366ee46463e49c977eda5",
+      "bytes": 2309
+    },
+    {
+      "path": "framework/workflows/WF_COMMERCIAL.json",
+      "sha256": "203a012f32aaf5fbe30e50e9b080a5f79c95df72e86d855792ea8d82e9189256",
+      "bytes": 1996
+    },
+    {
+      "path": "framework/workflows/WF_DEFECT.json",
+      "sha256": "08d71ca664570a794d88738edb37a215c1b5e61d007b52a46918127c5b87cb75",
+      "bytes": 2109
+    },
+    {
+      "path": "framework/workflows/WF_DOCUMENTATION.json",
+      "sha256": "4a14f4d4685c2c3e3a56d5f6f2e59655472c23e72c3552fc17f7061ecfba011a",
+      "bytes": 1931
+    },
+    {
+      "path": "framework/workflows/WF_EMERGENCY.json",
+      "sha256": "ba27cc764982a2a1c293318b5199ef39c8e7fa83bbc7d0dbe0d0dbfa54d457a8",
+      "bytes": 2417
+    },
+    {
+      "path": "framework/workflows/WF_EXCEPTION.json",
+      "sha256": "3f3e241628ead08a24ea6a852381ac94971485c6a829ae1e554e26818a3fbcc7",
+      "bytes": 2432
+    },
+    {
+      "path": "framework/workflows/WF_METHODOLOGY.json",
+      "sha256": "b212833821bd2d5d9ae482f6a8bed6b67ef9f68a005021534a8f93361e77c3d7",
+      "bytes": 2131
+    },
+    {
+      "path": "framework/workflows/WF_PERFORMANCE.json",
+      "sha256": "d6bf8601b07911c8ddc3da5f0ddf1785f0f152548cc7422312a7ca91140d0cfb",
+      "bytes": 2424
+    },
+    {
+      "path": "framework/workflows/WF_PRODUCTION_FEATURE.json",
+      "sha256": "eb633adfefebc29da98d5a65c41184bc731065849a364ed6de51b0174dd2c31f",
+      "bytes": 5658
+    },
+    {
+      "path": "framework/workflows/WF_PRODUCT_DECISION.json",
+      "sha256": "8d6ca19efb434124ebadfb4dd8a14082965780948529833f8ad0551733c13a30",
+      "bytes": 2612
+    },
+    {
+      "path": "framework/workflows/WF_SECURITY.json",
+      "sha256": "0ca4c614be6ec915d6fde37d6e1e3fba80d81e492a535a69613a87a5f6e04986",
+      "bytes": 2681
+    },
+    {
+      "path": "framework/workflows/WF_SPIKE.json",
+      "sha256": "634e518117933ddbc37b9cdc50cad5ddce5d250eb36259dbe335b7a178cc050a",
+      "bytes": 1748
+    },
+    {
+      "path": "framework/workflows/WF_THEME.json",
+      "sha256": "1878000145a16da62dd7a98004d10d95f0b2c571b1fe0c885d704edf4f4d7999",
+      "bytes": 2390
+    },
+    {
+      "path": "framework/workflows/WF_UPGRADE.json",
+      "sha256": "4ff19dcf4540329b51c9ce8df0becb3fc164e96a4b0191bea2ec6d85f3b0b0ef",
+      "bytes": 2221
+    },
+    {
+      "path": "profile/PROJECTONE-Build-Requirements.json",
+      "sha256": "d35dfe6105eecb2eb88d994c4f03cff3b10a7b6713b5e433395dc85169c35f05",
+      "bytes": 6573
+    },
+    {
+      "path": "profile/PROJECTONE-Exception.json",
+      "sha256": "64eef4a2a1765305b5bcc2e6cd7fb6171583896dd8b87a7a7631c63fdbee425a",
+      "bytes": 1358
+    },
+    {
+      "path": "profile/PROJECTONE-Forward-Requirements.json",
+      "sha256": "3a0853a519b807b86e914dbc5b714560df845cf3f0da8bdf8b29a1391c86a438",
+      "bytes": 10073
+    },
+    {
+      "path": "profile/PROJECTONE-Human-Approval.json",
+      "sha256": "1ede8aa23b19016e8978878eefd38d368480e077c0776965712f5fc06d24628f",
+      "bytes": 2519
+    },
+    {
+      "path": "profile/PROJECTONE-Independence.json",
+      "sha256": "b26e48449f74e6aee0509bb04d4e9f4e77bf7a191ccdf8f21ecde647b5d9536b",
+      "bytes": 1648
+    },
+    {
+      "path": "profile/PROJECTONE-Lifecycle.json",
+      "sha256": "03b5f44c6c35a54d23daa1afc25951a55e9b0c3bc9a0543eb739ebe77bef8632",
+      "bytes": 2368
+    },
+    {
+      "path": "profile/PROJECTONE-Ownership.json",
+      "sha256": "d31ed7e46260a6c15088cafa6560f74083116358f1b9a344cfabe89fffed86e4",
+      "bytes": 4125
+    },
+    {
+      "path": "profile/PROJECTONE-Profile.json",
+      "sha256": "91461995848f540624ce181edfbf8d1d73bcc10b32fe1af18ce4fe4b7b5280ca",
+      "bytes": 20504
+    },
+    {
+      "path": "profile/PROJECTONE-Risk.json",
+      "sha256": "5b11226f39409c29f01840cc2ac125f20491b37713e5f62df6363c8352ca2bed",
+      "bytes": 1386
+    },
+    {
+      "path": "profile/PROJECTONE-Source-Registry.json",
+      "sha256": "2cbeda4ab410aa3919d4c3f313d0992a476af30091ca970f24b27250e9fbdf8e",
+      "bytes": 22894
+    },
+    {
+      "path": "profile/PROJECTONE-Sustainability-Thresholds.json",
+      "sha256": "4ca38db67c538a57308af0a6d6952461739e486a6f593e24690223203d69b84e",
+      "bytes": 4488
+    },
+    {
+      "path": "profile/PROJECTONE-Technology-Registry.json",
+      "sha256": "895d8b00e5ad9c477cf27ee699db4e6fa46fea488feb08c06fc9e8aaefce8378",
+      "bytes": 19477
+    },
+    {
+      "path": "profile/PROJECTONE-Verification.json",
+      "sha256": "4a4448621071792ae5f8062d38d0682caceaaa0e4bcd20f458c9a90d0e7bca91",
+      "bytes": 211217
+    },
+    {
+      "path": "adapters/PAF-Adapter-Anthropic.json",
+      "sha256": "ef7de76b8c17bd62c85c7f49b5328636907189a9209ca3ff937ffd5a69570a52",
+      "bytes": 6788
+    },
+    {
+      "path": "adapters/PAF-Adapter-ChatGPT.json",
+      "sha256": "51801fa03f08bcffd9b7af952964d5401a7cc1b461083117ac0628da4ee35267",
+      "bytes": 3716
+    },
+    {
+      "path": "adapters/PAF-Adapter-Coding-Workbench.json",
+      "sha256": "92d996dd8ff8d8ee1b8a70a5ecd3c348343d011d7c6171493ee7762c93f0135a",
+      "bytes": 2955
+    },
+    {
+      "path": "adapters/PAF-Adapter-Contract.json",
+      "sha256": "151dbe13297ec164d6c7c485a76a4345eb166a9f00fe763047dd2642826693d8",
+      "bytes": 2239
+    },
+    {
+      "path": "adapters/PAF-Adapter-GitHub.json",
+      "sha256": "2935ca49ec45c10469e3868b3fd0738632d0ac39bf8ca29b7a1be3d42c38236a",
+      "bytes": 5447
+    },
+    {
+      "path": "manifests/PAF-Adapter-Compatibility-Matrix.json",
+      "sha256": "9414f2ad58f8ff87dcde8f5f3db58274aeca5dfce0c77303843b6feb027fde7d",
+      "bytes": 13202
+    },
+    {
+      "path": "manifests/PAF-Configuration-Manifest.json",
+      "sha256": "1e940386bdf4a4c4a8b2b38ae97cca6198205667f7e6066b3f93859beff9ae3d",
+      "bytes": 30289
+    },
+    {
+      "path": "manifests/PAF-Frozen-Baseline-v1.0.json",
+      "sha256": "6e12504c502c30600b28afab7ee9fd200a01b2c3e32b20899fe415331184f14f",
+      "bytes": 24841
+    },
+    {
+      "path": "manifests/PAF-Release-Manifest.json",
+      "sha256": "4bf04325f437345d120032a87922bd0a4618f5c9a6f13b02985f4417ee78975e",
+      "bytes": 1795
+    },
+    {
+      "path": "manifests/PAF-Validation-Candidate.json",
+      "sha256": "0d8c8498e8621a7ae8a668ec96bc957d7f7d2f8d73e6b900c821545326bb4303",
+      "bytes": 1138
+    },
+    {
+      "path": "engine/paf_engine.py",
+      "sha256": "a87189af9d542130c60f1f1a643114ebcc318ed5077110335604c15c6ffaede4",
+      "bytes": 11621
+    },
+    {
+      "path": "validation/activation_checkpoint.py",
+      "sha256": "3d94904d3526d42cf8dfab5d5b072d901b9a47bc796ca4ecb52b2193da956864",
+      "bytes": 11040
+    },
+    {
+      "path": "validation/assess_verification_readiness.py",
+      "sha256": "541d10aa715633790d8d0c837fea51fe8d2d81f7b88184c8cfe1b85b2a89e7a2",
+      "bytes": 4584
+    },
+    {
+      "path": "validation/conformance_probe.py",
+      "sha256": "3de546727dd5a81c556839777eba2c93a32c48de4207f442998e005e21fc0b54",
+      "bytes": 3586
+    },
+    {
+      "path": "validation/run_all_validation.py",
+      "sha256": "40b61ec0aa10d5082774a72234d7b646718ba0931f03a49f7a675e266e8acbc7",
+      "bytes": 1503
+    },
+    {
+      "path": "validation/run_dryrun.py",
+      "sha256": "b775d5f8d005e6bdf38b22f63280a32ca081619c634290ba76187387518cedc0",
+      "bytes": 10521
+    },
+    {
+      "path": "validation/run_regression.py",
+      "sha256": "32086ae79fc2b8ca96336398db64270ad06ee5406a5ddc20c34f5237e6dd7807",
+      "bytes": 6807
+    },
+    {
+      "path": "validation/run_replay.py",
+      "sha256": "7b2503bee55988256d7f52a41618cc65b7cdc5782c478fc0e9fceac4ccb31591",
+      "bytes": 5162
+    },
+    {
+      "path": "validation/validate_framework.py",
+      "sha256": "95288a37667de3f8f5ceed55c4168479096905307f55c6aae23ff39929ba49ab",
+      "bytes": 6256
+    },
+    {
+      "path": "validation/validate_run2.py",
+      "sha256": "36b9b03b157e70ed5d7e260f77c4eea86a6c289ddfe29afc5da8fa53b504c0f1",
+      "bytes": 6808
+    },
+    {
+      "path": "validation/validate_run3.py",
+      "sha256": "d0083154677bf5259b144c0afdd21513fc057cac8693846eca83a110780b634f",
+      "bytes": 5862
+    },
+    {
+      "path": "validation/validate_run4.py",
+      "sha256": "6a828584533bbcdbc3dd7ad420909b2a8a6377b9850fec1297d2d5fe5cfd46be",
+      "bytes": 6681
+    },
+    {
+      "path": "validation/validate_run5.py",
+      "sha256": "2d6aa5378ca39c9ed3ec9b2d807d55400b406d5b49ba9b4633e1191108d07cbc",
+      "bytes": 5558
+    },
+    {
+      "path": "reports/PAF-Framework-Validation-Report-v1.0.md",
+      "sha256": "2233391b7904f7807123f416232c73bca250208b21684ef622ea9dfe9b41f0b9",
+      "bytes": 10969
+    },
+    {
+      "path": "reports/PAF-Framework-v1-Approval-Package-v1.0.md",
+      "sha256": "373d46dea9d83af1a1d4f61497c4879838f6398f9e0d8cc7a52b350f4901d9ac",
+      "bytes": 6354
+    },
+    {
+      "path": "approvals/PAF-Owner-Approval-Record.json",
+      "sha256": "c664cae2796c6944d0a0b61dc1da7eb056224ad23b253893a5947440ee8b0976",
+      "bytes": 2287
+    },
+    {
+      "path": "evidence/SETUP-001/steps-63-72-evidence.json",
+      "sha256": "9e4abc460d3903ad4e2aa250ea3231a44720a733cdae09ddaa992a31a106571e",
+      "bytes": 7871
+    },
+    {
+      "path": "evidence/SETUP-002/steps-73-79-evidence.json",
+      "sha256": "208021a29ab3fdf1df3a3cf8d9f8796061f7d9c640cf041dc7b6c21fe8eb1503",
+      "bytes": 6005
+    },
+    {
+      "path": "evidence/SETUP-003/steps-87-100-evidence.json",
+      "sha256": "819d0b03c1855a45e896520dc3c48513b904609a5ac70a8491edd54e2461ccdf",
+      "bytes": 9807
+    },
+    {
+      "path": "evidence/dry-run-results.json",
+      "sha256": "68af1ff4ee68b4ae9253ccb71b4d5727af9b89dbc1c81a9cb43094b366ef28ef",
+      "bytes": 4942
+    },
+    {
+      "path": "evidence/replay-results.json",
+      "sha256": "51be6bdb825f23d0c32e9494317bc73f2fd24a77148ec69d533c1eb2bb6591c2",
+      "bytes": 2182
+    },
+    {
+      "path": "evidence/verification-readiness.json",
+      "sha256": "2b3ae0af3c7dd51ecb7359e79de926a75254c5ae0af1208a0a91591572364853",
+      "bytes": 102147
+    },
+    {
+      "path": "decisions/PAF-Foundation-Decision-Record-v1.0.md",
+      "sha256": "125b6213396de9b34d635ea114614c43ad6490e93cb3c3994e93bf2055fd13bb",
+      "bytes": 39467
+    },
+    {
+      "path": "state/PAF-Continuity-Snapshot-FrameworkV1.json",
+      "sha256": "cf64f574b74318286945def53f32157528979f903bc9766b848fb94476af2ff3",
+      "bytes": 9886
+    },
+    {
+      "path": "design/OQ-13-Provider-Comparison.md",
+      "sha256": "3e86548264b86273b86ec0b19150b67951b68bc0d0a233c99061bc80158fa8cb",
+      "bytes": 18941
+    },
+    {
+      "path": "design/PROJECTONE-Frontend-Decision-Support.json",
+      "sha256": "47dc3ca02abab389b082d600adf7c6f6d4ca0dfce704c4d376787aa3e58ea36d",
+      "bytes": 6489
+    },
+    {
+      "path": "design/PROJECTONE-Repository-Design-v1.0.json",
+      "sha256": "eb3042251eace016571cb7a83138026d8fcddde13021fdc551e36351ad958b6a",
+      "bytes": 12134
+    },
+    {
+      "path": "changes/CP-001-repository-binding.json",
+      "sha256": "590e052b20888902a147fb82f875856e6cbdcc41a84132953d7823702d2b47c7",
+      "bytes": 2604
+    },
+    {
+      "path": "changes/CP-002-backend-stack-and-mining-placement.json",
+      "sha256": "3bc4156ec1ed3611dde6fdd7bdb8bc0be054d8ca512ea4571b3461824436d31e",
+      "bytes": 6090
+    },
+    {
+      "path": "changes/CP-003-frontend-react-and-dom-ownership.json",
+      "sha256": "ac7a4c9833d52e36945d7d26b8d2dd41586ea0802a5c9623ef0f153670087b43",
+      "bytes": 7426
+    },
+    {
+      "path": "changes/CP-004-oq13-narrowed-fabric-excluded.json",
+      "sha256": "ca2a53d915c90fd26e31466b3b68a4a246d214e23b0a2eefcb45810b9a81d17a",
+      "bytes": 8948
+    },
+    {
+      "path": "changes/CP-005-technology-registry.json",
+      "sha256": "ae5df7361400e46dc33aeb50c2b75dc7d754dc2d210dbfa5444b2594e71a743d",
+      "bytes": 2362
+    },
+    {
+      "path": "repo-controls/scripts/check_baseline_integrity.py",
+      "sha256": "13116c58264db4ac241b831c89f3e9346c6ea7e27f79b44e7ae990e1b3135b6c",
+      "bytes": 3701
+    },
+    {
+      "path": "repo-controls/scripts/check_no_secrets.py",
+      "sha256": "7673cb74e69b7bdbde7f71b05a209d8fcc71f5b4eda54461600b627f79b4c488",
+      "bytes": 3196
+    },
+    {
+      "path": "repo-controls/scripts/check_pr_governance.py",
+      "sha256": "5c64ab53958b5f04ab0ed4afc6d87cc9a2bbfb103854981d8f8c6eb0aa0ae957",
+      "bytes": 2688
+    },
+    {
+      "path": "repo-controls/scripts/check_repository_layout.py",
+      "sha256": "fbe8d4f8a6e83764c29b85dcfa35d7b2be1b93e194312be3c49edc5ed0723e33",
+      "bytes": 3117
+    },
+    {
+      "path": "repo-controls/scripts/check_slice_boundaries.py",
+      "sha256": "84a765d9146dafa58265ed6756770940984aaa436f3e8f418ba32a261e39c25f",
+      "bytes": 4596
+    },
+    {
+      "path": "repo-controls/workflows/governance.yml",
+      "sha256": "db05eeb1bc01c924b249ad754f4f3ee61538da841ea2e6dac300c51fd365d941",
+      "bytes": 2292
+    },
+    {
+      "path": "repo-controls/workspace/.env.example",
+      "sha256": "7950362b5013b8bb5c0b88bd510544ba09a702e628fa7c3435241d549c68f624",
+      "bytes": 1748
+    },
+    {
+      "path": "repo-controls/workspace/.gitattributes",
+      "sha256": "af01102cd0e4d135f7bc5e1c1d12e0ba8ce7e94477ec002164035a4cb76367e7",
+      "bytes": 534
+    },
+    {
+      "path": "repo-controls/workspace/.vscode/extensions.json",
+      "sha256": "557299e2294470a6da1fedad41778f1a063d4dca855c6ef7d60b06ea2009479c",
+      "bytes": 2573
+    },
+    {
+      "path": "repo-controls/workspace/.vscode/launch.json",
+      "sha256": "692726852ab07c75b14f930570a00033a207ab50e9c4bfb72af0dc3f33b34b0f",
+      "bytes": 1733
+    },
+    {
+      "path": "repo-controls/workspace/.vscode/settings.json",
+      "sha256": "8e5c14665072153d1e80f28dfbca528caa928aad858353d97abc2f5ebbe03313",
+      "bytes": 4229
+    },
+    {
+      "path": "repo-controls/workspace/.vscode/tasks.json",
+      "sha256": "6ddeca3d8fd11b3d268414469c14d08db333bf18051fcacb8ddc8a96dd7202db",
+      "bytes": 3415
+    },
+    {
+      "path": "repo-controls/workspace/pyproject.toml",
+      "sha256": "6a78c944cfdbdc8ddb2896b74b6598ce9dc63fb768d61e71ba3ade2053b7d6e8",
+      "bytes": 2500
+    }
+  ],
+  "frozenAt": "2026-08-18T15:12:00-04:00",
+  "refreezeNote": "Authored to correct a version-number reuse defect: CP-002 through CP-005 were applied to the v1.1 manifest in place, producing two artifacts both labelled v1.1 with different contents (132 vs 155 components). v1.1 as frozen under CP-001 (132 components) is retained immutably in the repository. This manifest records the post-CP-005 state as v1.2. The operative freeze boundary \u2014 governance/framework/SHA256SUMS.txt, 87 files \u2014 is unchanged and byte-identical to v1.0.",
+  "changesSinceV11": [
+    "CP-002 backend + AC-MINING-PLACEMENT",
+    "CP-003 frontend React + AC-DOM-OWNERSHIP",
+    "CP-004 OQ-13 narrowed + Fabric excluded as source",
+    "CP-005 technology registry (29 entries)",
+    "Forward requirements register (9 entries)",
+    "repo-controls/ inventory (13 files) recorded"
+  ]
+}

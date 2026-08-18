@@ -1,0 +1,113 @@
+{
+  "header": {
+    "artifactId": "CP-004",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-08-17T11:36:31-04:00"
+  },
+  "changePackageId": "CP-004",
+  "title": "Narrow OQ-13 deployment target; exclude Fabric as host; record Fabric-as-source position",
+  "rationale": "Step 80 Decision 3. Owner elected to keep the deployment target open as long as responsibly possible. Audit found Fabric in direct conflict with LOCKED decision D-62 (enforced uniqueness at the storage layer), verified against Microsoft documentation. Leaving Fabric nominally open would require every subsequent design step to pretend to accommodate an option that cannot satisfy locked canon. OQ-13 is therefore NARROWED rather than closed: genuinely open where it is open, and closed where a locked decision already closed it.",
+  "targetArtifact": "profile/PROJECTONE-Profile.json",
+  "versionTransition": {
+    "from": "1.3 ACTIVE",
+    "to": "1.4 ACTIVE"
+  },
+  "hashBefore": "6455271a08ec40b6588c795136661f52a3172303f6f56e74cb755a9f7d1b2ae9",
+  "riskClass": "R3",
+  "riskBasis": "Narrows a formally open DDR question and records a design-ahead constraint. No R4 trigger fires: no change to canonical-data identity/keys/grain (D-62 is upheld, not altered), no security or tenant-isolation change, no source-authority change.",
+  "changes": [
+    {
+      "field": "openQuestions.OQ-13",
+      "value": {
+        "openQuestionId": "OQ-13",
+        "title": "Deployment target",
+        "status": "OPEN \u2014 NARROWED, deliberately late-binding",
+        "narrowedAt": "2026-08-17T11:36:31-04:00",
+        "narrowedBy": "John",
+        "changePackage": "CP-004",
+        "remainsOpenBetween": [
+          "Azure SQL Database (PaaS)",
+          "Azure SQL Managed Instance"
+        ],
+        "providerRemainsOpen": "Azure vs AWS (RDS/Aurora) vs GCP. Both remaining engine options are full SQL Server engines available or equivalent across providers.",
+        "excluded": [
+          {
+            "option": "Microsoft Fabric (Warehouse / SQL analytics endpoint)",
+            "status": "EXCLUDED",
+            "primaryReason": "Conflicts with LOCKED decision D-62. D-62 requires a UNIQUE constraint on the event natural key ENFORCED AT THE STORAGE LAYER \u2014 'duplicates rejected at the storage layer, making D-19 idempotency true at the DB'. Fabric Warehouse supports PRIMARY KEY and UNIQUE only with NONCLUSTERED and NOT ENFORCED; the engine does not check uniqueness and duplicate inserts succeed. Verified against Microsoft documentation (learn.microsoft.com/fabric/data-warehouse/table-constraints).",
+            "consequenceIfAdopted": "The uniqueness guarantee would have to move from the storage layer into loader code \u2014 precisely what D-62 decided against. Retro-fitting to a populated columnstore would be a P-8 migration event.",
+            "secondaryReasons": [
+              "Cost model inverts D-21. D-21 locked serverless posture because the workload is 'light and bursty' and can pause when idle. Fabric bills reserved capacity continuously, converting the cheapest-credible-start into a fixed monthly floor before first revenue.",
+              "Tenant isolation shape mismatch. D-16/D-17 provision isolated clients as separate serverless databases resolved by a single resolver row. Fabric's unit is a workspace on purchased capacity \u2014 not equivalent.",
+              "Category mismatch. Fabric is an analytics platform over a data lake, not a database engine for an application that reads and writes."
+            ],
+            "exclusionScope": "Excluded as a DEPLOYMENT TARGET only. NOT excluded as a data SOURCE \u2014 see OD-12.",
+            "reviewTrigger": "If Microsoft introduces enforced uniqueness in Fabric Warehouse, this exclusion may be revisited. Knowledge current to May 2026; Fabric changes quickly, so re-verify rather than relying on this record if reconsidered."
+          }
+        ],
+        "whyKeptOpen": "Nothing in Steps 81-90 requires it. SQL Server is the engine either way and the tooling is identical. The DDR was authored for late binding: D-21 locks posture while leaving target open, and D-27 explicitly ties partition scheme and tier boundaries to OQ-13.",
+        "latestResponsibleMoment": "Before infrastructure is provisioned for an environment holding real tenant data. Deferring past that point risks a P-8 migration event rather than a configuration choice.",
+        "designTaxToKeepItOpen": {
+          "rule": "While OQ-13 remains open between Azure SQL Database and Managed Instance, nothing may depend on a Managed-Instance-only capability. Using one silently closes the decision without anyone deciding it.",
+          "prohibitedWhileOpen": [
+            "SQL Server Agent for scheduling \u2014 use an external scheduler or an application-tier job runner",
+            "Cross-database queries \u2014 Azure SQL Database does not support them",
+            "Linked servers",
+            "CLR integration",
+            "Database Mail",
+            "FILESTREAM / FileTable",
+            "Instance-level configuration or server-scoped objects"
+          ],
+          "detectionNote": "This is currently enforced by review, not by an automated check. A deterministic check over DDL and migration scripts is buildable once there is schema to check, and should be added then.",
+          "classification": "This is a design-ahead tax, not a deferred design. Per P-8, the design accommodates either target; only the selection is deferred."
+        }
+      }
+    },
+    {
+      "field": "architecturalNotes.NOTE-FABRIC-AS-SOURCE",
+      "value": {
+        "noteId": "NOTE-FABRIC-AS-SOURCE",
+        "title": "Fabric as a data SOURCE, not a deployment target",
+        "recordedAt": "2026-08-17T11:36:31-04:00",
+        "basis": "Owner directed this be logged separately so it is not lost with the exclusion decision",
+        "sentiment": "Fabric is excluded as a place to HOST ProjectOne. It is not excluded as a place ProjectOne READS FROM. If a client already runs Fabric and wants ProjectOne to consume event data from their lakehouse, that is a connector \u2014 an integration story, not a hosting decision.",
+        "whyItMatters": "The exclusion decision and the integration opportunity are easy to conflate. Recording only the exclusion risks a future reader concluding 'Fabric is out' and declining a legitimate client integration. Mid-market and enterprise clients increasingly land data in Fabric; being able to read from it is a commercial advantage, and it costs nothing architecturally because reading does not require enforced constraints on the source side.",
+        "architecturalFit": "Clean. ProjectOne's data contract (504) defines what an event log must supply. A Fabric lakehouse is one more source shape behind that contract \u2014 the same position as a CSV, a database extract, or an API. The contract is the boundary; the source technology sits outside it.",
+        "constraintsUnaffected": [
+          "D-62 enforced uniqueness applies to ProjectOne's OWN storage, not to a source system",
+          "AC-MINING-PLACEMENT unaffected \u2014 mining still executes in ProjectOne's own SQL, over ingested data"
+        ],
+        "mustAppearIn": [
+          {
+            "artifact": "Implementation Guide",
+            "requirement": "MUST reference this note. The guide must state that Fabric is excluded as a deployment target AND supported in principle as a source, so the distinction survives into build-time documentation."
+          },
+          {
+            "artifact": "Client onboarding documentation (502)",
+            "requirement": "Source-system options should not imply Fabric is unsupported."
+          },
+          {
+            "artifact": "Event log data contract (504)",
+            "requirement": "Fabric lakehouse listed among candidate source shapes when connector work is scoped."
+          }
+        ],
+        "status": "RECORDED \u2014 not yet scheduled. Connector implementation is post-MVP and unscoped; this note establishes the position, not a commitment to build."
+      }
+    }
+  ],
+  "reviewPath": [
+    "ROLE_ARCHITECTURE"
+  ],
+  "approvalRequired": true,
+  "approvalClassRef": "MATERIAL_ARCHITECTURE_SHARED_PLATFORM",
+  "approvalStatus": "APPROVED \u2014 owner selected Option A and directed the Fabric-as-source note be logged and referenced in the Implementation Guide",
+  "doesNotAmendDDR": "This change does NOT amend D-62 or D-21. It records a Profile-level narrowing consistent with them. If the owner ever wishes to admit Fabric, that requires a DDR amendment to D-62 via the 999 overlay mechanism \u2014 not a Profile change.",
+  "closesOpenDecision": "OD-11 (narrowed, not closed \u2014 OQ-13 remains open between two options)",
+  "hashAfter": "f464e339a0b55f84b47b22bc3d815cca7f64e376c323338cdbbd0d2d732fb0c0"
+}
