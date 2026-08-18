@@ -68,6 +68,12 @@ jobs:
         # dependencies are read straight from pyproject.toml — still one source of
         # truth — and app/ is importable because pytest puts rootdir on sys.path.
         run: |
+          # pip is upgraded because pip-audit audits the RESOLVED ENVIRONMENT, and
+          # pip is part of it. The pip shipped by setup-python lagged behind the
+          # fixes for PYSEC-2026-1796 / -196 / -2875 / -2876, so an un-upgraded pip
+          # fails the Security scan on its own account. Verified in a clean venv:
+          # pip 24.0 reports 4 vulnerabilities, pip 26.2.1 reports none.
+          python -m pip install --upgrade pip
           pip --version
           python - > /tmp/requirements-ci.txt <<'PY'
           import tomllib
@@ -121,6 +127,12 @@ jobs:
         # dependencies are read straight from pyproject.toml — still one source of
         # truth — and app/ is importable because pytest puts rootdir on sys.path.
         run: |
+          # pip is upgraded because pip-audit audits the RESOLVED ENVIRONMENT, and
+          # pip is part of it. The pip shipped by setup-python lagged behind the
+          # fixes for PYSEC-2026-1796 / -196 / -2875 / -2876, so an un-upgraded pip
+          # fails the Security scan on its own account. Verified in a clean venv:
+          # pip 24.0 reports 4 vulnerabilities, pip 26.2.1 reports none.
+          python -m pip install --upgrade pip
           pip --version
           python - > /tmp/requirements-ci.txt <<'PY'
           import tomllib
