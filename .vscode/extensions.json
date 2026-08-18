@@ -1,0 +1,81 @@
+{
+  // Step 92 — approved extension set for this workspace.
+  //
+  // "recommendations" are surfaced to anyone opening this repository.
+  // "unwantedRecommendations" are DISABLED IN THIS WORKSPACE ONLY. They remain
+  // installed and fully available for the owner's other projects.
+  //
+  // Rationale for each exclusion is recorded in
+  // governance/adapter-config/WORKSPACE-EXTENSION-POLICY.md
+
+  "recommendations": [
+    // Python — ruff is the single formatting/linting authority (matches CI)
+    "charliermarsh.ruff",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "ms-python.vscode-python-envs",
+    "njpwerner.autodocstring",
+
+    // SQL Server — Microsoft first-party only
+    "ms-mssql.mssql",
+    "ms-mssql.sql-database-projects-vscode",
+    "ms-mssql.data-workspace-vscode",
+
+    // Frontend
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // Data / config formats
+    "redhat.vscode-yaml",
+    "redhat.vscode-xml",
+    "mechatroner.rainbow-csv",
+
+    // Documentation
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "bierner.markdown-mermaid",
+
+    // Git
+    "mhutchie.git-graph",
+    "github.vscode-pull-request-github",
+
+    // Quality of life
+    "usernamehw.errorlens",
+    "christian-kohler.path-intellisense",
+    "aaron-bond.better-comments",
+
+    // AI assistance — first-party only
+    "anthropic.claude-code",
+    "openai.chatgpt"
+  ],
+
+  "unwantedRecommendations": [
+    // Auto-refactors Python; conflicts with ruff as the single authority.
+    // Same vendor whose GitHub app overwrote a PR governance description
+    // (recorded in evidence/SETUP-001) and was suspended.
+    "sourcery.sourcery",
+
+    // Additional AI assistants with code-read and network access. Each is a
+    // separate egress path for file contents; secret_protection is a global
+    // non-waivable invariant. Two first-party assistants are retained.
+    "codeium.codeium",
+    "genieai.chatgpt-vscode",
+    "kodu-ai.claude-dev-experimental",
+
+    // Overlapping SQL clients — ms-mssql.mssql is the approved client.
+    "dbcode.dbcode",
+    "mtxr.sqltools",
+    "evidence.sqltools-duckdb-driver",
+
+    // Executes code on save / as-you-type. Unsuitable where mining placement
+    // and evidence determinism are governed constraints.
+    "almenon.arepl",
+    "wallabyjs.quokka-vscode",
+
+    // Runs a local web server against workspace files; unnecessary here and an
+    // avoidable local network surface.
+    "ritwickdey.liveserver",
+    "local-smart.excel-live-server"
+  ]
+}

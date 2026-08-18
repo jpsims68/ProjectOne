@@ -4,23 +4,54 @@ Governance check — secret_protection (global non-waivable invariant).
 Refuses committed secret VALUES. Configuration may reference secret NAMES only.
 Exit 0 = clean. Exit 1 = violation.
 """
-import re, sys, pathlib, subprocess
+
+import pathlib
+import re
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PATTERNS = [
-    (r"(?i)\b(aws_secret_access_key|aws_access_key_id)\b\s*[:=]\s*['\"]?[A-Za-z0-9/+=]{16,}", "AWS credential"),
+    (
+        r"(?i)\b(aws_secret_access_key|aws_access_key_id)\b\s*[:=]\s*['\"]?[A-Za-z0-9/+=]{16,}",
+        "AWS credential",
+    ),
     (r"ghp_[A-Za-z0-9]{20,}", "GitHub personal access token"),
     (r"github_pat_[A-Za-z0-9_]{20,}", "GitHub fine-grained token"),
     (r"sk-[A-Za-z0-9]{20,}", "API secret key"),
     (r"-----BEGIN (RSA |EC |OPENSSH |PGP )?PRIVATE KEY-----", "private key"),
-    (r"(?i)\b(password|passwd|secret|api_key|apikey|token)\b\s*[:=]\s*['\"][^'\"$\{\s]{8,}['\"]", "hardcoded credential"),
-    (r"(?i)(Server|Data Source)=.+;\s*(Password|Pwd)=[^;'\"]{4,}", "connection string with password"),
+    (
+        r"(?i)\b(password|passwd|secret|api_key|apikey|token)\b\s*[:=]\s*['\"][^'\"$\{\s]{8,}['\"]",
+        "hardcoded credential",
+    ),
+    # DEFECT F-R10-01: the quoted-value pattern above misses UNQUOTED assignments,
+    # which is exactly the .env / dotenv format — the single most likely place a real
+    # secret would appear. Found when a test .env containing a password passed cleanly.
+    (
+        r"(?i)^\s*[A-Z0-9_]*(PASSWORD|PASSWD|SECRET|API_KEY|APIKEY|TOKEN|PRIVATE_KEY)[A-Z0-9_]*\s*=\s*[^\s$\{<#\n][^\s]{5,}",
+        "unquoted credential assignment",
+    ),
+    (
+        r"(?i)(Server|Data Source)=.+;\s*(Password|Pwd)=[^;'\"]{4,}",
+        "connection string with password",
+    ),
 ]
-ALLOW = re.compile(r"(\$\{|\$\(|process\.env|os\.environ|<[A-Z_]+>|CHANGEME|EXAMPLE|placeholder|\bREPLACE_ME\b)", re.I)
+ALLOW = re.compile(
+    r"(\$\{|\$\(|process\.env|os\.environ|<[A-Z_]+>|CHANGEME|EXAMPLE|placeholder|\bREPLACE_ME\b)",
+    re.I,
+)
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "governance"}
 SKIP_SUFFIX = {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".ico", ".woff", ".woff2"}
 
 hits = []
+
+# A committed .env is a violation regardless of contents. .env.example is the template
+# and carries NAMES only; every other file in that family holds VALUES.
+for p in ROOT.rglob(".env*"):
+    if p.is_file() and ".git" not in p.parts and p.name != ".env.example":
+        hits.append(
+            f"{p.relative_to(ROOT)} — .env file committed; only .env.example may be tracked"
+        )
+
 for p in ROOT.rglob("*"):
     if not p.is_file() or p.suffix in SKIP_SUFFIX:
         continue

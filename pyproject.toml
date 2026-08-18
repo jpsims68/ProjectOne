@@ -1,0 +1,78 @@
+[project]
+name = "projectone"
+version = "0.0.0"
+description = "Process Intelligence as a Service — multi-tenant, process- and industry-agnostic"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.8,<3",
+    "pydantic-settings>=2.4",
+    "pyodbc>=5.1,<6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8,<9",
+    "pytest-cov>=5",
+    "mypy>=1.11",
+    "ruff>=0.6",
+    "pip-audit>=2.7",
+    "bandit>=1.7",
+    "jsonschema>=4.21",
+]
+
+# ---- ruff: the single Python formatting and linting authority ---------------
+# Identical configuration is used locally and in CI. One tool, one result.
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+# Frozen framework baseline and its delivered tooling are EXCLUDED, deliberately:
+#
+#   governance/framework   — hash-verified by check_baseline_integrity.py. Reformatting
+#                            would change the bytes and FAIL the integrity check. The
+#                            baseline is immutable by design (APR-002).
+#   governance/validation  — validation suites delivered WITH the frozen baseline and
+#   governance/engine        versioned as a unit with it. Reformatting would diverge the
+#                            repository copy from the packaged framework for no benefit.
+#
+# governance/scripts is NOT excluded: those are the active CI enforcement checks and are
+# held to the same standard as application code.
+exclude = [
+    "governance/framework",
+    "governance/validation",
+    "governance/engine",
+    ".venv",
+    "node_modules",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM", "PTH", "RUF"]
+ignore = ["E501"]  # line length is enforced by the formatter, not the linter
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# ---- mypy: the type-checking AUTHORITY (Pylance advises only) ---------------
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unreachable = true
+exclude = ["governance/framework", "\\.venv"]
+
+[[tool.mypy.overrides]]
+module = ["pyodbc.*"]
+ignore_missing_imports = true
+
+# ---- pytest -----------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+    "smoke: toolchain verification — must pass before any feature work",
+    "tenant_isolation: verifies a canonical access path is tenant-scoped",
+]
+
+[tool.bandit]
+exclude_dirs = [".venv", "node_modules", "governance", "tests"]
