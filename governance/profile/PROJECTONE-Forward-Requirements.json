@@ -109,15 +109,24 @@
     {
       "reqId": "FR-010",
       "targetArtifact": "governance/scripts/check_cloud_target_compatibility.py",
-      "targetStatus": "NOT YET BUILT",
+      "targetStatus": "BUILT \u2014 governance/scripts/check_cloud_target_compatibility.py (Step 105)",
       "sourceDecision": "Step 89 environment audit + CP-004 OQ-13 design tax",
       "recordedAt": "2026-08-17T17:03:17-04:00",
-      "requirement": "A deterministic check MUST scan DDL, T-SQL scripts and migration files for capabilities absent from Azure SQL Database: SQL Server Agent objects (msdb.dbo.sp_add_job, sp_add_jobstep, sysjobs), three-part cross-database names, linked-server syntax (sp_addlinkedserver, OPENQUERY, four-part names), and CLR (sp_configure 'clr enabled', CREATE ASSEMBLY). It must FAIL the build on any hit.",
+      "requirement": "A deterministic check MUST scan DDL, T-SQL scripts and migration files for ANY capability absent from Azure SQL Database, and MUST FAIL the build on any hit. The objective is the governing clause: no SQL may be committed that will not execute against Azure SQL Database. The following families are ILLUSTRATIVE, not exhaustive \u2014 SQL Server Agent objects (msdb.dbo.sp_add_job, sp_add_jobstep, sysjobs), cross-database three- and four-part names, linked-server syntax (sp_addlinkedserver, OPENQUERY, OPENDATASOURCE), and CLR (sp_configure 'clr enabled', CREATE ASSEMBLY). The implemented block list additionally covers: the USE statement, file placement / FILESTREAM / FILETABLE, backup / restore / recovery-model / high-availability syntax, instance configuration (sp_configure, RECONFIGURE, trace flags, Resource Governor), extended stored procedures and Database Mail, server-scoped objects (endpoints, server audit, server credentials, logon triggers, EXECUTE AS LOGIN), Windows authentication, Service Broker, TRUSTWORTHY / cross-database ownership chaining, distributed transactions, and BULK INSERT from a local filesystem path.",
       "whyRequired": "The owner's local instance is SQL Server 2022 DEVELOPER EDITION \u2014 the full Enterprise feature set. It will happily run SQL Agent jobs, cross-database queries, linked servers and CLR. Azure SQL Database supports NONE of them. Local success would therefore give false confidence, and the failure would surface only at deployment. This is the CP-004 design tax becoming live: previously a rule about a future choice, now a machine that will let the rule be broken silently.",
-      "acceptanceTest": "Check exists in CI, is a required status check, and fails on a fixture containing each prohibited pattern.",
+      "acceptanceTest": "Check exists in CI, is a required status check, and fails on a fixture containing each prohibited pattern. A clean-control fixture that names blocked constructs in comments and string literals MUST PASS \u2014 a check that produces false positives gets disregarded, and a disregarded check is no check. Fixture matrix: tests/test_cloud_target_compatibility.py.",
       "requiredBy": "Before the first DDL is committed to the repository",
-      "note": "Applies regardless of how OQ-13 resolves for provider. If AWS were ever chosen, D-21/D-26 would need amending first and this check would be revised, not deleted."
+      "note": "Applies regardless of how OQ-13 resolves for provider. If AWS were ever chosen, D-21/D-26 would need amending first and this check would be revised, not deleted.",
+      "amendmentNote": "2026-08-19 \u2014 Wording amended at owner direction. The original text stated the objective and then named four families after a colon; the acceptance test required failing only on those four. A check implementing the literal four would therefore have PASSED its own acceptance test while missing the objective. The enumeration is now explicitly illustrative and the implemented block list is recorded. Block list verified against Microsoft's 'T-SQL differences between SQL Server and Azure SQL Database' reference, last updated 2026-04-02. No design changed: the objective is as originally recorded.",
+      "implementationNote": "Three-part names are NOT uniformly blocked: Microsoft confirms names referencing the current database and tempdb are supported, so only other database prefixes are flagged. Blocking all three-part names would false-positive on ordinary same-database references. Scope is the db/ directory; SQL that is genuinely local-only and not part of the deployable product may live outside it."
     }
   ],
-  "note": "No entry here is a commitment to BUILD anything. Each is a requirement that a document, when written, must say something specific."
+  "note": "No entry here is a commitment to BUILD anything. Each is a requirement that a document, when written, must say something specific.",
+  "changeHistory": [
+    {
+      "date": "2026-08-19T09:20:00-04:00",
+      "change": "FR-010 wording amended: enumeration made explicitly illustrative, implemented block list recorded, acceptance test extended to require a clean-control fixture. Objective unchanged.",
+      "approver": "John"
+    }
+  ]
 }

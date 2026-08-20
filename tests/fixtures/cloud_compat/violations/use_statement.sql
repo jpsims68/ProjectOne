@@ -1,0 +1,3 @@
+USE [mvp];
+GO
+CREATE TABLE dbo.Thing (Id INT NOT NULL PRIMARY KEY);
