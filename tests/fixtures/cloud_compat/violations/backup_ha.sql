@@ -1,0 +1,2 @@
+BACKUP DATABASE mvp TO DISK = N'C:\backup\mvp.bak';
+ALTER DATABASE mvp SET RECOVERY FULL;

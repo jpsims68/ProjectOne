@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Refuse flattened or misplaced files
         run: python3 governance/scripts/check_repository_layout.py
 
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Enforce slice boundaries and manifests
         run: python3 governance/scripts/check_slice_boundaries.py
 
@@ -49,7 +49,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Refuse committed secret values
         run: python3 governance/scripts/check_no_secrets.py
 
@@ -62,13 +62,26 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Write PR body to file
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
         run: printf '%s' "$PR_BODY" > /tmp/pr_body.md
       - name: Check required governance metadata
         run: python3 governance/scripts/check_pr_governance.py /tmp/pr_body.md
+
+  cloud-target-compatibility:
+    name: Azure SQL Database compatibility (FR-010)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Refuse SQL that cannot run on Azure SQL Database
+        # Scans files only. Never connects to a database, never executes SQL.
+        run: python3 governance/scripts/check_cloud_target_compatibility.py
 
   baseline-integrity:
     name: Framework baseline integrity
@@ -78,6 +91,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - name: Verify frozen framework baseline hashes
         run: python3 governance/scripts/check_baseline_integrity.py
