@@ -1,13 +1,16 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-21T13:20:00-04:00",
+  "snapshotDateTime": "2026-08-21T14:30:00-04:00",
   "packageChain": {
-    "thisPackageId": "PAF-STEPS-1-100-PACKAGE",
+    "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
-    "predecessorPackageHash": "9eb5021f3d51bf71f56d9fc7dbace82e0b3674445b8a13d65e64ee364e3aa60b",
-    "predecessorPackageId": "PAF-RUN7A-CONTINUATION-v1.0",
-    "knownDefect": "CHAIN FORK: this snapshot and the Steps-1-72 snapshot both declare predecessorPackageId PAF-RUN7A-CONTINUATION-v1.0, so the 1-72 package is absent from the ancestry and the chain forks rather than extends. thisPackageId is also stale \u2014 state has advanced well beyond the 1-100 package. Both are repaired when the thin continuation package is exported at Step 111."
+    "predecessorPackageHash": "2d02618c1a35944dbb195183ed1f83371fd8142799ee8940bdd910721c76f96d",
+    "predecessorPackageId": "PAF-STEPS-1-100-PACKAGE",
+    "chainRepairNote": "FORK REPAIRED. The Steps-1-72 and Steps-1-100 snapshots both declared PAF-RUN7A-CONTINUATION-v1.0 as predecessor, so the chain forked rather than extended and the 1-72 package was absent from the ancestry. This package chains correctly to PAF-STEPS-1-100-PACKAGE by its measured SHA-256. thisPackageId, previously stale at PAF-STEPS-1-100-PACKAGE while state had advanced well beyond it, is also corrected.",
+    "packageIsThin": "THIN PACKAGE \u2014 owner decision 2026-08-21 (option B). This package carries the continuity snapshot and a manifest pointing at the repository. It does NOT carry a copy of the governed corpus. The repository at the commit below is the system of record. Measured before this decision: of 158 files in the previous fat package, 141 were byte-identical to the repository, 7 differed with the repository newer in every case, and 3 were absent \u2014 two READMEs describing the package itself and its own checksum file. The fat package therefore carried no information the repository lacked, while going stale between every session. That staleness was recorded as R-03.",
+    "repositoryAtExport": "f367c5394340165a3454f545249382c8f35df1af",
+    "whyNotRetiredEntirely": "Retiring the mechanism was considered and rejected on evidence. paf.continuity-snapshot.schema.json lists packageChain as a REQUIRED field, and packageChain requires thisPackageId, immutableCorpusHash and predecessorPackageHash. Removing it would produce a snapshot failing its own frozen schema, enforced by validate_framework.py \u2014 which would require a governed change against the frozen core to remove a safety mechanism. Thin satisfies the schema honestly while removing the staleness."
   },
   "frameworkStepRangeCompleted": [
     1,
@@ -119,9 +122,10 @@
     107,
     108,
     109,
-    110
+    110,
+    111
   ],
-  "currentStep": 110,
+  "currentStep": 111,
   "currentLifecycleState": "STABLE",
   "governanceBaseline": {
     "buildPolicy": "Build Requirements & Architecture Policy v1.2",
@@ -223,7 +227,7 @@
       "risk": "The Steps-1-100 continuation package on the owner's disk is now materially behind the repository",
       "impact": "Step 100 vs 109, baseline v1.1 vs v1.2, no lockfile, no overlay register, no Build Constraints Guide",
       "mitigation": "Repository is authoritative on any disagreement. Superseded by the Step 111 package export.",
-      "status": "OPEN \u2014 closes at Step 111"
+      "status": "CLOSED 2026-08-21 \u2014 the fat Steps-1-100 package is superseded by the thin package. Staleness is structurally removed: a package that is a pointer plus a snapshot cannot drift the way a 158-file copy did."
     }
   ],
   "openExceptions": [
@@ -311,7 +315,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Step 111: record the known-stable development baseline (versions, hashes, test and security results, environment, recovery point, open exceptions) and export the thin continuation package, repairing the packageChain fork and stale thisPackageId. Step 112 requires EXPLICIT OWNER AUTHORIZATION before Step 113. Production application implementation remains NOT AUTHORIZED.",
+  "nextAuthorizedAction": "Step 112: present readiness evidence to the owner and WAIT for explicit authorization of F1a. The evidence is governance/baselines/PROJECTONE-Development-Baseline-v1.0.json, and its whatIsNOTProven section must be read in full before authorizing. Step 113 begins implementation ONLY after Step 112. Production application implementation remains NOT AUTHORIZED.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place \u2014 governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -339,9 +343,10 @@
     "Do NOT mark OV-002 ACTIVE before connector work is scoped; PENDING is the requirement being met, not deferred",
     "Do NOT assert that a document or plan does not exist without searching EVERY unpacked package \u2014 the 101-113 execution plan was in the Core package while an agent reported no itemization existed",
     "Do NOT let a governance check inspect the filesystem when it means to inspect the repository \u2014 two checks failed on the mere presence of a git-ignored .env, which canonical Step 108 requires (F-SETUP-015-01/02)",
-    "Do NOT read 'Login failed for user' from SQL Server as an authentication problem without checking for error 4060 \u2014 a missing database produces the same message (F-SETUP-016-01)"
+    "Do NOT read 'Login failed for user' from SQL Server as an authentication problem without checking for error 4060 \u2014 a missing database produces the same message (F-SETUP-016-01)",
+    "Do NOT treat the Step 111 baseline as a statement that the SYSTEM is ready \u2014 it states that the ENVIRONMENT is verified. Read whatIsNOTProven before Step 112 authorization"
   ],
-  "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE: (a) Verify the re-uploaded Core package SHA-256 equals packageChain.immutableCorpusHash; a mismatch is a STOP condition. (b) Verify this continuation package against its SHA256SUMS.txt. (c) Confirm predecessorPackageHash chains correctly. (d) Re-run all validators: validate_framework.py (15/15), validate_run2.py (21/21), validate_run3.py (18/18), validate_run4.py <core> (16/16), validate_run5.py (15/15), conformance_probe.py <core> (5/5). All must pass before new work. (e) Read PAF-SPEC v0.2 and PAF-FDR v1.0. (f) Proceed to Run 2 (Steps 11-20). Never assume prior container files exist.",
+  "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 \u2014 the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary \u2014 including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan \u2014 the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete.",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json \u2014 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
   "resolvedDecisions": [
     {
@@ -435,8 +440,8 @@
       {
         "step": 111,
         "requirement": "Reproducible pre-feature development baseline recorded",
-        "status": "NOT STARTED",
-        "note": "Requires versions, hashes, test and security results, environment, recovery point, and open exceptions"
+        "status": "MET",
+        "evidence": "governance/baselines/PROJECTONE-Development-Baseline-v1.0.json \u2014 versions, hashes, environment, test and security results, gates, open exceptions, recovery point, and an explicit whatIsNOTProven section. Thin continuation package exported; packageChain fork repaired."
       }
     ]
   },
