@@ -16,44 +16,52 @@
   "requirements": [
     {
       "reqId": "FR-001",
-      "targetArtifact": "Implementation Guide",
-      "targetStatus": "NOT YET CREATED",
+      "targetArtifact": "Build Constraints Guide (governance/design/PROJECTONE-Build-Constraints-Guide.md)",
+      "targetStatus": "SATISFIED \u2014 \u00a73 (Step 107, 2026-08-19)",
       "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
       "recordedAt": "2026-08-17T11:37:15-04:00",
       "recordedBy": "Owner direction",
-      "requirement": "The Implementation Guide MUST state both halves of the Fabric position: (a) Microsoft Fabric is EXCLUDED as a deployment target, because Fabric Warehouse cannot enforce uniqueness constraints and therefore cannot satisfy LOCKED decision D-62; and (b) Fabric is NOT excluded as a data SOURCE \u2014 a client lakehouse is a legitimate connector target behind the event log data contract (504).",
+      "requirement": "The Build Constraints Guide MUST state both halves of the Fabric position: (a) Microsoft Fabric is EXCLUDED as a deployment target, because Fabric Warehouse cannot enforce uniqueness constraints and therefore cannot satisfy LOCKED decision D-62; and (b) Fabric is NOT excluded as a data SOURCE \u2014 a client lakehouse is a legitimate connector target behind the event log data contract (504).",
       "whyRequired": "The exclusion and the integration opportunity are easy to conflate. A guide recording only 'Fabric is out' would lead a future reader to decline a legitimate client integration. Both halves must travel together.",
-      "acceptanceTest": "Search the Implementation Guide for 'Fabric'. It must return both the deployment-target exclusion AND the source-side support statement. Either alone is a defect."
+      "acceptanceTest": "Search the Implementation Guide for 'Fabric'. It must return both the deployment-target exclusion AND the source-side support statement. Either alone is a defect.",
+      "retargetNote": "Retargeted from 'Implementation Guide' to the Build Constraints Guide. The original single target conflated two audiences: five of these six requirements address whoever writes code (DDL authors, the mining layer, the React frontend), while the owner's working definition of 'Implementation Guide' was a per-client installation pre-flight checklist. One document serving both readers would be ignored by both. Client-facing obligations remain with the 502 Playbook (FR-005) and 504 Data Contract (FR-006). Split approved by owner 2026-08-19.",
+      "acceptanceTestResult": "PASS \u2014 verified against the guide as written, \u00a73"
     },
     {
       "reqId": "FR-002",
-      "targetArtifact": "Implementation Guide",
-      "targetStatus": "NOT YET CREATED",
+      "targetArtifact": "Build Constraints Guide (governance/design/PROJECTONE-Build-Constraints-Guide.md)",
+      "targetStatus": "SATISFIED \u2014 \u00a72 (Step 107, 2026-08-19)",
       "sourceDecision": "CP-004 / OQ-13 design tax",
       "recordedAt": "2026-08-17T11:37:15-04:00",
-      "requirement": "The Implementation Guide MUST carry the OQ-13 design tax: while the deployment target remains open between Azure SQL Database and Managed Instance, nothing may depend on an MI-only capability (SQL Server Agent scheduling, cross-database queries, linked servers, CLR, Database Mail, FILESTREAM, instance-level configuration).",
+      "requirement": "The Build Constraints Guide MUST carry the OQ-13 design tax: while the deployment target remains open between Azure SQL Database and Managed Instance, nothing may depend on an MI-only capability (SQL Server Agent scheduling, cross-database queries, linked servers, CLR, Database Mail, FILESTREAM, instance-level configuration).",
       "whyRequired": "Using an MI-only feature silently closes an intentionally open decision. The prohibition must be visible to whoever writes DDL and jobs, not buried in a change package.",
-      "acceptanceTest": "The guide names the prohibited capabilities explicitly and states the consequence of using one."
+      "acceptanceTest": "The guide names the prohibited capabilities explicitly and states the consequence of using one.",
+      "retargetNote": "Retargeted from 'Implementation Guide' to the Build Constraints Guide. The original single target conflated two audiences: five of these six requirements address whoever writes code (DDL authors, the mining layer, the React frontend), while the owner's working definition of 'Implementation Guide' was a per-client installation pre-flight checklist. One document serving both readers would be ignored by both. Client-facing obligations remain with the 502 Playbook (FR-005) and 504 Data Contract (FR-006). Split approved by owner 2026-08-19.",
+      "acceptanceTestResult": "PASS \u2014 verified against the guide as written, \u00a72"
     },
     {
       "reqId": "FR-003",
-      "targetArtifact": "Implementation Guide",
-      "targetStatus": "NOT YET CREATED",
+      "targetArtifact": "Build Constraints Guide (governance/design/PROJECTONE-Build-Constraints-Guide.md)",
+      "targetStatus": "SATISFIED \u2014 \u00a71 (Step 107, 2026-08-19)",
       "sourceDecision": "CP-002 / AC-MINING-PLACEMENT",
       "recordedAt": "2026-08-17T11:37:15-04:00",
-      "requirement": "The Implementation Guide MUST carry the mining placement constraint: computation executes set-based in SQL; numpy only on already-reduced results; no row-wise Python over events; no mining in-request; no client-side computation over raw events.",
+      "requirement": "The Build Constraints Guide MUST carry the mining placement constraint: computation executes set-based in SQL; numpy only on already-reduced results; no row-wise Python over events; no mining in-request; no client-side computation over raw events.",
       "whyRequired": "Python cannot parallelize CPU-bound work across threads. A design placing mining in-request cannot be repaired by adding capacity \u2014 it requires restructuring. The constraint must reach whoever writes the first slice.",
-      "acceptanceTest": "The guide states the testable line: if a computation step receives raw event rows outside SQL, it is misplaced."
+      "acceptanceTest": "The guide states the testable line: if a computation step receives raw event rows outside SQL, it is misplaced.",
+      "retargetNote": "Retargeted from 'Implementation Guide' to the Build Constraints Guide. The original single target conflated two audiences: five of these six requirements address whoever writes code (DDL authors, the mining layer, the React frontend), while the owner's working definition of 'Implementation Guide' was a per-client installation pre-flight checklist. One document serving both readers would be ignored by both. Client-facing obligations remain with the 502 Playbook (FR-005) and 504 Data Contract (FR-006). Split approved by owner 2026-08-19.",
+      "acceptanceTestResult": "PASS \u2014 verified against the guide as written, \u00a71"
     },
     {
       "reqId": "FR-004",
-      "targetArtifact": "Implementation Guide",
-      "targetStatus": "NOT YET CREATED",
+      "targetArtifact": "Build Constraints Guide (governance/design/PROJECTONE-Build-Constraints-Guide.md)",
+      "targetStatus": "SATISFIED \u2014 \u00a75 (Step 107, 2026-08-19)",
       "sourceDecision": "CP-003 / AC-DOM-OWNERSHIP",
       "recordedAt": "2026-08-17T11:37:15-04:00",
-      "requirement": "The Implementation Guide MUST carry the DOM ownership boundary: one owner per container. Pattern A (D3 as pure math, React renders) is primary for the chart library. Pattern B (library owns its container, React stays out) applies to Cytoscape.js and the D-28 animation engine. Mixing ownership on the same elements is prohibited.",
+      "requirement": "The Build Constraints Guide MUST carry the DOM ownership boundary: one owner per container. Pattern A (D3 as pure math, React renders) is primary for the chart library. Pattern B (library owns its container, React stays out) applies to Cytoscape.js and the D-28 animation engine. Mixing ownership on the same elements is prohibited.",
       "whyRequired": "Mixed React/direct-DOM ownership is the primary defect source in this combination, and the defects appear only on re-render \u2014 late and hard to diagnose.",
-      "acceptanceTest": "The guide states that Pattern B is not a fallback for Pattern A; both are permanent and apply to different components."
+      "acceptanceTest": "The guide states that Pattern B is not a fallback for Pattern A; both are permanent and apply to different components.",
+      "retargetNote": "Retargeted from 'Implementation Guide' to the Build Constraints Guide. The original single target conflated two audiences: five of these six requirements address whoever writes code (DDL authors, the mining layer, the React frontend), while the owner's working definition of 'Implementation Guide' was a per-client installation pre-flight checklist. One document serving both readers would be ignored by both. Client-facing obligations remain with the 502 Playbook (FR-005) and 504 Data Contract (FR-006). Split approved by owner 2026-08-19.",
+      "acceptanceTestResult": "PASS \u2014 verified against the guide as written, \u00a75"
     },
     {
       "reqId": "FR-005",
@@ -78,23 +86,27 @@
     },
     {
       "reqId": "FR-007",
-      "targetArtifact": "Implementation Guide",
-      "targetStatus": "NOT YET CREATED",
+      "targetArtifact": "Build Constraints Guide (governance/design/PROJECTONE-Build-Constraints-Guide.md)",
+      "targetStatus": "SATISFIED \u2014 \u00a74 (Step 107, 2026-08-19)",
       "sourceDecision": "CP-005 / technology registry",
       "recordedAt": "2026-08-17T13:44:20-04:00",
-      "requirement": "The Implementation Guide MUST state that NO migration framework is used, and why: Alembic and equivalents optimise for frictionless schema churn, which works against DDR P-8. Schema is defined by numbered forward-only SQL scripts under the db-build-sop.",
+      "requirement": "The Build Constraints Guide MUST state that NO migration framework is used, and why: Alembic and equivalents optimise for frictionless schema churn, which works against DDR P-8. Schema is defined by numbered forward-only SQL scripts under the db-build-sop.",
       "whyRequired": "A future contributor reaching for Alembic would see it as an obvious omission rather than a deliberate exclusion. The reasoning must travel with the decision.",
-      "acceptanceTest": "The guide names the exclusion AND the P-8 reasoning, not merely the alternative chosen."
+      "acceptanceTest": "The guide names the exclusion AND the P-8 reasoning, not merely the alternative chosen.",
+      "retargetNote": "Retargeted from 'Implementation Guide' to the Build Constraints Guide. The original single target conflated two audiences: five of these six requirements address whoever writes code (DDL authors, the mining layer, the React frontend), while the owner's working definition of 'Implementation Guide' was a per-client installation pre-flight checklist. One document serving both readers would be ignored by both. Client-facing obligations remain with the 502 Playbook (FR-005) and 504 Data Contract (FR-006). Split approved by owner 2026-08-19.",
+      "acceptanceTestResult": "PASS \u2014 verified against the guide as written, \u00a74"
     },
     {
       "reqId": "FR-008",
-      "targetArtifact": "Implementation Guide",
-      "targetStatus": "NOT YET CREATED",
+      "targetArtifact": "Build Constraints Guide (governance/design/PROJECTONE-Build-Constraints-Guide.md)",
+      "targetStatus": "SATISFIED \u2014 \u00a76 (Step 107, 2026-08-19)",
       "sourceDecision": "CP-005 / Python 3.13",
       "recordedAt": "2026-08-17T13:44:20-04:00",
-      "requirement": "The Implementation Guide MUST state that Python 3.13's experimental free-threaded (GIL-free) build mode is NOT relied upon, and that AC-MINING-PLACEMENT is the mechanism that removes the need for it.",
+      "requirement": "The Build Constraints Guide MUST state that Python 3.13's experimental free-threaded (GIL-free) build mode is NOT relied upon, and that AC-MINING-PLACEMENT is the mechanism that removes the need for it.",
       "whyRequired": "Free-threaded mode looks like a direct answer to the GIL tradeoff recorded in CP-002. Relying on it would substitute an experimental runtime feature for a sound architectural constraint.",
-      "acceptanceTest": "The guide states free-threaded mode is out of scope and points to AC-MINING-PLACEMENT."
+      "acceptanceTest": "The guide states free-threaded mode is out of scope and points to AC-MINING-PLACEMENT.",
+      "retargetNote": "Retargeted from 'Implementation Guide' to the Build Constraints Guide. The original single target conflated two audiences: five of these six requirements address whoever writes code (DDL authors, the mining layer, the React frontend), while the owner's working definition of 'Implementation Guide' was a per-client installation pre-flight checklist. One document serving both readers would be ignored by both. Client-facing obligations remain with the 502 Playbook (FR-005) and 504 Data Contract (FR-006). Split approved by owner 2026-08-19.",
+      "acceptanceTestResult": "PASS \u2014 verified against the guide as written, \u00a76"
     },
     {
       "reqId": "FR-009",
@@ -126,6 +138,11 @@
     {
       "date": "2026-08-19T09:20:00-04:00",
       "change": "FR-010 wording amended: enumeration made explicitly illustrative, implemented block list recorded, acceptance test extended to require a clean-control fixture. Objective unchanged.",
+      "approver": "John"
+    },
+    {
+      "date": "2026-08-19T10:40:00-04:00",
+      "change": "FR-001, FR-002, FR-003, FR-004, FR-007, FR-008 retargeted from the never-created 'Implementation Guide' to the Build Constraints Guide, and marked SATISFIED. Each acceptance test was run against the guide before marking. Audience split approved by owner.",
       "approver": "John"
     }
   ]
