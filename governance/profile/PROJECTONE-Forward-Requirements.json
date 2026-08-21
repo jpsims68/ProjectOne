@@ -66,23 +66,25 @@
     {
       "reqId": "FR-005",
       "targetArtifact": "502-Delphics-Client-Onboarding-Playbook",
-      "targetStatus": "EXISTS \u2014 immutable source; change requires a 999 overlay",
+      "targetStatus": "SATISFIED \u2014 OV-001 ACTIVE in governance/overlays/PROJECTONE-999-Overlay-Register.json (Step 108, 2026-08-19)",
       "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
       "recordedAt": "2026-08-17T11:37:15-04:00",
       "requirement": "Source-system options must not imply Fabric is unsupported as a client data source.",
       "whyRequired": "Mid-market and enterprise clients increasingly land data in Fabric. Implying it is unsupported would forgo a commercial advantage that costs nothing architecturally.",
-      "mechanism": "999 overlay entry \u2014 this is an immutable uploaded source and is never edited in place."
+      "mechanism": "999 overlay entry \u2014 this is an immutable uploaded source and is never edited in place.",
+      "acceptanceTestResult": "PASS \u2014 OV-001 states Fabric must not be presented as unsupported as a client data source, and carries a practitioner-facing answer."
     },
     {
       "reqId": "FR-006",
       "targetArtifact": "504-ProjectOne-Event-Log-Data-Contract",
-      "targetStatus": "EXISTS \u2014 immutable source; change requires a 999 overlay",
+      "targetStatus": "RECORDED \u2014 OV-002 PENDING behind its post-MVP trigger (Step 108, 2026-08-19). Correct state until connector work is scoped; PENDING is the requirement met, not deferred.",
       "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
       "recordedAt": "2026-08-17T11:37:15-04:00",
       "requirement": "When connector work is scoped, a Fabric lakehouse should be listed among candidate source shapes, alongside CSV, database extract, and API.",
       "whyRequired": "The data contract is the boundary; source technology sits outside it. A Fabric lakehouse is one more source shape behind the same contract.",
       "mechanism": "999 overlay entry.",
-      "timing": "Post-MVP \u2014 when connector work is scoped, not before."
+      "timing": "Post-MVP \u2014 when connector work is scoped, not before.",
+      "acceptanceTestResult": "N/A YET \u2014 by design. FR-006's own timing clause says 'not before' connector scoping. Applying it now would advertise a capability that does not exist to a client."
     },
     {
       "reqId": "FR-007",
@@ -143,6 +145,11 @@
     {
       "date": "2026-08-19T10:40:00-04:00",
       "change": "FR-001, FR-002, FR-003, FR-004, FR-007, FR-008 retargeted from the never-created 'Implementation Guide' to the Build Constraints Guide, and marked SATISFIED. Each acceptance test was run against the guide before marking. Audience split approved by owner.",
+      "approver": "John"
+    },
+    {
+      "date": "2026-08-19T11:20:00-04:00",
+      "change": "FR-005 satisfied via OV-001 (ACTIVE). FR-006 recorded via OV-002 (PENDING behind its stated post-MVP trigger). Overlay mechanism established in-repository at governance/overlays/ per owner decision.",
       "approver": "John"
     }
   ]

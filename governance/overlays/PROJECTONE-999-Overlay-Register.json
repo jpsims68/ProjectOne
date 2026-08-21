@@ -1,0 +1,78 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-999-OVERLAY-REGISTER",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": ["PAF-SPEC", "PROJECTONE-PROFILE"],
+    "createdAt": "2026-08-19T11:15:00-04:00",
+    "supersedesMechanism": "999 Canon Modification Tracker v0.4 (external). Owner decision 2026-08-19: the repository is the system of record for overlays going forward."
+  },
+
+  "purpose": "Records modifications to IMMUTABLE UPLOADED SOURCES. Such a source is never edited in place — the file as uploaded is preserved exactly, and every change to its content is recorded here instead. An overlay entry is therefore the authoritative statement of what a source now says, layered over what it originally said.",
+
+  "whyOverlaysRatherThanEdits": "An uploaded source is evidence of what was provided and when. Editing it in place destroys that evidence and makes it impossible to tell an original requirement from a later reinterpretation. The overlay keeps both: the source stays as received, and the modification carries its own date, author, and reason.",
+
+  "readingRule": "An immutable source MUST be read together with every ACTIVE overlay entry targeting it. Reading the source alone yields a stale answer. Where an overlay and its source conflict, the overlay wins — that is the entire point of the mechanism.",
+
+  "targetsNotHeldInThisRepository": "The 500-series sources are uploaded artifacts and are not committed here. An overlay does not require its target to be co-located; it requires the target to be identified unambiguously. Each entry therefore records the target's SHA-256 as it stood when the overlay was written, so a future reader can tell whether the source has since changed underneath the overlay. A hash mismatch is not automatically an error — it means the overlay must be re-read against the newer source before being trusted.",
+
+  "overlays": [
+    {
+      "overlayId": "OV-001",
+      "status": "ACTIVE",
+      "targetSource": "502-Delphics-Client-Onboarding-Playbook.md",
+      "targetSourceHashAtAuthoring": "0a2bab864e590ef30da847ede1095a4a3085ec157350b623de7961b5bb073a62",
+      "hashNote": "SHA-256 of the copy available at authoring time. Recorded so drift between source and overlay is detectable rather than silent.",
+      "satisfies": "FR-005",
+      "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
+      "recordedAt": "2026-08-19T11:15:00-04:00",
+      "recordedBy": "Owner direction",
+
+      "modification": "Source-system options offered to a client MUST NOT imply that Microsoft Fabric is unsupported as a client data source. A client lakehouse is a legitimate source, on the same footing as CSV, Excel, and a database or table export.",
+
+      "appliesTo": "Phase 0 (Intake & prerequisites) and Phase 2 (Data assessment & Event-Log Contract), wherever source systems or delivery formats are discussed with the client.",
+
+      "reason": "Microsoft Fabric is excluded as a DEPLOYMENT TARGET for ProjectOne, because Fabric Warehouse cannot enforce uniqueness constraints and so cannot satisfy LOCKED decision D-62. That exclusion is about where ProjectOne runs. It says nothing about where a client's data may come from, and the two are easy to conflate. A practitioner who has absorbed 'Fabric is out' may decline a legitimate integration on the strength of a decision that does not apply to it.",
+
+      "commercialNote": "Mid-market and enterprise clients increasingly land data in Fabric. Treating it as unsupported would forgo a commercial advantage that costs nothing architecturally — the data contract is the boundary, and source technology sits outside it.",
+
+      "guidanceForPractitioners": "When a client says their data is in Fabric, the answer is yes. A Fabric lakehouse export is one more source shape behind the same event-log contract. Nothing about the contract changes.",
+
+      "acceptanceTest": "Any statement of source-system options in 502, whether in the playbook or in derived client-facing material, must either list Fabric among acceptable sources or be silent about it. It must never present Fabric as unsupported or out of scope."
+    },
+
+    {
+      "overlayId": "OV-002",
+      "status": "PENDING — trigger not yet reached",
+      "targetSource": "504-ProjectOne-Event-Log-Data-Contract.md",
+      "targetSourceHashAtAuthoring": "02ca0c30cf1892206546b1004daa98d697886293001c71bc30b2cabbce885c9a",
+      "hashNote": "SHA-256 of the copy available at authoring time.",
+      "satisfies": "FR-006",
+      "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
+      "recordedAt": "2026-08-19T11:15:00-04:00",
+      "recordedBy": "Owner direction",
+
+      "status_explanation": "RECORDED NOW, APPLIED LATER — and the distinction is deliberate. FR-006 carries an explicit timing constraint: 'Post-MVP — when connector work is scoped, not before.' Applying this overlay today would advertise a connector capability that does not exist, in a client-facing document. Leaving it unrecorded until then would rely on memory, which is the failure the forward requirements register exists to prevent. So the obligation is recorded with its trigger, and remains PENDING until the trigger fires.",
+
+      "trigger": "Connector work is scoped.",
+
+      "modificationWhenTriggered": "In §8 (Format & delivery), a Fabric lakehouse should be listed among candidate source shapes, alongside CSV, Excel, and a database or table export. §8 currently reads: 'Format: CSV, Excel, or a database/table export. (Direct API ingestion comes later.)'",
+
+      "reason": "The data contract is the boundary; source technology sits outside it. A Fabric lakehouse is one more source shape behind the same contract, requiring no change to what the contract asks for.",
+
+      "acceptanceTest": "Once the trigger has fired: §8 of 504 lists a Fabric lakehouse among candidate source shapes. Until then, this entry's correct state is PENDING, and a reviewer finding it PENDING has found the intended state, not an omission.",
+
+      "doNotApplyEarly": "Marking this ACTIVE before connector work is scoped would put an unsupported capability in front of a client. The PENDING state is the requirement being met, not deferred."
+    }
+  ],
+
+  "changeHistory": [
+    {
+      "date": "2026-08-19T11:15:00-04:00",
+      "change": "Register created. Overlay mechanism moved into the repository from the external 999 Canon Modification Tracker v0.4, per owner decision — the repository is now the system of record. OV-001 (FR-005) recorded ACTIVE; OV-002 (FR-006) recorded PENDING behind its stated post-MVP trigger.",
+      "approver": "John"
+    }
+  ]
+}

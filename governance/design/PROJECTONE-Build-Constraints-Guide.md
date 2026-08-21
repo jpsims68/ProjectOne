@@ -134,6 +134,8 @@ The data contract is the boundary. Source technology sits outside it. A Fabric l
 
 > Search this guide for "Fabric". You must find **both** the deployment-target exclusion **and** the source-side support statement. Either one alone is a defect.
 
+The client-facing half of this position is carried by **OV-001** in `governance/overlays/PROJECTONE-999-Overlay-Register.json`, which governs how source-system options are presented during onboarding.
+
 ---
 
 ## 4. No migration framework
@@ -254,6 +256,8 @@ Only §2 is machine-enforced today. The rest depend on review, which is why each
 ## Two standing rules that apply to all of the above
 
 **The technology registry is allowlist-based.** Any tool not listed ACTIVE in `PROJECTONE-Technology-Registry.json` is **DENIED by default.** Unlisted does not mean unconsidered — it means not approved. Adding an entry is a governed change.
+
+**Immutable sources must be read with their overlays.** The 500-series documents (502 Playbook, 504 Data Contract) are uploaded sources that are never edited in place. Every change to their content lives in `governance/overlays/PROJECTONE-999-Overlay-Register.json`. Reading one of those sources without its ACTIVE overlays gives you a stale answer.
 
 **Deferring functionality is fine. Deferring design is not.** Under DDR P-8, the design must accommodate known future requirements from the start, even where the functionality is not built yet. A feature can sit below the cut line; the design that feature will need cannot. This is the principle §4 protects.
 
