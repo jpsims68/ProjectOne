@@ -1,0 +1,64 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-EVIDENCE-SETUP-016",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROJECT",
+    "createdAt": "2026-08-21T13:20:00-04:00"
+  },
+  "workItem": "SETUP-016",
+  "scope": "Owner execution closing canonical Steps 108 and 109",
+  "method": "OWNER_EXECUTION",
+  "why_owner_execution": "Neither step could be performed by the assisting agent. .env is git-ignored and machine-specific, and the SQL Server instance is local to the owner's machine. Recording either as passing without owner-returned output would violate the standing rule against recording a step as passing that the owner did not execute.",
+  "step108": {
+    "requirement": "Local development database connectivity, permissions and safe configuration validated",
+    "command": "uv run pytest -q",
+    "result": "24 passed, 1 skipped",
+    "skipRemaining": "tests/test_app_shell.py::test_health_reports_honestly_when_unconfigured \u2014 cannot run once .env exists, which is correct: it exercises the UNCONFIGURED path and .env is now present.",
+    "nowPassing": [
+      "test_configuration_loads_and_validates",
+      "test_odbc_driver_18_present",
+      "test_database_reachable"
+    ],
+    "authentication": "Windows Integrated Authentication. Trusted_Connection=yes \u2014 the Windows login IS the credential; no password stored.",
+    "blockingDefectsClearedFirst": [
+      "F-SETUP-015-01 check_no_secrets.py",
+      "F-SETUP-015-02 check_repository_layout.py"
+    ],
+    "proofTheFixesHold": "With a real .env present on the owner's machine: check_no_secrets PASS, check_repository_layout PASS (7 root files), git status --short empty. This is the precise condition that previously produced two false failures."
+  },
+  "step109": {
+    "requirement": "Approved scaffold/minimal shell starts without bypassing gates",
+    "command": "uv run uvicorn app.main:app then GET http://127.0.0.1:8000/health",
+    "response": {
+      "status": "ok",
+      "version": "0.1.0",
+      "environment": "local",
+      "configurationLoaded": true,
+      "note": "Baseline shell only. No feature surface is implemented."
+    },
+    "whatThisProves": [
+      "the package imports",
+      "configuration resolves from the environment at request time",
+      "the approved web framework is correctly wired",
+      "the shell serves over HTTP"
+    ],
+    "whatThisDoesNotProve": "Nothing about features. Step 109 states explicitly: do not treat this as feature acceptance.",
+    "notAuthorization": "NOT F1a. Production implementation remains NOT AUTHORIZED until explicit owner authorization at Step 112."
+  },
+  "defectFound": {
+    "id": "F-SETUP-016-01",
+    "defect": "projectone_dev did not exist. sys.databases held only master, model, msdb, tempdb.",
+    "cause": "Canonical Step 99 configured the database CONNECTION. Nothing ever created the database.",
+    "misleadingSymptom": "pyodbc reported 'Login failed for user delphics\\\\johnp' (18456). The operative error was 4060 \u2014 'Cannot open database projectone_dev requested by the login'. SQL Server surfaces a login failure when it cannot open the requested database, so the message accuses authentication when the cause is a missing database. Diagnosing from the first line would have sent the owner into permissions troubleshooting.",
+    "fix": "CREATE DATABASE projectone_dev \u2014 empty, no schema, no tables.",
+    "gateCheck": "Environment setup, not implementation. Creating an empty database does not engage the Step 112 authorization gate.",
+    "latency": "Latent since Step 99 and invisible until the connection was exercised end to end, because a connection string never touches the server until used."
+  },
+  "canon110Reconfirmation": {
+    "requirement": "Remote CI and local checks agree",
+    "result": "8/8 required checks green on PR #14; merged main independently re-verified from a fresh clone",
+    "localAgreement": "bootstrap.py PASS, bootstrap_selftest.py 4/4 gates proved, 5/5 governance checks PASS, framework 87/87"
+  }
+}
