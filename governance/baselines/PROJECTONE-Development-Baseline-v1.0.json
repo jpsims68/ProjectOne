@@ -1,0 +1,172 @@
+{
+  "header": {
+    "artifactId": "PROJECTONE-DEVELOPMENT-BASELINE",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROJECT",
+    "createdAt": "2026-08-21T14:30:00-04:00",
+    "createdBy": "Owner-authorized agent work, verified by owner execution"
+  },
+  "purpose": "The known-stable pre-feature development baseline required by canonical Step 111. Two jobs: it is the state to return to when feature work goes wrong, and it is the evidence on which Step 112 authorization rests. It states what is verified AND what is not.",
+  "authority": "ProjectOne-Steps-1-through-113-Execution-Plan-v1.0.md, Step 111 (immutable Core package)",
+  "recoveryPoint": {
+    "commit": "f367c5394340165a3454f545249382c8f35df1af",
+    "shortCommit": "f367c53",
+    "branch": "main",
+    "trackedFiles": 198,
+    "howToReturn": "git checkout main && git reset --hard f367c5394340165a3454f545249382c8f35df1af",
+    "note": "Everything below was verified at this commit. Nothing outside git is required to reconstruct it except a local .env (from .env.example) and an empty projectone_dev database."
+  },
+  "versions": {
+    "framework": "PAF v1.0 FROZEN \u2014 87 files, byte-identical since freeze",
+    "frozenBaseline": "v1.2 \u2014 155 components",
+    "profile": "1.5 ACTIVE (CP-001..CP-005 applied)",
+    "technologyRegistry": "30 ACTIVE entries",
+    "forwardRequirements": "10 entries \u2014 7 SATISFIED, 1 BUILT, 1 RECORDED-PENDING, 1 OPEN",
+    "overlayRegister": "OV-001 ACTIVE, OV-002 PENDING behind post-MVP trigger",
+    "application": "0.1.0 \u2014 baseline shell only"
+  },
+  "hashes": {
+    "frameworkIntegrity": "87/87 verify against governance/framework/SHA256SUMS.txt",
+    "lockfile": "uv.lock \u2014 68 packages; uv lock --check confirms not stale",
+    "immutableCorpus": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e (Core Build Reference Package)"
+  },
+  "environment": {
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "uv": "0.11.29",
+    "node": "24.16.0",
+    "npm": "11.13.0",
+    "database": "SQL Server 2022 Developer Edition 16.0.1190.2, instance MSSQLSERVERLOCAL",
+    "databaseName": "projectone_dev \u2014 created empty 2026-08-21; no schema, no tables",
+    "odbc": "ODBC Driver 18 for SQL Server",
+    "authentication": "Windows Integrated Authentication (Trusted_Connection=yes) \u2014 no stored credential",
+    "lockedDependencies": {
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.4",
+      "pydantic-settings": "2.15.0",
+      "pyodbc": "5.3.0",
+      "uvicorn": "0.52.3",
+      "pytest": "9.1.1",
+      "ruff": "0.16.3",
+      "mypy": "2.3.1",
+      "pip-audit": "2.10.1",
+      "bandit": "1.9.4"
+    }
+  },
+  "testResults": {
+    "command": "uv run pytest -q",
+    "result": "24 passed, 1 skipped",
+    "executedBy": "OWNER_EXECUTION 2026-08-21",
+    "skip": "test_health_reports_honestly_when_unconfigured \u2014 cannot run once .env exists, which is correct",
+    "ciResult": "4 passed, 2 skipped (marker: not local_env)"
+  },
+  "securityResults": {
+    "dependencyAudit": "pip-audit --strict \u2014 no known vulnerabilities against the locked set",
+    "staticAnalysis": "bandit -r app -q \u2014 clean",
+    "secretProtection": "check_no_secrets PASS, verified with a real .env present and correctly untracked",
+    "resolvedFinding": "PYSEC-2026-1845 / CVE-2025-71176 in pytest 8.4.2 \u2014 remediated by governed registry amendment to >=9.0.3,<10. Surfaced by the Security scan gate on its first honest run."
+  },
+  "gates": {
+    "requiredStatusChecks": 8,
+    "names": [
+      "Build, lint, test",
+      "Security scan",
+      "Repository layout",
+      "Slice boundaries (VSA-1 / VSA-3)",
+      "Secret protection (non-waivable invariant)",
+      "PR governance metadata",
+      "Azure SQL Database compatibility (FR-010)",
+      "Framework baseline integrity"
+    ],
+    "sourcePinned": "all 8 pinned to GitHub Actions \u2014 not 'Any source'",
+    "bypassList": "empty",
+    "upToDateRequired": true,
+    "forcePush": "blocked",
+    "deletions": "restricted",
+    "provenCanFail": "bootstrap_selftest.py breaks each of 4 gates deliberately and confirms each goes red. Green CI is evidence only to the extent each gate has been proven capable of going red."
+  },
+  "openExceptions": [
+    {
+      "id": "EXC-TEST-01",
+      "subject": "test_configuration_loads_and_validates skipped in CI",
+      "expiry": "none \u2014 permanent environment split"
+    },
+    {
+      "id": "EXC-TEST-02",
+      "subject": "test_database_reachable skipped in CI",
+      "expiry": "none \u2014 permanent environment split"
+    },
+    {
+      "id": "EXC-TEST-03",
+      "subject": "test_odbc_driver_18_present skipped in CI",
+      "expiry": "none"
+    }
+  ],
+  "openDecisions": [
+    {
+      "id": "OD-11",
+      "subject": "OQ-13 deployment target \u2014 Azure SQL Database vs Managed Instance",
+      "status": "OPEN \u2014 Azure recommended, not decided",
+      "consequence": "The FR-010 check enforces the Azure SQL Database floor while this remains open, keeping the decision genuinely open."
+    },
+    {
+      "id": "OD-05",
+      "subject": "Independent clean-context review of the verification mechanism mapping",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-06",
+      "subject": "603-Activities_Groupings_for_Mapping.md acquisition",
+      "status": "OPEN \u2014 required before D-38 grouping-seed work"
+    },
+    {
+      "id": "OD-08",
+      "subject": "Set required approvals to 1 when a second human joins",
+      "status": "OPEN \u2014 change trigger"
+    },
+    {
+      "id": "FR-009",
+      "subject": "Observability tooling selection",
+      "status": "OPEN \u2014 deliberately deferred pending OQ-13"
+    }
+  ],
+  "independencePosture": {
+    "current": [
+      "DETERMINISTIC_NONJUDGMENTAL_CHECK \u2014 8 required checks, all proven capable of failing",
+      "HUMAN_REVIEW \u2014 owner review of every PR body and diff",
+      "OWNER_EXECUTION \u2014 canonical Steps 108 and 109 evidence originated with the owner, not the agent"
+    ],
+    "absent": "DIFFERENT_MODEL_OR_MODEL_FAMILY \u2014 no cross-model review mechanism is in place",
+    "honestStatement": "Human-review independence on this repository is ATTESTED, NOT ENFORCED. Required approvals is 0 because GitHub does not permit approving one's own pull request, so a solo owner cannot enforce it. 'Require review from Code Owners' is enabled but inert at 0 approvals \u2014 it reads like a control and is not one.",
+    "deferredDecision": {
+      "subject": "Adopt Claude Code with the OpenAI Codex plugin (openai/codex-plugin-cc) for cross-model review",
+      "decision": "DEFERRED to canonical Step 112",
+      "decidedBy": "John",
+      "date": "2026-08-21",
+      "trigger": "Step 112 authorization of F1a \u2014 the point at which production code begins and code review starts to matter",
+      "rationale": "The mechanism reviews CODE. Almost no application code exists yet, and none of this session's actual defects were code-quality defects \u2014 they were governance, environment and search failures. Adopting now buys cross-model review for a phase with nothing to review.",
+      "costReassessed": "Initially assessed as a workbench migration. Corrected: the Claude Code VS Code extension is the same engine, bundles the CLI, and shares plugins with it, so adoption cost is LOW. Recorded so the original overstatement is not inherited as a reason to keep deferring.",
+      "acceptedRisk": "Owner accepts that the plugin places a second vendor (OpenAI) in the code data path.",
+      "unverified": "Whether the plugin's Stop-hook review gate fires in the VS Code panel rather than requiring the CLI."
+    }
+  },
+  "whatIsNOTProven": [
+    "No load, performance or concurrency testing of any kind has been performed.",
+    "No security review of app/main.py beyond a clean bandit scan. It is 40 lines with one endpoint, but it has not been reviewed by anyone other than its author.",
+    "No database schema exists. projectone_dev is empty. No DDL has been written, and the FR-010 check has therefore never run against real DDL \u2014 only against fixtures.",
+    "No real or client data has ever entered the system. Tenant isolation is designed and asserted, never exercised.",
+    "No deployment of any kind. OQ-13 is open, so no cloud target has been provisioned or tested.",
+    "Canonical steps 1-100 are taken as given from prior sessions and were not re-verified by this baseline.",
+    "The 360-decision verification figure remains not independently verified (OD-05).",
+    "Recovery procedures are declared, not tested. No rollback has ever been executed."
+  ],
+  "whatThisBaselineDoesAndDoesNotSay": "It says: this ENVIRONMENT is verified and reproducible, and the gates that guard it have been proven capable of failing. It does NOT say the SYSTEM is ready \u2014 there is almost no system yet. Step 112 authorization should rest on the former and must not be read as the latter.",
+  "step112Readiness": {
+    "canonicalStepsComplete": "101-111",
+    "blockingConditions": "none identified",
+    "authorizationRequired": "Step 112 requires EXPLICIT OWNER AUTHORIZATION before Step 113. Never satisfied by silence, elapsed time, an agent's recommendation, or urgency.",
+    "recommendedPrerequisite": "Read whatIsNOTProven in full before authorizing. Every item there is a thing that will be true on the day F1a begins."
+  }
+}
