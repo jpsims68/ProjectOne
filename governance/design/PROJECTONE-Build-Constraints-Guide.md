@@ -3,7 +3,7 @@
 **Status:** ACTIVE
 **Audience:** anyone writing ProjectOne code — DDL, backend, frontend
 **Authority:** derived. The DDR (201) and the ProjectOne Profile are canonical. Where this guide and a canonical source disagree, the canonical source wins and this guide is the defect.
-**Created:** 2026-08-19
+**Created:** 2026-08-20
 
 ---
 
