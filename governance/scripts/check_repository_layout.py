@@ -19,6 +19,7 @@ Exit 0 = clean. Exit 1 = violation.
 
 import pathlib
 import re
+import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -65,8 +66,32 @@ GOVERNED_PATTERNS = [
 
 viol = []
 
+
+def tracked_by_git(rel: str) -> bool:
+    """Is this path actually in the repository?
+
+    This check exists to catch files COMMITTED to the wrong place — the signature
+    of an upload that lost its directory structure. An untracked local file is not
+    that. A developer's .env is required to run the application and the
+    local-environment tests, and it is correctly git-ignored; flagging it made the
+    check fail permanently on the owner's machine for a legitimate state.
+
+    Fail-closed: if git cannot answer, treat the file as tracked and flag it.
+    """
+    try:
+        r = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", "--", rel],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+        )
+        return r.returncode == 0
+    except (OSError, subprocess.SubprocessError):
+        return True
+
+
 for p in sorted(ROOT.iterdir()):
-    if p.is_file() and p.name not in ALLOWED_ROOT:
+    if p.is_file() and p.name not in ALLOWED_ROOT and tracked_by_git(p.name):
         viol.append(f"[LAYOUT] '{p.name}' is at the repository root — not an allowed root file")
 
 for p in sorted(ROOT.rglob("*")):

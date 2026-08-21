@@ -7,6 +7,7 @@ Exit 0 = clean. Exit 1 = violation.
 
 import pathlib
 import re
+import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -61,13 +62,38 @@ SKIP_SUFFIX = {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".ico", ".woff",
 
 hits = []
 
+
 # A committed .env is a violation regardless of contents. .env.example is the template
 # and carries NAMES only; every other file in that family holds VALUES.
+def is_tracked(rel: str) -> bool:
+    """Ask git whether a path is actually tracked.
+
+    The previous implementation flagged any .env file that EXISTED on disk. But a
+    local .env is required to run the application and the local-environment tests,
+    and it is correctly git-ignored — so the check failed permanently on the
+    owner's machine while reporting "committed", which was false. A check that
+    fails on a legitimate state teaches the reader to ignore it, and an ignored
+    check is no check.
+
+    Fail-closed: if git cannot answer, treat the file as tracked and flag it.
+    """
+    try:
+        r = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", "--", rel],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+        )
+        return r.returncode == 0
+    except (OSError, subprocess.SubprocessError):
+        return True
+
+
 for p in ROOT.rglob(".env*"):
     if p.is_file() and ".git" not in p.parts and p.name != ".env.example":
-        hits.append(
-            f"{p.relative_to(ROOT)} — .env file committed; only .env.example may be tracked"
-        )
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+        if is_tracked(rel):
+            hits.append(f"{rel} — .env file is TRACKED IN GIT; only .env.example may be tracked")
 
 for p in ROOT.rglob("*"):
     if not p.is_file() or p.suffix in SKIP_SUFFIX:
