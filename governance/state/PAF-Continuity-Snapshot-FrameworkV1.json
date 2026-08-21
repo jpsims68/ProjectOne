@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-21T09:15:00-04:00",
+  "snapshotDateTime": "2026-08-21T11:45:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-100-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -218,7 +218,29 @@
       "status": "OPEN \u2014 closes at Step 111"
     }
   ],
-  "openExceptions": [],
+  "openExceptions": [
+    {
+      "id": "EXC-TEST-01",
+      "subject": "test_configuration_loads_and_validates skipped in CI",
+      "basis": "requires .env, which must never be committed",
+      "expiry": "none \u2014 permanent environment split",
+      "record": "governance/evidence/SETUP-015/"
+    },
+    {
+      "id": "EXC-TEST-02",
+      "subject": "test_database_reachable skipped in CI",
+      "basis": "requires .env and a local SQL Server instance",
+      "expiry": "none \u2014 permanent environment split",
+      "record": "governance/evidence/SETUP-015/"
+    },
+    {
+      "id": "EXC-TEST-03",
+      "subject": "test_odbc_driver_18_present skipped in CI",
+      "basis": "ODBC Driver 18 is a local machine prerequisite",
+      "expiry": "none",
+      "record": "governance/evidence/SETUP-015/"
+    }
+  ],
   "unconfiguredControlWarnings": [],
   "blockingConditions": [],
   "testsAndEvidenceProduced": [
@@ -281,7 +303,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Close canonical gaps in order: 103 (import bootstrap scripts), 107 (record the two test skips as exceptions), 108 (local .env, run local_env tests), 109 (build the minimal shell). Then re-confirm 110 and produce the Step 111 baseline record and thin continuation package. Step 112 requires EXPLICIT OWNER AUTHORIZATION before Step 113. Production application implementation remains NOT AUTHORIZED.",
+  "nextAuthorizedAction": "Owner execution to close canon 108 and 109: create .env from .env.example and run 'uv run pytest -q'; then run 'uv run uvicorn app.main:app' and confirm /health responds. Then re-confirm canon 110 and produce the Step 111 baseline record and thin continuation package. Step 112 requires EXPLICIT OWNER AUTHORIZATION before Step 113. Production application implementation remains NOT AUTHORIZED.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place \u2014 governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -307,7 +329,8 @@
     "Do NOT trust a governance check that has never been negative-tested \u2014 three separate checks were found this session passing without examining anything",
     "Do NOT run pip-audit against a global Python install and read the result as a project finding \u2014 use the locked environment",
     "Do NOT mark OV-002 ACTIVE before connector work is scoped; PENDING is the requirement being met, not deferred",
-    "Do NOT assert that a document or plan does not exist without searching EVERY unpacked package \u2014 the 101-113 execution plan was in the Core package while an agent reported no itemization existed"
+    "Do NOT assert that a document or plan does not exist without searching EVERY unpacked package \u2014 the 101-113 execution plan was in the Core package while an agent reported no itemization existed",
+    "Do NOT let a governance check inspect the filesystem when it means to inspect the repository \u2014 two checks failed on the mere presence of a git-ignored .env, which canonical Step 108 requires (F-SETUP-015-01/02)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE: (a) Verify the re-uploaded Core package SHA-256 equals packageChain.immutableCorpusHash; a mismatch is a STOP condition. (b) Verify this continuation package against its SHA256SUMS.txt. (c) Confirm predecessorPackageHash chains correctly. (d) Re-run all validators: validate_framework.py (15/15), validate_run2.py (21/21), validate_run3.py (18/18), validate_run4.py <core> (16/16), validate_run5.py (15/15), conformance_probe.py <core> (5/5). All must pass before new work. (e) Read PAF-SPEC v0.2 and PAF-FDR v1.0. (f) Proceed to Run 2 (Steps 11-20). Never assume prior container files exist.",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json \u2014 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -355,9 +378,8 @@
       {
         "step": 103,
         "requirement": "Repository bootstrap/setup scripts run; local environment at baseline",
-        "status": "PARTIAL",
-        "gap": "No bootstrap scripts exist in the repository. Equivalent steps were run by hand with no evidence artifact.",
-        "plannedClosure": "Import bootstrap_selftest.py and create_baseline.py from the PAF Starter Kit work"
+        "status": "MET",
+        "evidence": "governance/scripts/bootstrap.py created and run \u2014 RESULT: PASS. bootstrap_selftest.py added: 4/4 gates proved they can go red. Evidence: governance/evidence/SETUP-015/"
       },
       {
         "step": 104,
@@ -380,23 +402,24 @@
       {
         "step": 107,
         "requirement": "Test baseline green OR valid exceptions recorded",
-        "status": "PARTIAL",
-        "gap": "4 passed, 2 skipped. The two skips were never recorded as exceptions, which the step explicitly requires.",
-        "plannedClosure": "Record both skips as exceptions with reasons"
+        "status": "MET",
+        "evidence": "Test baseline green apart from three environment-conditional skips, each recorded as an exception with reason, compensating control and expiry in governance/evidence/SETUP-015/ (EXC-TEST-01..03)"
       },
       {
         "step": 108,
         "requirement": "Local development database connectivity, permissions, safe configuration validated",
-        "status": "PARTIAL",
-        "gap": "sqlcmd connected and returned the server version, but the application's own DB test skipped for want of a local .env, so the application connection path is unproven.",
-        "plannedClosure": "Create a local .env and run the local_env tests"
+        "status": "OWNER ACTION PENDING",
+        "gap": "Awaiting owner execution on the local machine \u2014 .env is git-ignored and the SQL Server instance is local",
+        "plannedClosure": "Owner runs: uv run pytest -q with .env present",
+        "evidence": "Two blocking defects found and fixed first: check_no_secrets.py and check_repository_layout.py both failed on the mere presence of a local .env, which this step requires (F-SETUP-015-01/02). Owner must create .env and run the suite."
       },
       {
         "step": 109,
         "requirement": "Approved scaffold/minimal shell starts without bypassing gates",
-        "status": "NOT MET",
-        "gap": "No scaffold exists. app/ contains config.py (35 lines, zero FastAPI references) and __init__.py.",
-        "plannedClosure": "Build a minimal FastAPI shell with a health endpoint only. Owner decision 2026-08-21. Explicitly NOT F1a and NOT feature acceptance."
+        "status": "OWNER ACTION PENDING",
+        "gap": "Awaiting owner execution: uv run uvicorn app.main:app and confirm /health responds",
+        "plannedClosure": "Owner starts the shell and confirms the health response",
+        "evidence": "app/main.py created \u2014 FastAPI shell, single /health endpoint, no DB access, no business logic. 5 tests in tests/test_app_shell.py. Scope guard asserts the route set is exactly {/health}."
       },
       {
         "step": 110,

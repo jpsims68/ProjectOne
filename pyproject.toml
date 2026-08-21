@@ -1,6 +1,6 @@
 [project]
 name = "projectone"
-version = "0.0.0"
+version = "0.1.0"   # keep in step with app/__init__.py __version__
 description = "Process Intelligence as a Service — multi-tenant, process- and industry-agnostic"
 requires-python = ">=3.13,<3.14"
 dependencies = [
