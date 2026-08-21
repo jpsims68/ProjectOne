@@ -6,8 +6,8 @@
     "schemaVersion": "1.0",
     "layer": "PROFILE",
     "governedBy": ["PAF-SPEC", "PROJECTONE-PROFILE"],
-    "createdAt": "2026-08-19T11:15:00-04:00",
-    "supersedesMechanism": "999 Canon Modification Tracker v0.4 (external). Owner decision 2026-08-19: the repository is the system of record for overlays going forward."
+    "createdAt": "2026-08-20T11:15:00-04:00",
+    "supersedesMechanism": "999 Canon Modification Tracker v0.4 (external). Owner decision 2026-08-20: the repository is the system of record for overlays going forward."
   },
 
   "purpose": "Records modifications to IMMUTABLE UPLOADED SOURCES. Such a source is never edited in place — the file as uploaded is preserved exactly, and every change to its content is recorded here instead. An overlay entry is therefore the authoritative statement of what a source now says, layered over what it originally said.",
@@ -27,7 +27,7 @@
       "hashNote": "SHA-256 of the copy available at authoring time. Recorded so drift between source and overlay is detectable rather than silent.",
       "satisfies": "FR-005",
       "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
-      "recordedAt": "2026-08-19T11:15:00-04:00",
+      "recordedAt": "2026-08-20T11:15:00-04:00",
       "recordedBy": "Owner direction",
 
       "modification": "Source-system options offered to a client MUST NOT imply that Microsoft Fabric is unsupported as a client data source. A client lakehouse is a legitimate source, on the same footing as CSV, Excel, and a database or table export.",
@@ -51,7 +51,7 @@
       "hashNote": "SHA-256 of the copy available at authoring time.",
       "satisfies": "FR-006",
       "sourceDecision": "CP-004 / NOTE-FABRIC-AS-SOURCE",
-      "recordedAt": "2026-08-19T11:15:00-04:00",
+      "recordedAt": "2026-08-20T11:15:00-04:00",
       "recordedBy": "Owner direction",
 
       "status_explanation": "RECORDED NOW, APPLIED LATER — and the distinction is deliberate. FR-006 carries an explicit timing constraint: 'Post-MVP — when connector work is scoped, not before.' Applying this overlay today would advertise a connector capability that does not exist, in a client-facing document. Leaving it unrecorded until then would rely on memory, which is the failure the forward requirements register exists to prevent. So the obligation is recorded with its trigger, and remains PENDING until the trigger fires.",
@@ -70,7 +70,7 @@
 
   "changeHistory": [
     {
-      "date": "2026-08-19T11:15:00-04:00",
+      "date": "2026-08-20T11:15:00-04:00",
       "change": "Register created. Overlay mechanism moved into the repository from the external 999 Canon Modification Tracker v0.4, per owner decision — the repository is now the system of record. OV-001 (FR-005) recorded ACTIVE; OV-002 (FR-006) recorded PENDING behind its stated post-MVP trigger.",
       "approver": "John"
     }
