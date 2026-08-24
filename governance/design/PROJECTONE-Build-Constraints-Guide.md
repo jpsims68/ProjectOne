@@ -314,6 +314,109 @@ If a fourth appears, it belongs here too.
 
 ---
 
+## 8. Code structure and computation placement
+
+**Source:** D-69 (AB-CM-036) · AC-MINING-PLACEMENT · CP-002
+**Status of D-69:** PROPOSED — not yet approved. AC-MINING-PLACEMENT below is already LOCKED and in force.
+
+### Where computation goes — two questions
+
+For any computation **over event data**, in order:
+
+**Question 1 — does the input grow with tenant data volume?**
+
+| Answer | Placement |
+|---|---|
+| **Yes** | **SQL, set-based. No exception**, whatever the operation |
+| **No** | Python permitted — go to Question 2 |
+
+"Every event" grows. "One row per activity" does not — a process has a bounded activity count whether the tenant loads ten thousand events or ten million.
+
+Answerable by reading a function signature. No profiler, no benchmark, no production data — which matters, because none exists yet.
+
+**Question 2 — can SQL express the operation?**
+
+| Answer | Placement |
+|---|---|
+| **Yes** | **Use SQL anyway.** SQL is the default, not the fallback |
+| **No** | Python |
+
+SQL is inadequate for these — **illustrative of the objective, not a definition of it**. The objective is: *SQL unless SQL genuinely cannot do the work.*
+
+1. Unbounded-depth recursion through cyclic structures
+2. Iterative convergence, where termination depends on a criterion rather than on data
+3. Sequence alignment and edit-distance
+4. Linear algebra and matrix operations
+5. Combinatorial search and optimization
+
+**What SQL handles well — reaching for Python here is the common error.** Directly-follows pairs (`LAG` within case partition) · variant identification (`STRING_AGG` then group) · percentiles (`PERCENTILE_CONT`) · running totals, rank, gap-and-island, sessionization (window functions) · conformance rule evaluation · wait-time aggregation. Native regex is GA in Azure SQL Database; pattern matching alone does not justify moving work to Python.
+
+### The dangerous quadrant
+
+|  | Input bounded | Input grows with data |
+|---|---|---|
+| **SQL can do it** | Either — prefer SQL | **SQL, mandatory** |
+| **SQL cannot** | **Python — legitimate** | ⚠ **Reduce first, then escalate** |
+
+Bottom-right is where real decisions live. Sequence alignment across all traces is SQL-inadequate *and* data-volume-bound. The answer is never "therefore Python" — it is reduce in SQL to the bounded variant set, then align over that.
+
+> **The testable line:** if a computation step receives raw event rows outside SQL, it is misplaced. If you cannot answer Question 1 from the function signature alone, the signature is wrong.
+
+### Timing is a separate requirement
+
+Mining runs as a **scheduled or background job that materializes results the API reads**. Correct SQL inside a request handler still violates the constraint. Both rules must hold.
+
+### Runtime backstop
+
+Every Python analytical entry point **asserts its input size against a declared row budget and fails loudly** when exceeded. Catches a cardinality assumed bounded that turns out not to be.
+
+An assertion in code, not a design-time threshold. Design-time thresholds are untestable before data exists and invite argument afterwards.
+
+### When the rule does not clearly decide
+
+Raise a **`DECISION_REQUIRED`** escalation. Do not choose. Every escalation is evidence the rule needs tightening, and is more useful recorded than resolved silently.
+
+---
+
+### Operational rules for application code
+
+These govern the application tier. The analytical tier is carved out above.
+
+**Fail fast at boundaries.** Validate inputs where they enter a module. A value that has crossed a boundary unvalidated is indistinguishable from a valid one three call frames later.
+> *Testable line:* if a function must defend against malformed input from inside its own module, validation is in the wrong place.
+
+**Design failure, do not infer it.** Error behaviour is part of a contract: what fails, what it returns, what the caller must handle. An unhandled exception path is an undesigned one.
+> *Testable line:* if the answer to "what happens when this fails?" requires reading the implementation, the contract is incomplete.
+
+**Encapsulate.** Internal implementation is invisible to consumers. A consumer reaching past an interface has created coupling nobody declared.
+> *Testable line:* if changing a module's internals breaks a consumer, the interface was not the boundary.
+
+**Shared code is not a dumping ground.** A utility module accumulates everything nobody could place. Shared abstractions are introduced on **demonstrated** reuse, not anticipated reuse.
+> *Testable line:* if a shared module's responsibility cannot be stated in one sentence, it has become a dumping ground.
+
+**Classify idempotency explicitly.** Any operation that may be retried is marked idempotent or not, deliberately. Not discovered during an incident.
+> *Testable line:* if you cannot say whether running it twice is safe, it is not ready to be retried.
+
+**No hidden dependencies.** Declared and injected. A module reaching for a global, a singleton, or the clock has a dependency its signature denies.
+> *Testable line:* if a test needs monkey-patching to control behaviour, the dependency is hidden.
+
+### Already enforced — referenced, not restated
+
+These exist as controls. **The control governs; this list only points at it.**
+
+| Rule | Enforced by |
+|---|---|
+| Slice boundaries, cross-slice contracts | `check_slice_boundaries.py` (VSA-1/VSA-3) — cross-slice import is a build failure |
+| Bounded change surface | CPM-1 in every PR |
+| Dependency pinning, reproducibility | Technology registry allowlist + `uv.lock` + CI `--frozen` |
+| Regression protection | `ROLE_CODING` — may not weaken a test to make it pass |
+| Chart determinism, additive components | Chart ground rules |
+| Re-load idempotency | D-62 — unique constraint at the storage layer |
+
+**Observability** is a principle without a tool: FR-009 defers the tooling choice pending OQ-13, because the stack depends on the deployment target. Boundary operations should expose logging, metrics and tracing; *which* system remains unselected.
+
+---
+
 ## Constraint index
 
 | § | Constraint | Source | FR | Enforced by |
@@ -325,6 +428,7 @@ If a fourth appears, it belongs here too.
 | 5 | One DOM owner per container | AC-DOM-OWNERSHIP / CP-003 | FR-004 | review; testable line |
 | 6 | No free-threaded Python | CP-005 | FR-008 | review |
 | 7 | Decisions that exist only as overlays | AB-CM-011/021/022 | CF-005 | review; testable lines |
+| 8 | Code structure and computation placement | D-69 (PROPOSED) / AC-MINING-PLACEMENT | — | review; testable lines |
 
 Only §2 is machine-enforced today. The rest depend on review, which is why each carries a testable line rather than a general principle. §7 is the least defended of all: it depends on a reader knowing to consult the overlay register, which the DDR itself does not tell them to do.
 
