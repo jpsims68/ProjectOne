@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-22T09:45:00-04:00",
+  "snapshotDateTime": "2026-08-22T10:30:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -315,7 +315,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Step 112: present readiness evidence to the owner and WAIT for explicit authorization of F1a. The evidence is governance/baselines/PROJECTONE-Development-Baseline-v1.0.json, and its whatIsNOTProven section must be read in full before authorizing. Step 113 begins implementation ONLY after Step 112. Production application implementation remains NOT AUTHORIZED.",
+  "nextAuthorizedAction": "Step 112: present readiness evidence to the owner and WAIT for explicit authorization of F1a. Evidence is governance/baselines/PROJECTONE-Development-Baseline-v1.0.json; its whatIsNOTProven section must be read in full before authorizing. Design authority is now clean: the overlay register holds all 27 migrated entries, the DDR's true version and range are recorded, and the three overlay-only decisions have reached the Build Constraints Guide. Step 113 begins implementation ONLY after Step 112.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -519,12 +519,14 @@
     {
       "id": "CF-005",
       "subject": "Overlay-only DDR decisions must reach whoever writes the first DDL",
-      "status": "OPEN",
+      "status": "CLOSED 2026-08-22 — carried into the Build Constraints Guide §7",
       "severity": "HIGH — schema-level",
       "what": "Three decisions exist ONLY as overlays and appear nowhere in the DDR file: D-67 (theming, AB-CM-011), D-68 (business-unit assignment precedence, AB-CM-022), and the D-47 event-order field name event_sequence_num (AB-CM-021).",
       "risk": "Anyone writing DDL from the DDR alone would omit two decisions and use the WRONG field name. This is not a documentation nicety — event_sequence_num is a column name in the first schema written.",
       "recommendedAction": "Carry these into the Build Constraints Guide, which is the document already written for whoever writes the first slice, and which currently does not mention them.",
-      "recordedAt": "2026-08-22"
+      "recordedAt": "2026-08-22",
+      "resolution": "Section 7, 'Decisions that live ONLY as overlays', added to governance/design/PROJECTONE-Build-Constraints-Guide.md. Covers the event_sequence_num field name with the full sort tuple (from_ts, event_sequence_num, event_key), D-68's four precedence rules including as-of SCD-2 resolution and the conflict-flag requirement, and D-67's theming flow and slice obligations. Each carries a testable line. Also records that the DDR's own header (v1.35) and stated range (D-01..D-66) are both wrong: v1.37 and D-01..D-68.",
+      "keptAsItsOwnSection": "Owner decision, option A. These could have been filed under existing thematic constraints. They are kept together because the most important fact about them is the CATEGORY — approved decisions a reader consulting the primary source will not find. Filing them thematically would have buried that warning."
     }
   ]
 }

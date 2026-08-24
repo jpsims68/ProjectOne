@@ -238,6 +238,82 @@ Relying on an experimental build would also make the deployment story depend on 
 
 ---
 
+## 7. Decisions that live ONLY as overlays
+
+**Source:** AB-CM-011, AB-CM-021, AB-CM-022 in `governance/overlays/PROJECTONE-999-Overlay-Register.json`
+**Satisfies:** CF-005
+
+### Read this before you open the DDR
+
+Three approved decisions **do not appear anywhere in the DDR file.** Searching `201-ProjectOne-Design-Decision-Record.md` for any of them returns **zero** results:
+
+- **D-67** — Data-Driven Theming Architecture
+- **D-68** — Event business-unit assignment precedence
+- **`event_sequence_num`** — the canonical D-47 event-order field name
+
+They were approved by the owner on 5–8 August 2026 and recorded as overlays against an immutable source, which is the correct mechanism. But it means the DDR read alone is **incomplete on two decisions and actively wrong on one field name.**
+
+Two further things the DDR gets wrong about itself, both settled by AB-CM-029 and AB-CM-030:
+
+- Its header reads **v1.35**. The current authoritative version is **v1.37** — the header is stale, the file is not older.
+- Its stated range is D-01…D-66. The effective range is **D-01…D-68**.
+
+### 7a. The event-order field is `event_sequence_num`
+
+**Not `sequence_num`.** Wherever D-47 says `sequence_num` for the canonical event ordering and tie-break field, read `event_sequence_num`.
+
+The total sort is:
+
+```
+(from_ts, event_sequence_num, event_key)
+```
+
+D-62 controls the field name and the source/synthesis cascade. D-47 continues to control deterministic ordering semantics.
+
+**Why this one matters most.** It is a column name in the first table anyone writes. Get it wrong and it propagates into DDL, the field catalog, APIs, mappings, fixtures and tests before anyone notices — and renaming a key ordering column after data exists is exactly the migration DDR P-8 exists to prevent.
+
+> **The testable line:** if you find `sequence_num` unqualified in any DDL, mapping, fixture or test, it is wrong.
+
+### 7b. Business-unit assignment precedence (D-68)
+
+Determines how `event.business_unit_key` is populated. Four rules, in order:
+
+1. **Direct wins when valid.** If the event-log mapping supplies a business-unit value resolving to a valid `business_unit_dim` member for the tenant, that value is authoritative and becomes the effective `event.business_unit_key`.
+2. **Resource is the deterministic fallback.** With no valid direct value, derive from the resolved `resource_dim.business_unit_key` using the **SCD-2 version valid at `event.from_ts`**. Never the resource's *current* business unit for a historical event.
+3. **Provenance is mandatory.** Record `business_unit_assignment_source` as `direct_event`, `resource_asof`, or `none`.
+4. **Disagreement is a finding, not an overwrite.** When a valid direct value and a resource-derived value both exist and differ: keep the direct value as effective, set `business_unit_conflict_flag = true`, and emit a data-quality finding. Do not silently overwrite either meaning.
+
+Rules 2 and 4 are the ones that get implemented wrongly by default. As-of resolution is more work than a current-value join, and silently preferring one source is easier than surfacing a conflict — which is precisely why both are written down.
+
+> **The testable line:** if a business-unit lookup joins on the resource's current row rather than the row valid at `event.from_ts`, it is wrong. If a conflict resolves without setting a flag and emitting a finding, it is wrong.
+
+### 7c. Data-driven theming (D-67)
+
+Theme definitions are stored in a platform-agnostic versioned format such as JSON, validated against a schema, resolved through primitive, semantic, component, state and visualization tokens, and mapped to CSS Custom Properties for the web client.
+
+The canonical flow:
+
+```
+theme data → schema validation → token resolution → Theming/Skinning Engine
+           → platform adapter → CSS Custom Properties
+```
+
+**Feature slices consume approved semantic or component tokens and approved themed shared controls.** They do not create private theme systems, do not hard-code replacement appearance values where approved tokens exist, and do not place feature business logic in the theme layer.
+
+Runtime skinning must support approved tenant, product, environment, branding, density and accessibility skins **without feature-code changes.**
+
+This interacts directly with §5. Pattern A — D3 as pure math, React rendering — is what makes token-driven theming possible, because the render layer reads CSS Custom Properties rather than computing colours. A component that hard-codes a colour breaks both constraints at once.
+
+> **The testable line:** if changing a theme requires touching feature code, the theming layer has been bypassed.
+
+### Why this section exists as its own section
+
+These three could have been filed under the constraints above — the field name under a data section, theming beside DOM ownership. They are deliberately kept together because **the most important fact about them is the category they belong to**: approved decisions that a reader consulting the primary source will not find.
+
+If a fourth appears, it belongs here too.
+
+---
+
 ## Constraint index
 
 | § | Constraint | Source | FR | Enforced by |
@@ -248,8 +324,9 @@ Relying on an experimental build would also make the deployment story depend on 
 | 4 | No migration framework | CP-005 | FR-007 | review; registry |
 | 5 | One DOM owner per container | AC-DOM-OWNERSHIP / CP-003 | FR-004 | review; testable line |
 | 6 | No free-threaded Python | CP-005 | FR-008 | review |
+| 7 | Decisions that exist only as overlays | AB-CM-011/021/022 | CF-005 | review; testable lines |
 
-Only §2 is machine-enforced today. The rest depend on review, which is why each carries a testable line rather than a general principle.
+Only §2 is machine-enforced today. The rest depend on review, which is why each carries a testable line rather than a general principle. §7 is the least defended of all: it depends on a reader knowing to consult the overlay register, which the DDR itself does not tell them to do.
 
 ---
 
@@ -257,7 +334,7 @@ Only §2 is machine-enforced today. The rest depend on review, which is why each
 
 **The technology registry is allowlist-based.** Any tool not listed ACTIVE in `PROJECTONE-Technology-Registry.json` is **DENIED by default.** Unlisted does not mean unconsidered — it means not approved. Adding an entry is a governed change.
 
-**Immutable sources must be read with their overlays.** The 500-series documents (502 Playbook, 504 Data Contract) are uploaded sources that are never edited in place. Every change to their content lives in `governance/overlays/PROJECTONE-999-Overlay-Register.json`. Reading one of those sources without its ACTIVE overlays gives you a stale answer.
+**Immutable sources must be read with their overlays.** This is not a formality — see §7, where three approved decisions exist only as overlays and one of them is a column name. The 500-series documents (502 Playbook, 504 Data Contract) are uploaded sources that are never edited in place. Every change to their content lives in `governance/overlays/PROJECTONE-999-Overlay-Register.json`. Reading one of those sources without its ACTIVE overlays gives you a stale answer.
 
 **Deferring functionality is fine. Deferring design is not.** Under DDR P-8, the design must accommodate known future requirements from the start, even where the functionality is not built yet. A feature can sit below the cut line; the design that feature will need cannot. This is the principle §4 protects.
 
