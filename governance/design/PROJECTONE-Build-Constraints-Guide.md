@@ -317,7 +317,7 @@ If a fourth appears, it belongs here too.
 ## 8. Code structure and computation placement
 
 **Source:** D-69 (AB-CM-036) · AC-MINING-PLACEMENT · CP-002
-**Status of D-69:** PROPOSED — not yet approved. AC-MINING-PLACEMENT below is already LOCKED and in force.
+**Status of D-69:** APPROVED 2026-08-24 (D69-A) — effective. AC-MINING-PLACEMENT is LOCKED and in force.
 
 ### Where computation goes — two questions
 
@@ -350,6 +350,18 @@ SQL is inadequate for these — **illustrative of the objective, not a definitio
 5. Combinatorial search and optimization
 
 **What SQL handles well — reaching for Python here is the common error.** Directly-follows pairs (`LAG` within case partition) · variant identification (`STRING_AGG` then group) · percentiles (`PERCENTILE_CONT`) · running totals, rank, gap-and-island, sessionization (window functions) · conformance rule evaluation · wait-time aggregation. Native regex is GA in Azure SQL Database; pattern matching alone does not justify moving work to Python.
+
+### One local-versus-Azure trap
+
+`REGEXP_LIKE`, `REGEXP_MATCHES` and `REGEXP_SPLIT_TO_TABLE` require **database compatibility level 170+**, which is SQL Server 2025. The local development instance is **SQL Server 2022 — maximum level 160**.
+
+So these functions **work on Azure SQL Database and fail on the local machine.**
+
+That is the *inverse* of the §2 problem. There, Developer Edition runs everything happily and the failure surfaces at deployment. Here the failure surfaces on the first local run, in seconds, with a clear error. Loud and immediate, which is why it is accepted rather than guarded by a check.
+
+If you need one of these constructs, that is a **decision** — raise it — not a workaround to code around.
+
+> **The general form, which outlasts regex:** Azure SQL Database tracks ahead of the boxed product. Any capability newer than SQL Server 2022 may exist in the target and not locally. The durable answer is CI running against a real Azure SQL Database, so both directions are caught by execution rather than by pattern-matching. Recorded as CF-006; it belongs with the OQ-13 and FR-009 cluster.
 
 ### The dangerous quadrant
 
