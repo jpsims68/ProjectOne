@@ -83,6 +83,18 @@ jobs:
         # Scans files only. Never connects to a database, never executes SQL.
         run: python3 governance/scripts/check_cloud_target_compatibility.py
 
+  overlay-reachability:
+    name: Overlay reachability
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Refuse an approved overlay its target never mentions
+        run: python3 governance/scripts/check_overlay_reachability.py
+
   baseline-integrity:
     name: Framework baseline integrity
     runs-on: ubuntu-latest

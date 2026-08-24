@@ -1,7 +1,7 @@
 {
   "header": {
     "artifactId": "PROJECTONE-SOURCE-REGISTRY",
-    "version": "1.0",
+    "version": "2.0",
     "status": "FROZEN",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
@@ -11,7 +11,8 @@
     ],
     "createdAt": "2026-08-13T10:01:00-04:00",
     "frozenAt": "2026-08-13T15:26:10-04:00",
-    "frozenUnder": "APR-002 (Step 54 owner approval)"
+    "frozenUnder": "APR-002 (Step 54 owner approval)",
+    "lastUpdated": "2026-08-24T10:15:00-04:00"
   },
   "tierModel": {
     "tiers": [
@@ -111,8 +112,22 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-011",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-021",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-022",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 3 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "202",
@@ -127,8 +142,18 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-012",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-031",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 2 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "203",
@@ -143,8 +168,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-032",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "204",
@@ -159,8 +190,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-033",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "205",
@@ -175,8 +212,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-024",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "301",
@@ -207,8 +250,22 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-019",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-020",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-027",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 3 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "402",
@@ -223,8 +280,26 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-009",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-016",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-023",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-029",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 4 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "403",
@@ -239,8 +314,30 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-008",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-017",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-025",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-030",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-035",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 5 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "404",
@@ -255,8 +352,22 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-010",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-018",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-028",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 3 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "405",
@@ -303,8 +414,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-013",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "411",
@@ -335,8 +452,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-014",
+          "status": "VERIFIED NO CHANGE REQUIRED / APPROVED NEW ARTIFACT DIRECTIVE"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "502",
@@ -351,8 +474,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "OV-001",
+          "status": "ACTIVE"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "503",
@@ -383,8 +512,14 @@
         "product/design source"
       ],
       "useClassification": "NORMATIVE_IMMUTABLE",
-      "overlayRefs": [],
-      "availability": "PRESENT"
+      "overlayRefs": [
+        {
+          "overlayId": "OV-002",
+          "status": "PENDING — trigger not yet reached"
+        }
+      ],
+      "availability": "PRESENT",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 1 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "999-Agent-Build-Canon-Modification-Tracker-v0.4",
@@ -698,6 +833,104 @@
       "useClassification": "EVIDENCE_ONLY",
       "overlayRefs": [],
       "availability": "ABSENT_NON_BLOCKING"
+    },
+    {
+      "sourceId": "406",
+      "displayName": "406-ProjectOne-DDL-Build-Kickoff-Brief.md",
+      "tier": 2,
+      "version": "v11",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": true,
+      "governsSubjects": [
+        "DDL build kickoff",
+        "standing reference §1–§8"
+      ],
+      "useClassification": "NORMATIVE_IMMUTABLE",
+      "overlayRefs": [
+        {
+          "overlayId": "AB-CM-026",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-034",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
+        }
+      ],
+      "availability": "PRESENT",
+      "registrationNote": "Added 2026-08-24. This source carried two approved overlays (AB-CM-026, AB-CM-034) while absent from the registry entirely — so nothing could resolve them to a file.",
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 2 approved overlay entries. Reading the base file alone yields a stale answer."
+    },
+    {
+      "sourceId": "BUILD-CONSTRAINTS-GUIDE",
+      "displayName": "governance/design/PROJECTONE-Build-Constraints-Guide.md",
+      "tier": 1,
+      "version": "ACTIVE",
+      "versionResolved": true,
+      "status": "ACTIVE",
+      "immutable": false,
+      "contentHash": "ef6a4c0ba18dcf2163742fd5c6a7ae6fb32441ace5577ab79b2c7f0aa962a8c5",
+      "governsSubjects": [
+        "developer-facing build constraints",
+        "point-of-use delivery of design decisions"
+      ],
+      "useClassification": "ACTIVE_GOVERNANCE",
+      "overlayRefs": [],
+      "availability": "PRESENT",
+      "authorityNote": "DERIVED, NOT CANONICAL. The DDR (201) and the Profile are authoritative. Where this guide and a canonical source disagree, the canonical source wins and the guide is the defect. It exists because an agent reads the document it is pointed at and treats it as complete — so the constraints are restated at the point of use rather than left as cross-references nobody follows.",
+      "registrationNote": "Added 2026-08-24. Previously absent, so no role contract could require it."
     }
-  ]
+  ],
+  "sourceBundleBindings": {
+    "purpose": "Role contracts in the frozen framework declare REQUIRED source CLASSES, not files — the framework is project-agnostic and cannot name project artifacts. This profile-layer table binds each class to concrete sources. Without it, a role contract demanding DESIGN_RECORD has nothing to resolve, and the requirement silently does nothing.",
+    "foundGap": "2026-08-24: ROLE_CODING declared GOVERNANCE_POLICY, DESIGN_RECORD, CONTRACT_REGISTRY and TECHNOLOGY_REGISTRY as MANDATORY. None were bound. A coding agent was told to load the design record with nothing telling it which file that is.",
+    "bindings": [
+      {
+        "sourceClass": "GOVERNANCE_POLICY",
+        "necessity": "MANDATORY",
+        "sources": [
+          "ProjectOne-Build-Requirements-and-Architecture-Policy-v1.2",
+          "ProjectOne-Agent-Source-and-Responsibility-Model-v0.4",
+          "governance/design/PROJECTONE-Build-Constraints-Guide.md"
+        ]
+      },
+      {
+        "sourceClass": "DESIGN_RECORD",
+        "necessity": "MANDATORY",
+        "sources": [
+          "201"
+        ],
+        "mustReadWith": "governance/overlays/PROJECTONE-999-Overlay-Register.json — 201 has 3 approved overlays and 2 of its self-descriptions are wrong"
+      },
+      {
+        "sourceClass": "CONTRACT_REGISTRY",
+        "necessity": "MANDATORY",
+        "sources": [
+          "202",
+          "203",
+          "204",
+          "ProjectOne-Field-Catalog-Registry-v1.0"
+        ]
+      },
+      {
+        "sourceClass": "TECHNOLOGY_REGISTRY",
+        "necessity": "MANDATORY",
+        "sources": [
+          "governance/profile/PROJECTONE-Technology-Registry.json"
+        ],
+        "note": "Allowlist-based. Anything not listed ACTIVE is DENIED by default."
+      },
+      {
+        "sourceClass": "DATA_DEFINITION",
+        "necessity": "CONDITIONAL",
+        "sources": [
+          "205",
+          "504",
+          "ProjectOne-Field-Catalog-Registry-v1.0"
+        ],
+        "condition": "Required whenever work touches schema, fields, or the event-log contract."
+      }
+    ],
+    "resolutionNote": "A bound source that is UNAVAILABLE triggers the SOURCE_UNAVAILABLE escalation in the role contract. It is a stop condition, not a warning."
+  }
 }
