@@ -1,16 +1,16 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-21T15:30:00-04:00",
+  "snapshotDateTime": "2026-08-22T09:45:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
     "predecessorPackageHash": "2d02618c1a35944dbb195183ed1f83371fd8142799ee8940bdd910721c76f96d",
     "predecessorPackageId": "PAF-STEPS-1-100-PACKAGE",
     "chainRepairNote": "FORK REPAIRED. The Steps-1-72 and Steps-1-100 snapshots both declared PAF-RUN7A-CONTINUATION-v1.0 as predecessor, so the chain forked rather than extended and the 1-72 package was absent from the ancestry. This package chains correctly to PAF-STEPS-1-100-PACKAGE by its measured SHA-256. thisPackageId, previously stale at PAF-STEPS-1-100-PACKAGE while state had advanced well beyond it, is also corrected.",
-    "packageIsThin": "THIN PACKAGE \u2014 owner decision 2026-08-21 (option B). This package carries the continuity snapshot and a manifest pointing at the repository. It does NOT carry a copy of the governed corpus. The repository at the commit below is the system of record. Measured before this decision: of 158 files in the previous fat package, 141 were byte-identical to the repository, 7 differed with the repository newer in every case, and 3 were absent \u2014 two READMEs describing the package itself and its own checksum file. The fat package therefore carried no information the repository lacked, while going stale between every session. That staleness was recorded as R-03.",
+    "packageIsThin": "THIN PACKAGE — owner decision 2026-08-21 (option B). This package carries the continuity snapshot and a manifest pointing at the repository. It does NOT carry a copy of the governed corpus. The repository at the commit below is the system of record. Measured before this decision: of 158 files in the previous fat package, 141 were byte-identical to the repository, 7 differed with the repository newer in every case, and 3 were absent — two READMEs describing the package itself and its own checksum file. The fat package therefore carried no information the repository lacked, while going stale between every session. That staleness was recorded as R-03.",
     "repositoryAtExport": "f367c5394340165a3454f545249382c8f35df1af",
-    "whyNotRetiredEntirely": "Retiring the mechanism was considered and rejected on evidence. paf.continuity-snapshot.schema.json lists packageChain as a REQUIRED field, and packageChain requires thisPackageId, immutableCorpusHash and predecessorPackageHash. Removing it would produce a snapshot failing its own frozen schema, enforced by validate_framework.py \u2014 which would require a governed change against the frozen core to remove a safety mechanism. Thin satisfies the schema honestly while removing the staleness."
+    "whyNotRetiredEntirely": "Retiring the mechanism was considered and rejected on evidence. paf.continuity-snapshot.schema.json lists packageChain as a REQUIRED field, and packageChain requires thisPackageId, immutableCorpusHash and predecessorPackageHash. Removing it would produce a snapshot failing its own frozen schema, enforced by validate_framework.py — which would require a governed change against the frozen core to remove a safety mechanism. Thin satisfies the schema honestly while removing the staleness."
   },
   "frameworkStepRangeCompleted": [
     1,
@@ -133,7 +133,7 @@
     "immutableOverlay": "999 Canon Modification Tracker v0.4",
     "designAuthority": "DDR 201 v1.37 + overlays",
     "auditGate": "CLEARED (D3 v1.2 post-D4)",
-    "frameworkStatus": "APPROVED AND FROZEN \u2014 Agent Framework v1.0 (APR-002). Now authoritative for ProjectOne build governance.",
+    "frameworkStatus": "APPROVED AND FROZEN — Agent Framework v1.0 (APR-002). Now authoritative for ProjectOne build governance.",
     "productionImplementation": "NOT AUTHORIZED"
   },
   "activeArtifactVersions": {
@@ -144,58 +144,58 @@
     "approvals": "APR-001, APR-002, CP-001, CP-002, CP-003, CP-004, CP-005",
     "activationCheckpoint": "PASS 34/34",
     "validation": "9/9 suites",
-    "repository": "https://github.com/jpsims68/ProjectOne \u2014 main at fdb3d7b, 192 files; 8 required checks (all functional, no skip-and-pass); uv.lock committed",
-    "technologyRegistry": "1.0 \u2014 29 approved entries (Steps 81-86)",
+    "repository": "https://github.com/jpsims68/ProjectOne — main at fdb3d7b, 192 files; 8 required checks (all functional, no skip-and-pass); uv.lock committed",
+    "technologyRegistry": "1.0 — 29 approved entries (Steps 81-86)",
     "localEnvironment": "VS Code 1.133.0 | Python 3.13.5 | uv 0.11.29 | Node 24.16.0 | SQL Server 2022 Developer (MSSQLSERVERLOCAL) | ODBC 18"
   },
   "decisionsMadeSincePriorSnapshot": [
     {
-      "id": "PR #6 \u2014 CI remediation",
-      "status": "COMPLETE \u2014 PR #6. Two of seven required checks were passing without doing their work: the test gate's glob never matched, dependencies were never installed, pip-audit audited a non-existent file, bandit targeted non-existent directories, and mypy never ran. CI also pinned Python 3.12 against a 3.13 requirement."
+      "id": "PR #6 — CI remediation",
+      "status": "COMPLETE — PR #6. Two of seven required checks were passing without doing their work: the test gate's glob never matched, dependencies were never installed, pip-audit audited a non-existent file, bandit targeted non-existent directories, and mypy never ran. CI also pinned Python 3.12 against a 3.13 requirement."
     },
     {
       "id": "pytest range amended",
       "status": "registry >=8,<9 -> >=9.0.3,<10 (PYSEC-2026-1845 / CVE-2025-71176), surfaced by the repaired Security scan on its first honest run"
     },
     {
-      "id": "PR #7 \u2014 project venv and lockfile",
-      "status": "COMPLETE \u2014 PR #7. Local pip-audit reported 316 findings across 49 packages against global Python; 41 packages were unrelated to ProjectOne and the 8 that were had gone stale. Root cause was that the local environment and CI had diverged. uv.lock committed; CI installs with --frozen."
+      "id": "PR #7 — project venv and lockfile",
+      "status": "COMPLETE — PR #7. Local pip-audit reported 316 findings across 49 packages against global Python; 41 packages were unrelated to ProjectOne and the 8 that were had gone stale. Root cause was that the local environment and CI had diverged. uv.lock committed; CI installs with --frozen."
     },
     {
       "id": "check_baseline_integrity Windows fix",
-      "status": "shelled out to sha256sum, which does not exist on Windows \u2014 the fail-closed guard on the frozen framework raised an unhandled FileNotFoundError on the owner's machine. Replaced with in-process hashlib."
+      "status": "shelled out to sha256sum, which does not exist on Windows — the fail-closed guard on the frozen framework raised an unhandled FileNotFoundError on the owner's machine. Replaced with in-process hashlib."
     },
     {
-      "id": "PR #8 \u2014 DOC-LAG cleanup",
-      "status": "COMPLETE \u2014 PR #8. Snapshot and registry corrected; OD-09 and OD-13 resolved."
+      "id": "PR #8 — DOC-LAG cleanup",
+      "status": "COMPLETE — PR #8. Snapshot and registry corrected; OD-09 and OD-13 resolved."
     },
     {
-      "id": "PR #9 \u2014 FR-010 cloud-compatibility check",
-      "status": "COMPLETE \u2014 PR #9. check_cloud_target_compatibility.py built to FR-010's OBJECTIVE rather than its four illustrative examples; FR-010 amended so register and check agree. Now the 8th required status check."
+      "id": "PR #9 — FR-010 cloud-compatibility check",
+      "status": "COMPLETE — PR #9. check_cloud_target_compatibility.py built to FR-010's OBJECTIVE rather than its four illustrative examples; FR-010 amended so register and check agree. Now the 8th required status check."
     },
     {
-      "id": "PR #10 \u2014 Build Constraints Guide",
-      "status": "COMPLETE \u2014 PR #10. Six constraints, each with a testable line. Six FRs retargeted from the never-created 'Implementation Guide' and marked SATISFIED."
+      "id": "PR #10 — Build Constraints Guide",
+      "status": "COMPLETE — PR #10. Six constraints, each with a testable line. Six FRs retargeted from the never-created 'Implementation Guide' and marked SATISFIED."
     },
     {
-      "id": "PR #11 \u2014 999 overlay register",
-      "status": "COMPLETE \u2014 PR #11. Overlay mechanism moved into the repository, superseding the external 999 Tracker. OV-001 ACTIVE, OV-002 PENDING behind its post-MVP trigger."
+      "id": "PR #11 — 999 overlay register",
+      "status": "COMPLETE — PR #11. Overlay mechanism moved into the repository, superseding the external 999 Tracker. OV-001 ACTIVE, OV-002 PENDING behind its post-MVP trigger."
     },
     {
-      "id": "PR #10/#11 \u2014 FR acceptance tests executed",
-      "status": "COMPLETE \u2014 executed during PR #10 and PR #11 and re-verified against merged main, not deferred to a separate pass."
+      "id": "PR #10/#11 — FR acceptance tests executed",
+      "status": "COMPLETE — executed during PR #10 and PR #11 and re-verified against merged main, not deferred to a separate pass."
     }
   ],
   "openDecisions": [
     {
       "id": "OD-11",
-      "subject": "OQ-13 deployment target \u2014 Azure recommended, decision deferred",
-      "status": "OPEN \u2014 comparison document at design/OQ-13-Provider-Comparison.md"
+      "subject": "OQ-13 deployment target — Azure recommended, decision deferred",
+      "status": "OPEN — comparison document at design/OQ-13-Provider-Comparison.md"
     },
     {
       "id": "OD-05",
       "subject": "Independent clean-context review of verification mechanism mapping",
-      "status": "OPEN \u2014 recommended"
+      "status": "OPEN — recommended"
     },
     {
       "id": "OD-06",
@@ -206,7 +206,7 @@
     {
       "id": "OD-08",
       "subject": "Set required approvals to 1 when a second human joins",
-      "status": "OPEN \u2014 change trigger"
+      "status": "OPEN — change trigger"
     }
   ],
   "openRisks": [
@@ -214,7 +214,7 @@
       "id": "R-01",
       "risk": "Remote GitHub/CI unavailable on this platform",
       "impact": "Steps 63-72,91,101,110 require owner execution",
-      "status": "OPEN \u2014 disposition still pending. Steps 101 and 110 (repository verification, CI hardening) required owner hands-on execution as anticipated; no change to the underlying constraint. Carried forward rather than re-dated."
+      "status": "OPEN — disposition still pending. Steps 101 and 110 (repository verification, CI hardening) required owner hands-on execution as anticipated; no change to the underlying constraint. Carried forward rather than re-dated."
     },
     {
       "id": "R-02",
@@ -227,7 +227,7 @@
       "risk": "The Steps-1-100 continuation package on the owner's disk is now materially behind the repository",
       "impact": "Step 100 vs 109, baseline v1.1 vs v1.2, no lockfile, no overlay register, no Build Constraints Guide",
       "mitigation": "Repository is authoritative on any disagreement. Superseded by the Step 111 package export.",
-      "status": "CLOSED 2026-08-21 \u2014 the fat Steps-1-100 package is superseded by the thin package. Staleness is structurally removed: a package that is a pointer plus a snapshot cannot drift the way a 158-file copy did."
+      "status": "CLOSED 2026-08-21 — the fat Steps-1-100 package is superseded by the thin package. Staleness is structurally removed: a package that is a pointer plus a snapshot cannot drift the way a 158-file copy did."
     }
   ],
   "openExceptions": [
@@ -235,14 +235,14 @@
       "id": "EXC-TEST-01",
       "subject": "test_configuration_loads_and_validates skipped in CI",
       "basis": "requires .env, which must never be committed",
-      "expiry": "none \u2014 permanent environment split",
+      "expiry": "none — permanent environment split",
       "record": "governance/evidence/SETUP-015/"
     },
     {
       "id": "EXC-TEST-02",
       "subject": "test_database_reachable skipped in CI",
       "basis": "requires .env and a local SQL Server instance",
-      "expiry": "none \u2014 permanent environment split",
+      "expiry": "none — permanent environment split",
       "record": "governance/evidence/SETUP-015/"
     },
     {
@@ -266,7 +266,7 @@
       "id": "EV-R11-02",
       "name": "Smoke suite on CI's pinned interpreter",
       "method": "DETERMINISTIC_CHECK",
-      "result": "2 tests FAIL on Python 3.12 \u2014 the broken glob was suppressing a real failure"
+      "result": "2 tests FAIL on Python 3.12 — the broken glob was suppressing a real failure"
     },
     {
       "id": "EV-R11-03",
@@ -317,47 +317,49 @@
   ],
   "nextAuthorizedAction": "Step 112: present readiness evidence to the owner and WAIT for explicit authorization of F1a. The evidence is governance/baselines/PROJECTONE-Development-Baseline-v1.0.json, and its whatIsNOTProven section must be read in full before authorizing. Step 113 begins implementation ONLY after Step 112. Production application implementation remains NOT AUTHORIZED.",
   "doNotDo": [
-    "Do NOT edit any frozen artifact in place \u2014 governed change package + new baseline version only",
+    "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
     "Do NOT write anything to the baseline after generating a freeze manifest (F-R7-02)",
     "Do NOT proceed past Step 112 without explicit owner authorization for Step 113",
     "Do NOT treat the 360/360 verification figure as independently verified (OD-05)",
     "Do NOT infer approval from silence",
-    "Do NOT add a third-party app to required status checks \u2014 an external service must never block or unblock a merge",
-    "Do NOT leave required-check source as 'Any source' \u2014 it permits forgeable check results",
+    "Do NOT add a third-party app to required status checks — an external service must never block or unblock a merge",
+    "Do NOT leave required-check source as 'Any source' — it permits forgeable check results",
     "Do NOT describe human-review independence on this repo as enforced; it is attested",
-    "Do NOT use browser file upload for multi-file or nested commits \u2014 it silently loses dot-files, caps at 100, and discards directory structure. Use GitHub Desktop.",
-    "Do NOT write a check that skips-and-passes when its target is missing \u2014 distinguish absent-expected from absent-unexpected",
-    "Do NOT use an MI-only SQL Server capability while OQ-13 remains open \u2014 it silently closes an intentionally open decision",
-    "Do NOT record Fabric as simply 'excluded' \u2014 the exclusion is deployment-target only; it remains valid as a data source",
+    "Do NOT use browser file upload for multi-file or nested commits — it silently loses dot-files, caps at 100, and discards directory structure. Use GitHub Desktop.",
+    "Do NOT write a check that skips-and-passes when its target is missing — distinguish absent-expected from absent-unexpected",
+    "Do NOT use an MI-only SQL Server capability while OQ-13 remains open — it silently closes an intentionally open decision",
+    "Do NOT record Fabric as simply 'excluded' — the exclusion is deployment-target only; it remains valid as a data source",
     "Do NOT mark the Implementation Guide complete without checking the forward requirements register",
-    "Do NOT introduce a migration framework \u2014 it works against P-8 (see FR-007)",
-    "Do NOT rely on Python 3.13 free-threaded mode \u2014 experimental, and AC-MINING-PLACEMENT already removes the need (see FR-008)",
-    "Do NOT use any tool not listed ACTIVE in the technology registry \u2014 unlisted is DENIED by default",
-    "Do NOT diagnose repository state from a branch \u2014 compare against main first (AE-01)",
+    "Do NOT introduce a migration framework — it works against P-8 (see FR-007)",
+    "Do NOT rely on Python 3.13 free-threaded mode — experimental, and AC-MINING-PLACEMENT already removes the need (see FR-008)",
+    "Do NOT use any tool not listed ACTIVE in the technology registry — unlisted is DENIED by default",
+    "Do NOT diagnose repository state from a branch — compare against main first (AE-01)",
     "Do NOT assume a commit was pushed; commit and push are separate actions in GitHub Desktop",
-    "Do NOT skip pulling after a merge \u2014 a stale local clone caused a 45-minute failure sequence",
+    "Do NOT skip pulling after a merge — a stale local clone caused a 45-minute failure sequence",
     "Do NOT rely on a governance check without negative-testing it; F-R10-01 passed a real secret",
-    "Do NOT trust a governance check that has never been negative-tested \u2014 three separate checks were found this session passing without examining anything",
-    "Do NOT run pip-audit against a global Python install and read the result as a project finding \u2014 use the locked environment",
+    "Do NOT trust a governance check that has never been negative-tested — three separate checks were found this session passing without examining anything",
+    "Do NOT run pip-audit against a global Python install and read the result as a project finding — use the locked environment",
     "Do NOT mark OV-002 ACTIVE before connector work is scoped; PENDING is the requirement being met, not deferred",
-    "Do NOT assert that a document or plan does not exist without searching EVERY unpacked package \u2014 the 101-113 execution plan was in the Core package while an agent reported no itemization existed",
-    "Do NOT let a governance check inspect the filesystem when it means to inspect the repository \u2014 two checks failed on the mere presence of a git-ignored .env, which canonical Step 108 requires (F-SETUP-015-01/02)",
-    "Do NOT read 'Login failed for user' from SQL Server as an authentication problem without checking for error 4060 \u2014 a missing database produces the same message (F-SETUP-016-01)",
-    "Do NOT treat the Step 111 baseline as a statement that the SYSTEM is ready \u2014 it states that the ENVIRONMENT is verified. Read whatIsNOTProven before Step 112 authorization"
+    "Do NOT assert that a document or plan does not exist without searching EVERY unpacked package — the 101-113 execution plan was in the Core package while an agent reported no itemization existed",
+    "Do NOT let a governance check inspect the filesystem when it means to inspect the repository — two checks failed on the mere presence of a git-ignored .env, which canonical Step 108 requires (F-SETUP-015-01/02)",
+    "Do NOT read 'Login failed for user' from SQL Server as an authentication problem without checking for error 4060 — a missing database produces the same message (F-SETUP-016-01)",
+    "Do NOT treat the Step 111 baseline as a statement that the SYSTEM is ready — it states that the ENVIRONMENT is verified. Read whatIsNOTProven before Step 112 authorization",
+    "Do NOT write an artifact's headline claim as though complete while footnoting the gap as NOT_EXAMINED — weaken the claim instead (F-SETUP-018-01)",
+    "Do NOT write DDL from the DDR alone — D-67, D-68 and the field name event_sequence_num exist only as overlays (CF-005)"
   ],
-  "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 \u2014 the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary \u2014 including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan \u2014 the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost \u2014 notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
-  "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json \u2014 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
+  "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
+  "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
   "resolvedDecisions": [
     {
       "id": "OD-09",
       "subject": "Repository resides inside OneDrive; sync locks can conflict with Git",
-      "status": "RESOLVED \u2014 repository relocated outside OneDrive (2026-08-18)"
+      "status": "RESOLVED — repository relocated outside OneDrive (2026-08-18)"
     },
     {
       "id": "OD-13",
       "subject": "Delete abandoned branch work/SETUP-004-local-workspace-config",
-      "status": "RESOLVED \u2014 abandoned branch deleted; remote confirmed to hold only main (2026-08-18)"
+      "status": "RESOLVED — abandoned branch deleted; remote confirmed to hold only main (2026-08-18)"
     }
   ],
   "corrections": [
@@ -393,7 +395,7 @@
         "step": 103,
         "requirement": "Repository bootstrap/setup scripts run; local environment at baseline",
         "status": "MET",
-        "evidence": "governance/scripts/bootstrap.py created and run \u2014 RESULT: PASS. bootstrap_selftest.py added: 4/4 gates proved they can go red. Evidence: governance/evidence/SETUP-015/"
+        "evidence": "governance/scripts/bootstrap.py created and run — RESULT: PASS. bootstrap_selftest.py added: 4/4 gates proved they can go red. Evidence: governance/evidence/SETUP-015/"
       },
       {
         "step": 104,
@@ -423,7 +425,7 @@
         "step": 108,
         "requirement": "Local development database connectivity, permissions, safe configuration validated",
         "status": "MET",
-        "evidence": "OWNER EXECUTION 2026-08-21. uv run pytest -q \u2014 24 passed, 1 skipped. test_configuration_loads_and_validates, test_odbc_driver_18_present and test_database_reachable all PASS. Database reached through the application's own connection path using Windows Integrated Authentication. Two blocking check defects fixed first (F-SETUP-015-01/02) and verified against a real .env: check_no_secrets and check_repository_layout both PASS with .env present, git status clean."
+        "evidence": "OWNER EXECUTION 2026-08-21. uv run pytest -q — 24 passed, 1 skipped. test_configuration_loads_and_validates, test_odbc_driver_18_present and test_database_reachable all PASS. Database reached through the application's own connection path using Windows Integrated Authentication. Two blocking check defects fixed first (F-SETUP-015-01/02) and verified against a real .env: check_no_secrets and check_repository_layout both PASS with .env present, git status clean."
       },
       {
         "step": 109,
@@ -441,7 +443,7 @@
         "step": 111,
         "requirement": "Reproducible pre-feature development baseline recorded",
         "status": "MET",
-        "evidence": "governance/baselines/PROJECTONE-Development-Baseline-v1.0.json \u2014 versions, hashes, environment, test and security results, gates, open exceptions, recovery point, and an explicit whatIsNOTProven section. Thin continuation package exported; packageChain fork repaired."
+        "evidence": "governance/baselines/PROJECTONE-Development-Baseline-v1.0.json — versions, hashes, environment, test and security results, gates, open exceptions, recovery point, and an explicit whatIsNOTProven section. Thin continuation package exported; packageChain fork repaired."
       }
     ]
   },
@@ -451,16 +453,27 @@
       "foundAt": "canonical Step 108, 2026-08-21",
       "severity": "BLOCKING for Step 108",
       "defect": "The database projectone_dev did not exist. sys.databases held only master, model, msdb and tempdb. Canonical Step 99 configured the local development database CONNECTION; nothing ever created the database itself.",
-      "symptom": "pyodbc.InterfaceError reporting 'Login failed for user' \u2014 misleading. The operative error was 4060, 'Cannot open database projectone_dev requested by the login'. SQL Server reports a login failure when it cannot open the requested database, so the message points at authentication when the cause is a missing database.",
-      "fix": "CREATE DATABASE projectone_dev \u2014 empty, no schema. Environment setup, not implementation; clear of the Step 112 gate.",
+      "symptom": "pyodbc.InterfaceError reporting 'Login failed for user' — misleading. The operative error was 4060, 'Cannot open database projectone_dev requested by the login'. SQL Server reports a login failure when it cannot open the requested database, so the message points at authentication when the cause is a missing database.",
+      "fix": "CREATE DATABASE projectone_dev — empty, no schema. Environment setup, not implementation; clear of the Step 112 gate.",
       "latency": "Latent since Step 99. Invisible until the connection was exercised end to end, because configuring a connection string never touches the server."
+    },
+    {
+      "id": "F-SETUP-018-01",
+      "foundAt": "owner-directed double-check, 2026-08-22",
+      "severity": "HIGH",
+      "defect": "The 999 overlay register created at canonical Step 108 claimed to supersede the external 999-Agent-Build-Canon-Modification-Tracker-v0.4.md while containing only OV-001 and OV-002. That tracker held 27 APPROVED entries. None had been migrated.",
+      "howItHappened": "The register was authored without access to the external tracker. The gap WAS flagged at the time as NOT_EXAMINED in PR #11's evidence section, so it was not a silent miss — but the header's supersedes claim was written as though complete, and stood untrue for six days.",
+      "whyItMattered": "A register that looks complete is more dangerous than one that is obviously partial. A reader checking 'are there overlays on the DDR?' would have found none and concluded correctly from a false premise.",
+      "fix": "All 27 entries migrated verbatim with original approvals; supersedes claim corrected; register v1.0 -> v2.0.",
+      "foundBy": "Owner. John directed a double-check of whether prior DDR change proposals had been evaluated.",
+      "lesson": "A NOT_EXAMINED note protects honesty but does not protect the artifact. When a claim depends on something unexamined, weaken the CLAIM, do not merely footnote it."
     }
   ],
   "carriedForward": [
     {
       "id": "CF-001",
       "subject": "PAF Starter Kit v1.0",
-      "status": "PRESERVED \u2014 the nine documents are committed to docs/paf-starter-kit/",
+      "status": "PRESERVED — the nine documents are committed to docs/paf-starter-kit/",
       "location": "Nine documents: docs/paf-starter-kit/ in this repository. The rest of the kit (framework/, adapters/, scripts, workflows, blank profile templates) remains a zip on the owner's machine and is DERIVABLE from this repository if lost.",
       "what": "A portable extraction of the framework for starting a NEW project: framework/ (87 files, verified to contain zero references to this project), adapters/, adapter-config/, 5 governance checks, bootstrap_selftest.py, create_baseline.py, 13 blank profile templates, CI workflows, PR template, and NINE documents (READ-ME-FIRST, Estimation Guide, AI Kickoff Prompt, Bootstrap Instructions, Modification Guide, Decisions You Must Make, Lessons Already Paid For, What This Costs You, and an optional fictional example).",
       "verified": "Dry-run on a fresh project: all gates pass, bootstrap_selftest proves 4/4 gates can go red, create_baseline.py generates and verifies a baseline, framework 87/87 after copy.",
@@ -471,7 +484,7 @@
     {
       "id": "CF-002",
       "subject": "Template repository for the Starter Kit",
-      "status": "QUEUED \u2014 owner decision 2026-08-21",
+      "status": "QUEUED — owner decision 2026-08-21",
       "what": "Turn the Starter Kit into its own GitHub template repository rather than a zip.",
       "timing": "Owner directed: after the ProjectOne build completes. Not before.",
       "owner": "John",
@@ -481,7 +494,7 @@
     {
       "id": "CF-003",
       "subject": "Version drift across Project-knowledge canonical documents",
-      "status": "OPEN \u2014 UNRESOLVED",
+      "status": "RESOLVED 2026-08-22 — already ruled on in the external tracker; ruling now migrated into the repository",
       "severity": "Material. These are Tier-1/Tier-2 canonical documents and they disagree with each other on paper.",
       "findings": [
         "402 Tracker: header reads v84; its own 'current canonical versions' line reads v82; the Manifest reads v80. Three values.",
@@ -489,17 +502,29 @@
         "201 DDR: file header reads v1.35 while BOTH the Manifest and the Tracker claim v1.37. Either the header is stale after surgical edits, or the file itself is an older version. Nobody can tell which from inside the repository."
       ],
       "whyItMatters": "The DDR is the design authority and wins every conflict. A design authority whose own version cannot be established is a weak foundation for the first vertical slice.",
-      "whereTheseLive": "Claude Project knowledge and the Core Build Reference Package \u2014 NOT this repository. Some are immutable uploaded sources, so corrections may require 999 overlays rather than edits. See governance/overlays/PROJECTONE-999-Overlay-Register.json for the mechanism.",
+      "whereTheseLive": "Claude Project knowledge and the Core Build Reference Package — NOT this repository. Some are immutable uploaded sources, so corrections may require 999 overlays rather than edits. See governance/overlays/PROJECTONE-999-Overlay-Register.json for the mechanism.",
       "notDoneBecause": "Out of scope for the 101-111 range, which governs the repository. Deliberately deferred, not forgotten.",
       "recommendedTiming": "Before or during Step 112, since F1a work reads from the DDR.",
-      "recordedAt": "2026-08-21"
+      "recordedAt": "2026-08-21",
+      "resolution": "The drift was not an open question. AB-CM-029, approved by John 2026-08-11, states the current authoritative DDR is v1.37 and explicitly names v1.23, v1.26, v1.27, v1.29, v1.33 and v1.35 as superseded. The DDR file header reading v1.35 is therefore a STALE HEADER, not an older file — the exact ambiguity that could not be settled from inside the repository. AB-CM-030 does the same for the Manifest's DDR row, and AB-CM-016 and AB-CM-029 cover the Tracker's own pointers.",
+      "recordedNow": "governance/overlays/PROJECTONE-999-Overlay-Register.json v2.0, effectiveCanonPointers"
     },
     {
       "id": "CF-004",
       "subject": "Starter Kit lesson addendum",
-      "status": "CLOSED 2026-08-21 \u2014 lesson 10 added to docs/paf-starter-kit/06-LESSONS-ALREADY-PAID-FOR.md",
+      "status": "CLOSED 2026-08-21 — lesson 10 added to docs/paf-starter-kit/06-LESSONS-ALREADY-PAID-FOR.md",
       "what": "06-LESSONS-ALREADY-PAID-FOR.md in the Starter Kit should gain the lesson recorded here as CORR-001: do not assert that a document or plan does not exist without searching EVERY unpacked package. The lesson is in this repository's doNotDo; it is not yet in the kit.",
       "recordedAt": "2026-08-21"
+    },
+    {
+      "id": "CF-005",
+      "subject": "Overlay-only DDR decisions must reach whoever writes the first DDL",
+      "status": "OPEN",
+      "severity": "HIGH — schema-level",
+      "what": "Three decisions exist ONLY as overlays and appear nowhere in the DDR file: D-67 (theming, AB-CM-011), D-68 (business-unit assignment precedence, AB-CM-022), and the D-47 event-order field name event_sequence_num (AB-CM-021).",
+      "risk": "Anyone writing DDL from the DDR alone would omit two decisions and use the WRONG field name. This is not a documentation nicety — event_sequence_num is a column name in the first schema written.",
+      "recommendedAction": "Carry these into the Build Constraints Guide, which is the document already written for whoever writes the first slice, and which currently does not mention them.",
+      "recordedAt": "2026-08-22"
     }
   ]
 }
