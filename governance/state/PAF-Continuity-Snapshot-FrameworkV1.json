@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T10:30:00-04:00",
+  "snapshotDateTime": "2026-08-24T11:45:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -184,6 +184,10 @@
     {
       "id": "PR #10/#11 — FR acceptance tests executed",
       "status": "COMPLETE — executed during PR #10 and PR #11 and re-verified against merged main, not deferred to a separate pass."
+    },
+    {
+      "id": "Coding-strategy review (owner-initiated)",
+      "status": "Owner supplied ProjectOne-Coding-Strategy.md and asked whether its principles were already specified, complementary, or conflicting. Finding: the canon has NO coding-practice layer — zero occurrences of 'functional core', 'imperative shell', 'pure function', 'side-effect', 'dependency inversion', 'cohesion', 'loosely coupled' or 'stateless' across all 35 Project documents. One real conflict found: functional-core purity versus AC-MINING-PLACEMENT's SQL requirement. Resolved by tier-scoped carve-out (owner option A) with the boundary tightened from 'small set' to a two-question test. D-69 drafted as AB-CM-036, PROPOSED."
     }
   ],
   "openDecisions": [
@@ -538,6 +542,22 @@
       "recordedAt": "2026-08-22",
       "resolution": "Section 7, 'Decisions that live ONLY as overlays', added to governance/design/PROJECTONE-Build-Constraints-Guide.md. Covers the event_sequence_num field name with the full sort tuple (from_ts, event_sequence_num, event_key), D-68's four precedence rules including as-of SCD-2 resolution and the conflict-flag requirement, and D-67's theming flow and slice obligations. Each carries a testable line. Also records that the DDR's own header (v1.35) and stated range (D-01..D-66) are both wrong: v1.37 and D-01..D-68.",
       "keptAsItsOwnSection": "Owner decision, option A. These could have been filed under existing thematic constraints. They are kept together because the most important fact about them is the CATEGORY — approved decisions a reader consulting the primary source will not find. Filing them thematically would have buried that warning."
+    },
+    {
+      "id": "CF-006",
+      "subject": "Compatibility-level trap: Azure SQL Database is AHEAD of the local instance on regex",
+      "status": "OPEN — recorded, no action yet",
+      "severity": "MEDIUM",
+      "what": "REGEXP_LIKE, REGEXP_MATCHES and REGEXP_SPLIT_TO_TABLE require database compatibility level 170+. Level 170 is SQL Server 2025 (17.x). The owner's local instance is SQL Server 2022, 16.0.1190.2 — maximum compatibility level 160. These functions are GENERALLY AVAILABLE in Azure SQL Database and UNAVAILABLE locally.",
+      "whyItMatters": "This is the INVERSE of the FR-010 problem. FR-010 catches 'works locally, fails on Azure', because Developer Edition is more permissive. This is 'works on Azure, fails locally'. FR-010 does not cover it and correctly should not — its objective is Azure compatibility. Both directions produce a green result in one environment and a broken one in the other.",
+      "notActedOnBecause": "No DDL exists. Nothing can violate it yet. It should be known before the first script is written.",
+      "options": [
+        "Accept and rely on CI, which runs against neither environment today",
+        "Add a companion check for local-unavailable constructs",
+        "Raise the local instance to SQL Server 2025 so both environments share a capability floor"
+      ],
+      "relatedFinding": "Fuzzy string-matching in Azure SQL Database is PREVIEW, not GA. Adopting a preview feature would repeat the free-threaded-Python pattern the guide already prohibits in section 6. It is also unregistered, therefore DENIED by default under the technology registry.",
+      "recordedAt": "2026-08-24"
     }
   ]
 }
