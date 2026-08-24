@@ -124,10 +124,14 @@
         {
           "overlayId": "AB-CM-022",
           "status": "APPROVED — EFFECTIVE OVERLAY"
+        },
+        {
+          "overlayId": "AB-CM-036",
+          "status": "APPROVED — EFFECTIVE OVERLAY"
         }
       ],
       "availability": "PRESENT",
-      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 3 approved overlay entries. Reading the base file alone yields a stale answer."
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 4 approved overlay entries. Reading the base file alone yields a stale answer."
     },
     {
       "sourceId": "202",

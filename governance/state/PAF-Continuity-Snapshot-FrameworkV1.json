@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T11:45:00-04:00",
+  "snapshotDateTime": "2026-08-24T12:20:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -188,6 +188,10 @@
     {
       "id": "Coding-strategy review (owner-initiated)",
       "status": "Owner supplied ProjectOne-Coding-Strategy.md and asked whether its principles were already specified, complementary, or conflicting. Finding: the canon has NO coding-practice layer — zero occurrences of 'functional core', 'imperative shell', 'pure function', 'side-effect', 'dependency inversion', 'cohesion', 'loosely coupled' or 'stateless' across all 35 Project documents. One real conflict found: functional-core purity versus AC-MINING-PLACEMENT's SQL requirement. Resolved by tier-scoped carve-out (owner option A) with the boundary tightened from 'small set' to a two-question test. D-69 drafted as AB-CM-036, PROPOSED."
+    },
+    {
+      "id": "D-69 APPROVED (D69-A)",
+      "status": "Owner approved 2026-08-24. Effective DDR range becomes D-01..D-69. Approving it immediately made the overlay-reachability check FAIL — 201's overlayRefs did not yet list AB-CM-036 — which is the control working as designed on its first live exercise, one day after being built."
     }
   ],
   "openDecisions": [
@@ -546,7 +550,7 @@
     {
       "id": "CF-006",
       "subject": "Compatibility-level trap: Azure SQL Database is AHEAD of the local instance on regex",
-      "status": "OPEN — recorded, no action yet",
+      "status": "ACCEPTED 2026-08-24 — recorded with a re-evaluation trigger; no check built, no upgrade performed",
       "severity": "MEDIUM",
       "what": "REGEXP_LIKE, REGEXP_MATCHES and REGEXP_SPLIT_TO_TABLE require database compatibility level 170+. Level 170 is SQL Server 2025 (17.x). The owner's local instance is SQL Server 2022, 16.0.1190.2 — maximum compatibility level 160. These functions are GENERALLY AVAILABLE in Azure SQL Database and UNAVAILABLE locally.",
       "whyItMatters": "This is the INVERSE of the FR-010 problem. FR-010 catches 'works locally, fails on Azure', because Developer Edition is more permissive. This is 'works on Azure, fails locally'. FR-010 does not cover it and correctly should not — its objective is Azure compatibility. Both directions produce a green result in one environment and a broken one in the other.",
@@ -557,7 +561,11 @@
         "Raise the local instance to SQL Server 2025 so both environments share a capability floor"
       ],
       "relatedFinding": "Fuzzy string-matching in Azure SQL Database is PREVIEW, not GA. Adopting a preview feature would repeat the free-threaded-Python pattern the guide already prohibits in section 6. It is also unregistered, therefore DENIED by default under the technology registry.",
-      "recordedAt": "2026-08-24"
+      "recordedAt": "2026-08-24",
+      "decision": "Owner accepted the risk. Rationale: the affected construct set is tiny, and it fails LOUDLY and IMMEDIATELY on first local execution — the opposite of the FR-010 failure mode, where Developer Edition runs everything happily and the failure surfaces at deployment. Building a check for a defect that announces itself spends effort on the wrong risk. Upgrading the local instance was rejected for now because OQ-13 is open: if Managed Instance is chosen the version story changes, and the work might be redone.",
+      "recordedIn": "Build Constraints Guide §8, 'One local-versus-Azure trap'",
+      "reEvaluationTrigger": "Re-evaluate at whichever comes FIRST: (a) the first DDL is written, or (b) OQ-13 resolves. Both are real events, not 'someday'.",
+      "durableAnswer": "The regex case is one instance of a general divergence: Azure SQL Database tracks ahead of the boxed product, so any post-2022 capability may exist in the target and not locally. The durable fix is not a second pattern-matching check — it is CI running against a real Azure SQL Database, so BOTH directions are caught by execution. That belongs with the OQ-13 / FR-009 cluster, not here, and cannot be scoped until the deployment target is decided."
     }
   ]
 }

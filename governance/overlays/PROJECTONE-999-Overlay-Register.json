@@ -461,8 +461,8 @@
     {
       "overlayId": "AB-CM-036",
       "title": "Add D-69 code structure and computation placement (Functional Core / Imperative Shell with analytical-tier carve-out)",
-      "status": "PROPOSED — AWAITING OWNER APPROVAL",
-      "approval": "NOT YET APPROVED. Drafted 2026-08-24 at owner request following review of ProjectOne-Coding-Strategy.md.",
+      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "approval": "D69-A approved by John, 2026-08-24. Explicit approval following review of the drafted decision.",
       "targetSource": "201-ProjectOne-Design-Decision-Record.md",
       "targetSnapshot": "Version 1.37, plus effective D-67 and D-68 overlays",
       "location": "Decision summary immediately after effective D-68; detailed decision immediately after effective D-68 detail",
@@ -477,7 +477,8 @@
         "Boundary tightened 2026-08-24: 'small set' and 'typically' replaced with the two-question test.",
         "Parsing and fuzzy matching deliberately named in NEITHER list — the two questions route them correctly, and a named exception invites argument."
       ],
-      "recordedAt": "2026-08-24T11:30:00-04:00"
+      "recordedAt": "2026-08-24T11:30:00-04:00",
+      "approvalNote": "Approved as an ARCHITECTURE_CHANGE. The decision is effective from this date: D-69 now forms part of the effective DDR alongside D-67 and D-68, and the DDR's effective decision range becomes D-01..D-69."
     }
   ],
   "changeHistory": [
@@ -495,15 +496,21 @@
       "date": "2026-08-24T11:30:00-04:00",
       "change": "AB-CM-036 drafted (D-69). Status PROPOSED — awaiting owner approval. Not effective until approved.",
       "approver": "PENDING"
+    },
+    {
+      "date": "2026-08-24T12:15:00-04:00",
+      "change": "AB-CM-036 (D-69) APPROVED by owner. Status PROPOSED -> APPROVED — EFFECTIVE OVERLAY. Effective DDR range now D-01..D-69.",
+      "approver": "John"
     }
   ],
   "effectiveCanonPointers": {
     "note": "Frequently-needed answers that the source documents get wrong on their own.",
     "ddrCurrentVersion": "v1.37 — per AB-CM-029. The DDR file header reads v1.35; the tracker explicitly names v1.23, v1.26, v1.27, v1.29, v1.33 and v1.35 as superseded by v1.37. The header is STALE; the file is not an older file. This resolves CF-003 for the DDR, which could not be settled from inside the repository.",
-    "ddrDecisionRange": "D-01 through D-66 and P-1 through P-9 in the file, PLUS D-67 (AB-CM-011) and D-68 (AB-CM-022) which exist only as overlays.",
+    "ddrDecisionRange": "D-01 through D-66 and P-1 through P-9 in the file, PLUS D-67 (AB-CM-011), D-68 (AB-CM-022) and D-69 (AB-CM-036) which exist only as overlays. Effective range is D-01..D-69.",
     "eventOrderFieldName": "event_sequence_num — per AB-CM-021. The DDR file does not contain this name. Anyone writing DDL from the DDR alone would use the wrong field name.",
     "trackerCurrentVersion": "See AB-CM-029 and AB-CM-016 for the Tracker's own current-facing pointers.",
-    "manifestDdrRow": "See AB-CM-030."
+    "manifestDdrRow": "See AB-CM-030.",
+    "computationPlacement": "D-69 (AB-CM-036). Placement of any computation over event data is decided by two questions: (1) does the input grow with tenant data volume — if yes, set-based SQL, no exception; (2) can SQL express the operation — if yes, SQL anyway. The analytical tier is deliberately outside the Functional Core / Imperative Shell model."
   },
   "entryCount": 30
 }
