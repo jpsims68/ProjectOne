@@ -37,6 +37,7 @@ CHECKS = [
     "check_no_secrets.py",
     "check_slice_boundaries.py",
     "check_cloud_target_compatibility.py",
+    "check_overlay_reachability.py",
 ]
 
 # Tools the build depends on. Version ranges are governed by the technology

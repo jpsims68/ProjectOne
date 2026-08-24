@@ -88,11 +88,29 @@ def break_cloud_compat(sandbox: Path) -> str:
     return "added SQL using USE and SQL Server Agent, neither of which exists on Azure SQL Database"
 
 
+def break_overlay_reach(sandbox: Path) -> str:
+    import json as _json
+
+    p = sandbox / "governance" / "profile" / "PROJECTONE-Source-Registry.json"
+    d = _json.loads(p.read_text(encoding="utf-8"))
+    for src in d["sources"]:
+        if src.get("overlayRefs"):
+            dropped = src["overlayRefs"].pop()
+            p.write_text(_json.dumps(d, indent=2), encoding="utf-8")
+            return f"removed overlay {dropped['overlayId']} from source {src['sourceId']}'s overlayRefs"
+    return "no overlayRefs to remove"
+
+
 CHECKS = [
     ("check_baseline_integrity.py", break_baseline, "frozen framework is intact"),
     ("check_no_secrets.py", break_secrets, "no credentials are committed"),
     ("check_repository_layout.py", break_layout, "governance artifacts are placed correctly"),
     ("check_cloud_target_compatibility.py", break_cloud_compat, "SQL runs on Azure SQL Database"),
+    (
+        "check_overlay_reachability.py",
+        break_overlay_reach,
+        "approved overlays are reachable from their target",
+    ),
 ]
 
 

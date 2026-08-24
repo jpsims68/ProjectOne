@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-22T10:30:00-04:00",
+  "snapshotDateTime": "2026-08-24T10:30:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -346,7 +346,8 @@
     "Do NOT read 'Login failed for user' from SQL Server as an authentication problem without checking for error 4060 — a missing database produces the same message (F-SETUP-016-01)",
     "Do NOT treat the Step 111 baseline as a statement that the SYSTEM is ready — it states that the ENVIRONMENT is verified. Read whatIsNOTProven before Step 112 authorization",
     "Do NOT write an artifact's headline claim as though complete while footnoting the gap as NOT_EXAMINED — weaken the claim instead (F-SETUP-018-01)",
-    "Do NOT write DDL from the DDR alone — D-67, D-68 and the field name event_sequence_num exist only as overlays (CF-005)"
+    "Do NOT write DDL from the DDR alone — D-67, D-68 and the field name event_sequence_num exist only as overlays (CF-005)",
+    "Do NOT assume a stated rule is operative — the source registry declared the overlay rule and provided overlayRefs on every source while all 40 were empty (F-SETUP-020-01)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -467,6 +468,16 @@
       "fix": "All 27 entries migrated verbatim with original approvals; supersedes claim corrected; register v1.0 -> v2.0.",
       "foundBy": "Owner. John directed a double-check of whether prior DDR change proposals had been evaluated.",
       "lesson": "A NOT_EXAMINED note protects honesty but does not protect the artifact. When a claim depends on something unexamined, weaken the CLAIM, do not merely footnote it."
+    },
+    {
+      "id": "F-SETUP-020-01",
+      "foundAt": "owner question on documentation routing, 2026-08-24",
+      "severity": "HIGH",
+      "defect": "The source registry stated the overlay rule — 'Effective source = immutable source + all applicable approved overlay entries. Reading the base source alone is an incomplete read.' — and provided an overlayRefs field on all 40 sources. ALL 40 WERE EMPTY. Separately, ROLE_CODING declared four source classes MANDATORY (GOVERNANCE_POLICY, DESIGN_RECORD, CONTRACT_REGISTRY, TECHNOLOGY_REGISTRY) and NONE were bound to files. Source 406 carried two approved overlays while absent from the registry entirely.",
+      "consequence": "A coding agent was instructed to load the design record with nothing resolving that to a file, and a reader of the DDR had no way to learn that three approved decisions existed only as overlays. This is the mechanism behind CF-005, not a separate problem.",
+      "fix": "overlayRefs populated on 14 sources from the register mechanically; readRule warning added to each; 406 and the Build Constraints Guide registered; sourceBundleBindings added binding all five classes; check_overlay_reachability.py built, negative-tested and made the 9th required status check.",
+      "foundBy": "Owner. John asked where the principles should live for AI to read them with least risk of losing the authority.",
+      "lesson": "A rule stated in a document and a field provided for it are not the same as the field being populated. Check the data, not the schema."
     }
   ],
   "carriedForward": [
