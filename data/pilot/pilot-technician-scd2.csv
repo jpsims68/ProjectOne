@@ -1,0 +1,9 @@
+technician_id,depot,valid_from,valid_to
+T-101,North Depot,2026-01-01,9999-12-31
+T-102,North Depot,2026-01-01,9999-12-31
+T-201,Central Depot,2026-01-01,9999-12-31
+T-202,Central Depot,2026-01-01,2026-03-15
+T-202,South Depot,2026-03-15,9999-12-31
+T-301,South Depot,2026-01-01,9999-12-31
+T-302,South Depot,2026-01-01,2026-04-01
+T-302,Central Depot,2026-04-01,9999-12-31

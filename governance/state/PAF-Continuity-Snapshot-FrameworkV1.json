@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T14:00:00-04:00",
+  "snapshotDateTime": "2026-08-24T16:00:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -323,7 +323,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Work queue item 2: OWNER DECISION on thin-slice pilot data (B2.12 PRE-2). It blocks items 3 and 4. Step 112 remains BLOCKED until queue items 1-5 close. Production application implementation remains NOT AUTHORIZED. See workQueue for the full sequence and preF1aPrerequisites for what canon requires before F1a.",
+  "nextAuthorizedAction": "Work queue item 3: testing architecture — the one architectural gap coupled to F1a's irreversibility. Then item 4 (F1a build brief, now unblocked) and item 5 (reconcile PRE-1). Step 112 remains BLOCKED until items 3-5 close. Production application implementation remains NOT AUTHORIZED.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -586,9 +586,14 @@
         "id": "PRE-2",
         "subject": "Thin-slice pilot data",
         "canonText": "what the first thin slice runs against — (A) fresh agnostic synthetic log, (B) first real client's log, (C) other",
-        "status": "OPEN — GENUINELY UNDECIDED",
+        "status": "CLOSED 2026-08-24 — owner decided option A (fresh agnostic synthetic log), generated",
         "whyItMatters": "F1a builds the event model. What it runs against determines what F1a proves. Two of the eight unproven baseline items depend on it: FR-010 has never run against real DDL, and tenant isolation is designed but never exercised.",
-        "action": "Owner decision. Queue item 2. BLOCKS the F1a build brief."
+        "action": "Owner decision. Queue item 2. BLOCKS the F1a build brief.",
+        "decision": "Option A. No client is in the pipeline, so option B was undeliverable rather than merely expensive. Option C (the existing 406 fabricated dataset) is explicitly marked obsolete in canon and 406 is pilot-only.",
+        "rationale": "P-8 reasoning: F1a's schema will change several times while it is written. A dataset regenerable in seconds matches that; a received one does not. Option A's weakness — clean in unintended ways — is fixable by DESIGNING the dirt, which a process-mining platform must handle regardless.",
+        "artifact": "tools/generate_pilot_log.py (the durable artifact) + data/pilot/ (disposable output)",
+        "domainChoice": "Equipment maintenance across three depots. Deliberately nobody's target market. Healthcare was considered and rejected on two grounds: fabricated admissions and discharges look like PHI to anyone glancing at the repository, and healthcare is a plausible vertical — the same drift risk that put SMB wholesale distribution into canon and required it to be explicitly disowned. Inventory logistics was rejected as too linear to exercise variant logic, and is the disowned vertical.",
+        "datasetHash": "964abc8655ae6e7adb40006d6875cb911b6b688bddb50f054af2d47174353e86"
       },
       {
         "id": "PRE-3",
@@ -694,13 +699,13 @@
         "n": 1,
         "item": "Record B2.12 prerequisites, architecture inventory, and this queue",
         "owner": "agent",
-        "status": "IN PROGRESS — this PR"
+        "status": "CLOSED — merged as PR #23"
       },
       {
         "n": 2,
         "item": "Decide thin-slice pilot data",
         "owner": "OWNER",
-        "status": "OPEN",
+        "status": "CLOSED 2026-08-24 — option A, generator committed",
         "blocks": [
           3,
           4
@@ -719,7 +724,7 @@
         "n": 4,
         "item": "Write the F1a build brief",
         "owner": "agent + owner",
-        "status": "BLOCKED by 2",
+        "status": "OPEN — unblocked by item 2",
         "ref": "PRE-3"
       },
       {
@@ -806,5 +811,62 @@
       }
     ],
     "deferralRationale": "Items 9-12 are not neglect. Designing observability, deployment, security or resilience against an undecided deployment target produces work that would be redone — the same reasoning FR-009 already applies to observability tooling."
+  },
+  "pilotDataset": {
+    "status": "ACTIVE — F1a only",
+    "generator": "tools/generate_pilot_log.py",
+    "determinism": "Same seed produces identical bytes. A diff between runs means the GENERATOR changed, not randomness.",
+    "eventsSha256": "964abc8655ae6e7adb40006d6875cb911b6b688bddb50f054af2d47174353e86",
+    "scope": {
+      "events": 3411,
+      "cases": 400,
+      "distinctActivities": 9,
+      "distinctVariants": 8,
+      "note": "A few thousand events, hand-verifiable. NOT a performance dataset — performance work needs the real deployment target and OQ-13 is open."
+    },
+    "deliberateEdgeCases": [
+      {
+        "case": "duplicate timestamps within a case",
+        "count": 23,
+        "exercises": "D-62 event_sequence_num cascade; the field name is AB-CM-021, overlay-only and absent from the DDR"
+      },
+      {
+        "case": "technician changes depot mid-window",
+        "spanningCases": 32,
+        "exercises": "D-68 rule 2 — as-of SCD-2 resolution at event.from_ts, never the resource's CURRENT depot. A join on current depot returns wrong answers for every event before the move, invisibly."
+      },
+      {
+        "case": "three depots with nine sub-areas",
+        "exercises": "D-43 closure ancestry — a declared tree, not one inferred from event rows"
+      },
+      {
+        "case": "rework loops and self-transitions",
+        "reworkCases": 68,
+        "selfTransitions": 18,
+        "exercises": "variant logic; 8 distinct variants with a long tail"
+      },
+      {
+        "case": "cases open at the window boundary",
+        "count": 10,
+        "exercises": "proves the schema does not FORBID a case receiving later events — reopening is an F3 ingestion concern, but P-8 requires the design to permit it now"
+      },
+      {
+        "case": "source_event_id present for two depots, absent for the third",
+        "tierA": 2195,
+        "tierB": 1216,
+        "exercises": "BOTH tiers of the D-62 natural-key cascade in one file"
+      },
+      {
+        "case": "nulls in optional fields",
+        "exercises": "optionality on cost_amount and priority"
+      }
+    ],
+    "deliberatelyExcluded": [
+      "Daily incremental loads, rejected records, reopened cases — these are INGESTION behaviours and ingestion is F3, four build units after F1a. Testing them here means hand-writing the load logic F3 will replace.",
+      "Orphan dimension references — parked as ingestion open item F-068.",
+      "Activity-name variants requiring normalization — ingestion-time concern.",
+      "Volume/performance data — needs the real deployment target."
+    ],
+    "notPrecludedNote": "The schema must SUPPORT what this dataset does not TEST: reopened cases, incremental load, late-arriving events, staging separate from the fact. That distinction is P-8. Cases left open at the boundary exist so appending later proves nothing forbade it."
   }
 }
