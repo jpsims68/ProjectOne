@@ -429,6 +429,94 @@ These exist as controls. **The control governs; this list only points at it.**
 
 ---
 
+## 9. Testing architecture — F1a scope
+
+**Status:** F1a-SCOPED, owner decision 2026-08-24. Layers beyond F1a are deferred with recorded triggers — see the deferral table at the end of this section.
+**Source:** architectureLayerInventory (testing recorded as ABSENT) · pilot dataset (B2.12 PRE-2)
+
+### Why this is scoped rather than complete
+
+Canon had no testing architecture at all: zero occurrences of `test pyramid`, `unit test`, `integration test`, `contract test`, `test strategy` or `coverage target` across 35 documents. Practices existed — pytest, CI, the may-not-weaken-a-test prohibition, chart ground rule 7's fixture matrix — with nothing connecting them.
+
+Writing the full pyramid now would mostly be guesswork: there are no slices, no contracts, no deployment target. What **cannot** wait is narrower and sharper:
+
+> **Is what F1a produces testable at all?**
+
+That is a *design* property, not a test-writing task. If the event model cannot be verified without a full load, or a directly-follows result cannot be asserted without hand-computing it, that is a **schema** problem — fixed by changing the schema, which is exactly what P-8 exists to prevent. So this section covers F1a, and the rest carries triggers.
+
+### 9a. The three questions F1a testing must answer
+
+**1. Does the schema accept the contract?** The pilot log conforms to 504. Loading it must require no column the schema lacks, and no transformation that invents meaning.
+
+> *Testable line:* if loading the pilot log requires editing the pilot log, the schema is wrong — not the data.
+
+**2. Do dimension resolutions produce the right answer?** Specifically the ones with a wrong default. D-68's as-of SCD-2 lookup returns a different, plausible, wrong answer if joined on the resource's current row. The pilot dataset contains **32 cases spanning a technician's depot change** precisely so this is detectable.
+
+> *Testable line:* every dimension resolution with a temporal dimension needs at least one test case that spans a change. A test set where no entity ever changes cannot distinguish as-of from current.
+
+**3. Are Tier-1 query results correct?** Not "does the query run" — correct. Directly-follows counts, variant identification, wait-time aggregates, closure-ancestry subtree filters.
+
+> *Testable line:* a Tier-1 result is verified only if the expected answer was derived independently of the query that produces it.
+
+### 9b. Where expected answers come from
+
+This is the part that decides whether F1a testing means anything.
+
+The pilot dataset is **generated**, so its correct answers are **derivable from the generator**, not from running the system and blessing the output. That distinction is the whole point.
+
+| Practice | Status |
+|---|---|
+| Expected values computed from generator parameters or by independent means | **Required** |
+| Expected values captured from a system run and frozen as "correct" | **PROHIBITED for correctness tests** |
+
+Capturing output as a baseline is legitimate for *regression* — detecting unintended change. It is not legitimate for *correctness* — it proves only that behaviour is stable, including stably wrong.
+
+> *Testable line:* if the expected value in a test came from running the code under test, it is a regression assertion, not a correctness assertion. Label it as such.
+
+### 9c. Test classes for F1a
+
+Three, with distinct jobs. Markers are declared in `pyproject.toml` and enforced by `--strict-markers`.
+
+**Schema shape tests** — no data. Does the DDL create what the contract needs, with the constraints the design requires? Fast, run on every commit, no database state.
+
+**Load and resolution tests** — pilot dataset, marked `local_env`. Loading and dimension resolution against a real instance. Cannot run in CI: CI has no SQL Server, and the existing exceptions EXC-TEST-01..03 already record this as permanent and correct.
+
+**Tier-1 correctness tests** — pilot dataset, expected answers derived independently. The tests that would catch a wrong directly-follows edge or a mis-resolved business unit.
+
+> A load test proves data arrived. A correctness test proves it arrived *right*. Passing the first while failing the second is the failure this section exists to prevent.
+
+### 9d. What CI can and cannot verify
+
+CI has no SQL Server and will not get one before OQ-13 resolves. So:
+
+| Class | CI | Local |
+|---|---|---|
+| Schema shape | **Yes** | Yes |
+| Load and resolution | **No** — `local_env` | Yes |
+| Tier-1 correctness | **No** — `local_env` | Yes |
+
+**This is a real limitation, not a workaround.** Two of the three F1a test classes will be **owner-executed**, exactly as canonical Steps 108 and 109 were. Their results are evidence only when the owner runs them and returns output — the standing rule against recording a step as passing that the owner did not execute.
+
+The durable answer is CI against a real Azure SQL Database, which also closes CF-006's local-versus-Azure divergence. It belongs with the OQ-13 and FR-009 cluster and cannot be scoped until the deployment target is decided.
+
+### 9e. Deferred layers — triggers and prompt points
+
+Each deferred layer names the event that reopens it. **When a trigger fires, the owner is to be prompted with the layer named** — deferral without a prompt point is how an intention becomes an omission.
+
+| Layer | Trigger | Prompt the owner when |
+|---|---|---|
+| **Contract testing** | First cross-slice contract declared | A `slice.manifest.json` first lists a `producedContracts` entry |
+| **Coverage expectations** | F1a code exists | The first F1a PR is opened |
+| **Integration testing across slices** | Second slice begins | Build unit F1b starts |
+| **End-to-end testing** | A deployable environment exists | OQ-13 resolves |
+| **Performance testing** | Real volume on the real target | OQ-13 resolves **and** a client dataset exists |
+| **Security testing** | Security architecture is defined | The security-architecture item is taken up (queue item 11) |
+| **CI against a real database** | Deployment target chosen | OQ-13 resolves — see CF-006 |
+
+**A deferred layer is not an absent layer.** Every one will be built. What is deferred is *deciding its shape* before there is anything to shape it around — the same reasoning FR-009 applies to observability tooling, and OV-002 to the Fabric source note.
+
+---
+
 ## Constraint index
 
 | § | Constraint | Source | FR | Enforced by |
@@ -440,7 +528,8 @@ These exist as controls. **The control governs; this list only points at it.**
 | 5 | One DOM owner per container | AC-DOM-OWNERSHIP / CP-003 | FR-004 | review; testable line |
 | 6 | No free-threaded Python | CP-005 | FR-008 | review |
 | 7 | Decisions that exist only as overlays | AB-CM-011/021/022 | CF-005 | review; testable lines |
-| 8 | Code structure and computation placement | D-69 (PROPOSED) / AC-MINING-PLACEMENT | — | review; testable lines |
+| 8 | Code structure and computation placement | D-69 / AC-MINING-PLACEMENT | — | review; testable lines |
+| 9 | Testing architecture (F1a scope) | owner decision 2026-08-24 | — | review; testable lines |
 
 Only §2 is machine-enforced today. The rest depend on review, which is why each carries a testable line rather than a general principle. §7 is the least defended of all: it depends on a reader knowing to consult the overlay register, which the DDR itself does not tell them to do.
 
