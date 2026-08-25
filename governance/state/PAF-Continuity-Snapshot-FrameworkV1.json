@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T12:20:00-04:00",
+  "snapshotDateTime": "2026-08-24T14:00:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -323,7 +323,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Step 112: present readiness evidence to the owner and WAIT for explicit authorization of F1a. Evidence is governance/baselines/PROJECTONE-Development-Baseline-v1.0.json; its whatIsNOTProven section must be read in full before authorizing. Design authority is now clean: the overlay register holds all 27 migrated entries, the DDR's true version and range are recorded, and the three overlay-only decisions have reached the Build Constraints Guide. Step 113 begins implementation ONLY after Step 112.",
+  "nextAuthorizedAction": "Work queue item 2: OWNER DECISION on thin-slice pilot data (B2.12 PRE-2). It blocks items 3 and 4. Step 112 remains BLOCKED until queue items 1-5 close. Production application implementation remains NOT AUTHORIZED. See workQueue for the full sequence and preF1aPrerequisites for what canon requires before F1a.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -355,7 +355,8 @@
     "Do NOT treat the Step 111 baseline as a statement that the SYSTEM is ready — it states that the ENVIRONMENT is verified. Read whatIsNOTProven before Step 112 authorization",
     "Do NOT write an artifact's headline claim as though complete while footnoting the gap as NOT_EXAMINED — weaken the claim instead (F-SETUP-018-01)",
     "Do NOT write DDL from the DDR alone — D-67, D-68 and the field name event_sequence_num exist only as overlays (CF-005)",
-    "Do NOT assume a stated rule is operative — the source registry declared the overlay rule and provided overlayRefs on every source while all 40 were empty (F-SETUP-020-01)"
+    "Do NOT assume a stated rule is operative — the source registry declared the overlay rule and provided overlayRefs on every source while all 40 were empty (F-SETUP-020-01)",
+    "Do NOT authorize Step 112 while any B2.12 prerequisite is open — canon set three gates before F1a and none was closed as of 2026-08-24 (preF1aPrerequisites)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -567,5 +568,243 @@
       "reEvaluationTrigger": "Re-evaluate at whichever comes FIRST: (a) the first DDL is written, or (b) OQ-13 resolves. Both are real events, not 'someday'.",
       "durableAnswer": "The regex case is one instance of a general divergence: Azure SQL Database tracks ahead of the boxed product, so any post-2022 capability may exist in the target and not locally. The durable fix is not a second pattern-matching check — it is CI running against a real Azure SQL Database, so BOTH directions are caught by execution. That belongs with the OQ-13 / FR-009 cluster, not here, and cannot be scoped until the deployment target is decided."
     }
-  ]
+  ],
+  "preF1aPrerequisites": {
+    "authority": "402-ProjectOne-PRD-Tracker.md §B2.12, owner-directed 2026-08-05",
+    "status": "NONE CLOSED as of 2026-08-24",
+    "whyRecorded": "Discovered during Step 112 readiness review and existed only in conversation. Canon set three gates before F1a and no artefact in this repository referenced any of them. Authorizing over them would repeat the pattern of CORR-001: proceeding past a specification nobody checked.",
+    "prerequisites": [
+      {
+        "id": "PRE-1",
+        "subject": "Build-Requirements / Architecture design doc, authored FIRST",
+        "canonText": "specifies the engineering/architecture requirements the build must strictly adhere to — e.g. Vertical Slice Architecture",
+        "status": "LIKELY SATISFIED DIFFERENTLY — NOT RECONCILED",
+        "assessment": "The Build Constraints Guide §1–8 now carries D-69, and VSA-1/VSA-3 is enforced by check_slice_boundaries.py — a build failure, which is stricter than a document. This is arguably more than canon asked for, but nobody has verified the coverage against B2.12 item by item.",
+        "action": "Reconcile clause by clause; record the result. Queue item 5."
+      },
+      {
+        "id": "PRE-2",
+        "subject": "Thin-slice pilot data",
+        "canonText": "what the first thin slice runs against — (A) fresh agnostic synthetic log, (B) first real client's log, (C) other",
+        "status": "OPEN — GENUINELY UNDECIDED",
+        "whyItMatters": "F1a builds the event model. What it runs against determines what F1a proves. Two of the eight unproven baseline items depend on it: FR-010 has never run against real DDL, and tenant isolation is designed but never exercised.",
+        "action": "Owner decision. Queue item 2. BLOCKS the F1a build brief."
+      },
+      {
+        "id": "PRE-3",
+        "subject": "Clean build-kickoff seed",
+        "canonText": "406 is the PILOT kickoff (fictional ITSM client + obsolete fabricated dataset) — NOT the production build entry. A fresh F1a build brief is required.",
+        "status": "OPEN — NOT CREATED",
+        "action": "Author the F1a build brief. Queue item 4. Depends on PRE-2."
+      }
+    ]
+  },
+  "architectureLayerInventory": {
+    "assessedAt": "2026-08-24",
+    "method": "term-frequency survey across all 35 canon documents AND the repository, then manual disambiguation of domain versus architectural usage",
+    "whyRecorded": "The absence of a coding-practice layer was found by accident when the owner supplied a coding-strategy document. One accident is a bad sampling method, so the owner asked for a systematic survey. This is the result.",
+    "methodCorrections": [
+      "An initial score of 2150 for observability was a FALSE READING: those hits are monitor_definition and alerts as PRODUCT FEATURES (D-36) — monitoring built FOR clients — not ops observability. Real ops observability is near zero.",
+      "'SLI' matched 'slice'. Discarded."
+    ],
+    "layers": [
+      {
+        "layer": "Data architecture",
+        "state": "STRONG",
+        "evidence": "1948 hits, DDR-dominant. Grain, SCD-2, keys, event model, partitioning. The most developed layer.",
+        "action": "none"
+      },
+      {
+        "layer": "Identity / multi-tenancy",
+        "state": "STRONG",
+        "evidence": "398 hits. Tenant isolation designed throughout.",
+        "action": "none"
+      },
+      {
+        "layer": "GUI / presentation",
+        "state": "GOOD",
+        "evidence": "601 hits. Canvas, components, D-67 theming, chart spec convention, AC-DOM-OWNERSHIP.",
+        "action": "none"
+      },
+      {
+        "layer": "Performance",
+        "state": "MODERATE",
+        "evidence": "322 hits, but mostly Tier-1/Tier-2 SERVING TIERS rather than budgets. No p95 targets, no latency budgets.",
+        "action": "revisit with real data"
+      },
+      {
+        "layer": "System / deployment",
+        "state": "MODERATE — DELIBERATELY BLOCKED",
+        "evidence": "353 hits; OQ-13 open by design.",
+        "action": "queue item 10, after OQ-13"
+      },
+      {
+        "layer": "Versioning / lifecycle",
+        "state": "MODERATE",
+        "evidence": "171 hits, mostly document versioning and P-8. API versioning absent.",
+        "action": "folds into queue item 7"
+      },
+      {
+        "layer": "Integration / API",
+        "state": "WEAK",
+        "evidence": "openapi 0, api version 0, pagination 0, rate limit 0, request/response schema 0. VSA-3 enforces contracts BETWEEN SLICES; the external API surface is unspecified.",
+        "action": "queue item 7, with F1a"
+      },
+      {
+        "layer": "Error / resilience",
+        "state": "WEAK",
+        "evidence": "circuit breaker 0, retry policy 0, backoff 0, error taxonomy 0. Only 'graceful degradation' (6) and 'failure mode' (6).",
+        "action": "queue item 12, after OQ-13"
+      },
+      {
+        "layer": "Security beyond tenancy",
+        "state": "WEAK",
+        "evidence": "threat model 0, least privilege 0 in canon (2 in framework), encryption at rest 0, audit log 0, secret rotation 0, penetration 0. Tenant isolation is the exception and is strong.",
+        "action": "queue item 11, after OQ-13"
+      },
+      {
+        "layer": "Observability (ops sense)",
+        "state": "NEAR-ABSENT",
+        "evidence": "observability 0 in canon, structured log 0, correlation id 0, trace id 0, log level 0, health check 1.",
+        "note": "DISTINCT FROM FR-009. FR-009 defers TOOLING pending OQ-13, correctly. What gets logged, correlation-ID propagation, log levels and trace boundaries are TOOL-INDEPENDENT and undecided. This is the one item from the owner's coding-strategy document with no home.",
+        "action": "queue item 9"
+      },
+      {
+        "layer": "Testing architecture",
+        "state": "ABSENT",
+        "evidence": "test pyramid 0, unit test 0, integration test 0, contract test 0, test strategy 0, coverage target 0. 'fixture' (7) refers to chart ground rule 7.",
+        "note": "Real practices exist — pytest, CI, ROLE_CODING's may-not-weaken-a-test, chart fixture matrices — but no ARCHITECTURE. What is an integration test here? What must a contract test cover? What runs against fabricated versus real data?",
+        "action": "QUEUE ITEM 3 — MOVED AHEAD OF F1a"
+      },
+      {
+        "layer": "Application / code",
+        "state": "RESOLVED 2026-08-24",
+        "evidence": "Was 9 hits. Now D-69 (AB-CM-036) effective, Build Constraints Guide §8.",
+        "action": "none"
+      }
+    ],
+    "headline": "Nine of twelve layers are adequate or deliberately blocked. Three are genuinely thin: testing (absent), observability in the ops sense (near-absent), and integration/API (weak). Only testing is coupled to F1a's irreversibility, which is why it moved ahead of the build."
+  },
+  "workQueue": {
+    "purpose": "A SEQUENCED queue. The other lists — carriedForward, openDecisions, openRisks, openExceptions, defectsFound — record WHAT is open. None records WHAT TO DO NEXT, IN WHAT ORDER. nextAuthorizedAction holds one step, not a queue.",
+    "singleSourceRule": "Entries CROSS-REFERENCE the other lists; they never duplicate them. A second list of open work that can disagree with the first is the defect recorded as F-SETUP-018-01.",
+    "lastSequenced": "2026-08-24",
+    "beforeStep112": [
+      {
+        "n": 1,
+        "item": "Record B2.12 prerequisites, architecture inventory, and this queue",
+        "owner": "agent",
+        "status": "IN PROGRESS — this PR"
+      },
+      {
+        "n": 2,
+        "item": "Decide thin-slice pilot data",
+        "owner": "OWNER",
+        "status": "OPEN",
+        "blocks": [
+          3,
+          4
+        ],
+        "ref": "PRE-2"
+      },
+      {
+        "n": 3,
+        "item": "Testing architecture",
+        "owner": "agent + owner",
+        "status": "OPEN",
+        "why": "F1a produces schema; how schema is tested should be decided before writing it",
+        "ref": "architectureLayerInventory"
+      },
+      {
+        "n": 4,
+        "item": "Write the F1a build brief",
+        "owner": "agent + owner",
+        "status": "BLOCKED by 2",
+        "ref": "PRE-3"
+      },
+      {
+        "n": 5,
+        "item": "Reconcile PRE-1 against the Build Constraints Guide and VSA enforcement",
+        "owner": "agent",
+        "status": "OPEN",
+        "ref": "PRE-1"
+      },
+      {
+        "n": 6,
+        "item": "Step 112 authorization",
+        "owner": "OWNER",
+        "status": "BLOCKED by 1-5",
+        "note": "Non-delegable. Never satisfied by silence."
+      }
+    ],
+    "withF1a": [
+      {
+        "n": 7,
+        "item": "API / integration architecture — only the surface F1a touches",
+        "owner": "agent + owner",
+        "trigger": "F1a work begins"
+      },
+      {
+        "n": 8,
+        "item": "Update PAF Starter Kit: architecture-layers section in 05-DECISIONS-YOU-MUST-MAKE.md, a blank ARCHITECTURE-LAYERS.json profile template, and this inventory's layer list so a future project can run the same survey on day one",
+        "owner": "agent",
+        "trigger": "after 3 and 7 prove the shape",
+        "ref": "CF-001, CF-002"
+      }
+    ],
+    "afterOQ13": [
+      {
+        "n": 9,
+        "item": "Observability architecture — what is logged, correlation IDs, log levels, trace boundaries",
+        "owner": "agent + owner",
+        "blockedBy": "OD-11",
+        "related": "FR-009 (tooling, already deferred)"
+      },
+      {
+        "n": 10,
+        "item": "Deployment / system architecture",
+        "owner": "agent + owner",
+        "blockedBy": "OD-11"
+      },
+      {
+        "n": 11,
+        "item": "Security architecture beyond tenancy — threat model, encryption, audit, secrets",
+        "owner": "agent + owner",
+        "blockedBy": "OD-11"
+      },
+      {
+        "n": 12,
+        "item": "Error / resilience architecture",
+        "owner": "agent + owner",
+        "blockedBy": "OD-11"
+      }
+    ],
+    "standingUnscheduled": [
+      {
+        "ref": "OD-11 / OQ-13",
+        "note": "Deployment target. Blocks queue items 9-12. FR-010 holds the Azure floor meanwhile."
+      },
+      {
+        "ref": "OD-05",
+        "note": "Clean-context review of the verification mapping. CANNOT be the implementing agent."
+      },
+      {
+        "ref": "OD-06",
+        "note": "603-Activities_Groupings_for_Mapping.md. Needed before D-38 grouping work, not before F1a."
+      },
+      {
+        "ref": "OD-08",
+        "note": "Required approvals to 1 when a second human joins. Trigger-based."
+      },
+      {
+        "ref": "CF-002",
+        "note": "Starter Kit template repository. Owner-queued for after this build."
+      },
+      {
+        "ref": "Codex plugin",
+        "note": "Cross-model review, deferred to Step 112. That trigger is now live."
+      }
+    ],
+    "deferralRationale": "Items 9-12 are not neglect. Designing observability, deployment, security or resilience against an undecided deployment target produces work that would be redone — the same reasoning FR-009 already applies to observability tooling."
+  }
 }
