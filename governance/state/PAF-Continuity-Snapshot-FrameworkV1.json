@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T16:00:00-04:00",
+  "snapshotDateTime": "2026-08-24T17:30:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -323,7 +323,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Work queue item 3: testing architecture — the one architectural gap coupled to F1a's irreversibility. Then item 4 (F1a build brief, now unblocked) and item 5 (reconcile PRE-1). Step 112 remains BLOCKED until items 3-5 close. Production application implementation remains NOT AUTHORIZED.",
+  "nextAuthorizedAction": "Work queue item 4: write the F1a build brief (B2.12 PRE-3). Unblocked by the pilot dataset. Then item 5 (reconcile PRE-1). Step 112 remains BLOCKED until items 4-5 close. Production application implementation remains NOT AUTHORIZED. Check deferredWithTriggers before assuming any architecture layer is out of scope.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -357,7 +357,8 @@
     "Do NOT write DDL from the DDR alone — D-67, D-68 and the field name event_sequence_num exist only as overlays (CF-005)",
     "Do NOT assume a stated rule is operative — the source registry declared the overlay rule and provided overlayRefs on every source while all 40 were empty (F-SETUP-020-01)",
     "Do NOT authorize Step 112 while any B2.12 prerequisite is open — canon set three gates before F1a and none was closed as of 2026-08-24 (preF1aPrerequisites)",
-    "Do NOT record a hash as evidence without a check that re-derives it — a hash nobody recomputes is decoration, not proof (F-SETUP-025-01)"
+    "Do NOT record a hash as evidence without a check that re-derives it — a hash nobody recomputes is decoration, not proof (F-SETUP-025-01)",
+    "Do NOT defer an architecture layer without a trigger AND a prompt point — 'later' is not a trigger, and every untriggered deferral in this project has needed rescuing (deferredWithTriggers)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -727,9 +728,10 @@
         "n": 3,
         "item": "Testing architecture",
         "owner": "agent + owner",
-        "status": "OPEN",
+        "status": "CLOSED 2026-08-24 — F1a-scoped, deferred layers carry triggers",
         "why": "F1a produces schema; how schema is tested should be decided before writing it",
-        "ref": "architectureLayerInventory"
+        "ref": "architectureLayerInventory",
+        "artifact": "Build Constraints Guide §9; deferredWithTriggers DEF-01..09"
       },
       {
         "n": 4,
@@ -821,7 +823,8 @@
         "note": "Cross-model review, deferred to Step 112. That trigger is now live."
       }
     ],
-    "deferralRationale": "Items 9-12 are not neglect. Designing observability, deployment, security or resilience against an undecided deployment target produces work that would be redone — the same reasoning FR-009 already applies to observability tooling."
+    "deferralRationale": "Items 9-12 are not neglect. Designing observability, deployment, security or resilience against an undecided deployment target produces work that would be redone — the same reasoning FR-009 already applies to observability tooling.",
+    "note": "Deferred architecture layers are tracked in deferredWithTriggers, not here. That list carries the reopening event and an instruction to prompt the owner."
   },
   "pilotDataset": {
     "status": "ACTIVE — F1a only",
@@ -880,5 +883,84 @@
     ],
     "notPrecludedNote": "The schema must SUPPORT what this dataset does not TEST: reopened cases, incremental load, late-arriving events, staging separate from the fact. That distinction is P-8. Cases left open at the boundary exist so appending later proves nothing forbade it.",
     "lineEndingNote": "Generator writes LF explicitly. Python's csv module defaults to CRLF, but .gitattributes normalises all text to LF — so a CRLF-writing generator can never reproduce the committed bytes."
+  },
+  "deferredWithTriggers": {
+    "purpose": "Deferrals that carry an event which reopens them, and an instruction to PROMPT THE OWNER when that event occurs. Recorded because every untriggered deferral in this project has needed rescuing — 'later' is not a trigger, and an intention without a prompt point becomes an omission.",
+    "howToUse": "A successor session checks this list against what is happening. When a trigger has fired, RAISE IT WITH THE OWNER BY NAME. Do not silently proceed, and do not silently defer again.",
+    "entries": [
+      {
+        "id": "DEF-01",
+        "layer": "Contract testing",
+        "trigger": "First cross-slice contract is declared",
+        "detectableBy": "a slice.manifest.json lists a producedContracts entry",
+        "promptOwner": true,
+        "ref": "Build Constraints Guide §9e"
+      },
+      {
+        "id": "DEF-02",
+        "layer": "Coverage expectations",
+        "trigger": "F1a code exists",
+        "detectableBy": "the first F1a pull request is opened",
+        "promptOwner": true,
+        "ref": "§9e"
+      },
+      {
+        "id": "DEF-03",
+        "layer": "Integration testing across slices",
+        "trigger": "Second slice begins",
+        "detectableBy": "build unit F1b starts",
+        "promptOwner": true,
+        "ref": "§9e"
+      },
+      {
+        "id": "DEF-04",
+        "layer": "End-to-end testing",
+        "trigger": "A deployable environment exists",
+        "detectableBy": "OD-11 / OQ-13 resolves",
+        "promptOwner": true,
+        "ref": "§9e"
+      },
+      {
+        "id": "DEF-05",
+        "layer": "Performance testing",
+        "trigger": "Real volume on the real target",
+        "detectableBy": "OQ-13 resolves AND a client dataset exists",
+        "promptOwner": true,
+        "ref": "§9e"
+      },
+      {
+        "id": "DEF-06",
+        "layer": "Security testing",
+        "trigger": "Security architecture is defined",
+        "detectableBy": "work queue item 11 is taken up",
+        "promptOwner": true,
+        "ref": "§9e"
+      },
+      {
+        "id": "DEF-07",
+        "layer": "CI against a real database",
+        "trigger": "Deployment target chosen",
+        "detectableBy": "OD-11 / OQ-13 resolves",
+        "promptOwner": true,
+        "note": "Also closes CF-006 — the local-versus-Azure capability divergence. Both directions caught by execution rather than pattern-matching.",
+        "ref": "§9e, CF-006"
+      },
+      {
+        "id": "DEF-08",
+        "layer": "Observability architecture",
+        "trigger": "OQ-13 resolves",
+        "promptOwner": true,
+        "note": "Distinct from FR-009, which defers TOOLING. What is logged, correlation IDs, log levels and trace boundaries are tool-independent.",
+        "ref": "work queue item 9"
+      },
+      {
+        "id": "DEF-09",
+        "layer": "API / integration architecture",
+        "trigger": "F1a work begins",
+        "detectableBy": "queue item 4 closes and implementation starts",
+        "promptOwner": true,
+        "ref": "work queue item 7"
+      }
+    ]
   }
 }
