@@ -241,7 +241,11 @@ def main() -> int:
 
     log = out / "pilot-equipment-maintenance-events.csv"
     with log.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=cols)
+        # LF explicitly. Python's csv module defaults to \r\n, but .gitattributes
+        # normalises all text to LF — so a CRLF-writing generator can never reproduce
+        # the committed bytes, and the recorded hash would be of something that does
+        # not exist in the repository. Caught by the reproducibility check below.
+        w = csv.DictWriter(f, fieldnames=cols, lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 
@@ -249,7 +253,7 @@ def main() -> int:
     # tree inferred from event rows is not the same as a declared one.
     hier = out / "pilot-location-hierarchy.csv"
     with hier.open("w", newline="", encoding="utf-8") as f:
-        hw = csv.writer(f)
+        hw = csv.writer(f, lineterminator="\n")
         hw.writerow(["level_1", "level_2"])
         for depot, areas in HIERARCHY.items():
             for area in areas:
@@ -259,7 +263,7 @@ def main() -> int:
     # cannot be tested — there is nothing to resolve against.
     tech = out / "pilot-technician-scd2.csv"
     with tech.open("w", newline="", encoding="utf-8") as f:
-        tw = csv.writer(f)
+        tw = csv.writer(f, lineterminator="\n")
         tw.writerow(["technician_id", "depot", "valid_from", "valid_to"])
         for tid, home, move in TECHNICIANS:
             if move:

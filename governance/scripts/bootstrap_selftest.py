@@ -101,6 +101,15 @@ def break_overlay_reach(sandbox: Path) -> str:
     return "no overlayRefs to remove"
 
 
+def break_data_repro(sandbox: Path) -> str:
+    p = sandbox / "data" / "pilot" / "pilot-equipment-maintenance-events.csv"
+    if not p.is_file():
+        return "no pilot dataset present to tamper with"
+    t = p.read_text(encoding="utf-8").replace("North Depot", "NORTH DEPOT", 1)
+    p.write_text(t, encoding="utf-8", newline="")
+    return "altered one depot value in the committed event log"
+
+
 CHECKS = [
     ("check_baseline_integrity.py", break_baseline, "frozen framework is intact"),
     ("check_no_secrets.py", break_secrets, "no credentials are committed"),
@@ -110,6 +119,11 @@ CHECKS = [
         "check_overlay_reachability.py",
         break_overlay_reach,
         "approved overlays are reachable from their target",
+    ),
+    (
+        "check_generated_data_reproducible.py",
+        break_data_repro,
+        "committed data reproduces from its generator",
     ),
 ]
 

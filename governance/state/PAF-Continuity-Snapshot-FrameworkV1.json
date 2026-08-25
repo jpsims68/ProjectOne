@@ -356,7 +356,8 @@
     "Do NOT write an artifact's headline claim as though complete while footnoting the gap as NOT_EXAMINED — weaken the claim instead (F-SETUP-018-01)",
     "Do NOT write DDL from the DDR alone — D-67, D-68 and the field name event_sequence_num exist only as overlays (CF-005)",
     "Do NOT assume a stated rule is operative — the source registry declared the overlay rule and provided overlayRefs on every source while all 40 were empty (F-SETUP-020-01)",
-    "Do NOT authorize Step 112 while any B2.12 prerequisite is open — canon set three gates before F1a and none was closed as of 2026-08-24 (preF1aPrerequisites)"
+    "Do NOT authorize Step 112 while any B2.12 prerequisite is open — canon set three gates before F1a and none was closed as of 2026-08-24 (preF1aPrerequisites)",
+    "Do NOT record a hash as evidence without a check that re-derives it — a hash nobody recomputes is decoration, not proof (F-SETUP-025-01)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -487,6 +488,16 @@
       "fix": "overlayRefs populated on 14 sources from the register mechanically; readRule warning added to each; 406 and the Build Constraints Guide registered; sourceBundleBindings added binding all five classes; check_overlay_reachability.py built, negative-tested and made the 9th required status check.",
       "foundBy": "Owner. John asked where the principles should live for AI to read them with least risk of losing the authority.",
       "lesson": "A rule stated in a document and a field provided for it are not the same as the field being populated. Check the data, not the schema."
+    },
+    {
+      "id": "F-SETUP-025-01",
+      "foundAt": "pre-PR verification, 2026-08-24",
+      "severity": "MEDIUM",
+      "defect": "The pilot dataset's SHA-256 was recorded in the snapshot as evidence of determinism. It was the hash of a file that did not exist in the repository. Python's csv module writes CRLF by default; .gitattributes normalises text to LF; so the generator produced CRLF, git stored LF, and the recorded hash matched neither the committed file nor anything a reader could reproduce.",
+      "whyItMattered": "The CONTENT was never wrong — only the claim about it. That is the more dangerous failure: a hash recorded as evidence, proving nothing, that nobody would question because it looks like rigour.",
+      "fix": "Generator writes LF explicitly; recorded hash corrected to 53707b90...; check_generated_data_reproducible.py built.",
+      "foundBy": "A reproducibility comparison run during branch verification — regenerate and compare against the committed file. Not by any existing gate.",
+      "lesson": "A recorded hash is only evidence if something re-derives it. Otherwise it is decoration that resembles proof."
     }
   ],
   "carriedForward": [
@@ -593,7 +604,7 @@
         "rationale": "P-8 reasoning: F1a's schema will change several times while it is written. A dataset regenerable in seconds matches that; a received one does not. Option A's weakness — clean in unintended ways — is fixable by DESIGNING the dirt, which a process-mining platform must handle regardless.",
         "artifact": "tools/generate_pilot_log.py (the durable artifact) + data/pilot/ (disposable output)",
         "domainChoice": "Equipment maintenance across three depots. Deliberately nobody's target market. Healthcare was considered and rejected on two grounds: fabricated admissions and discharges look like PHI to anyone glancing at the repository, and healthcare is a plausible vertical — the same drift risk that put SMB wholesale distribution into canon and required it to be explicitly disowned. Inventory logistics was rejected as too linear to exercise variant logic, and is the disowned vertical.",
-        "datasetHash": "964abc8655ae6e7adb40006d6875cb911b6b688bddb50f054af2d47174353e86"
+        "datasetHash": "53707b90e725199193ffd42773e45ed245de1a16dd971769ce38e9873608e335"
       },
       {
         "id": "PRE-3",
@@ -816,7 +827,7 @@
     "status": "ACTIVE — F1a only",
     "generator": "tools/generate_pilot_log.py",
     "determinism": "Same seed produces identical bytes. A diff between runs means the GENERATOR changed, not randomness.",
-    "eventsSha256": "964abc8655ae6e7adb40006d6875cb911b6b688bddb50f054af2d47174353e86",
+    "eventsSha256": "53707b90e725199193ffd42773e45ed245de1a16dd971769ce38e9873608e335",
     "scope": {
       "events": 3411,
       "cases": 400,
@@ -867,6 +878,7 @@
       "Activity-name variants requiring normalization — ingestion-time concern.",
       "Volume/performance data — needs the real deployment target."
     ],
-    "notPrecludedNote": "The schema must SUPPORT what this dataset does not TEST: reopened cases, incremental load, late-arriving events, staging separate from the fact. That distinction is P-8. Cases left open at the boundary exist so appending later proves nothing forbade it."
+    "notPrecludedNote": "The schema must SUPPORT what this dataset does not TEST: reopened cases, incremental load, late-arriving events, staging separate from the fact. That distinction is P-8. Cases left open at the boundary exist so appending later proves nothing forbade it.",
+    "lineEndingNote": "Generator writes LF explicitly. Python's csv module defaults to CRLF, but .gitattributes normalises all text to LF — so a CRLF-writing generator can never reproduce the committed bytes."
   }
 }
