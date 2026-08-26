@@ -479,6 +479,25 @@
       ],
       "recordedAt": "2026-08-24T11:30:00-04:00",
       "approvalNote": "Approved as an ARCHITECTURE_CHANGE. The decision is effective from this date: D-69 now forms part of the effective DDR alongside D-67 and D-68, and the DDR's effective decision range becomes D-01..D-69."
+    },
+    {
+      "overlayId": "AB-CM-037",
+      "title": "Add D-70 period/date dimension shape and the dual-clock rule (closes the R-4 remainder)",
+      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "approval": "D70-A approved by John, 2026-08-25. Option B selected after review of three options and their costs.",
+      "targetSource": "201-ProjectOne-Design-Decision-Record.md",
+      "targetSnapshot": "Version 1.37, plus effective D-67, D-68, D-69",
+      "location": "Decision summary after effective D-69; detail after effective D-69 detail",
+      "changeType": "INSERT AFTER",
+      "reason": "D-49 explicitly left the date/period dimension shape open within R-4. F1a builds Tier-1 serving and, per D-49, a date dimension. Building it without the clock rule settled means either omitting the shape — a deferred DESIGN, which P-8 forbids — or storing a derived value that a calendar change invalidates.",
+      "prescribedSummaryRow": "| D-70 | **Period/date dimension shape and the dual-clock rule — closes the R-4 remainder.** A date/period dimension carries per-tenant working hours, holidays and fiscal-calendar attributes. Duration may be read on either a CALENDAR clock or a BUSINESS clock, selected at read time as a parameter. **No business-clock duration is ever stored on a fact.** Business duration is derived at read time by set-based join against the calendar dimension; only raw timestamps and calendar duration are stored. | LOCKED | Owner |",
+      "prescribedDetail": "**D-70 detail — period/date dimension shape and the dual-clock rule.**\n\n**What this closes.** D-49 recorded: *\"Still open within R-4: the shape of the date/period dimension (business-hours vs calendar SLA clock; per-tenant fiscal calendar).\"* This closes that half. The CR-5 item-3 metric-catalog home remains open and is unaffected.\n\n**The rule.**\n\n1. A date/period dimension carries, per tenant: working-hours definition, holiday calendar, timezone, and fiscal-calendar attributes.\n2. Any duration may be read on a **calendar clock** or a **business clock**. The clock is a **read-time parameter**, not a stored property.\n3. **No business-clock duration is stored on a fact.** Only raw timestamps and calendar duration are stored.\n4. Business duration is derived at read time by **set-based join** against the calendar dimension — never row-wise, per D-69.\n\n**Why storing business duration is prohibited.** A business-clock duration is derived from a MUTABLE input: the tenant's calendar. Add a public holiday and every stored value covering that date becomes wrong. Correcting them means rewriting derived values across live data — the migration DDR P-8 exists to prevent.\n\nComputing at read time inverts the failure: adding a holiday changes future answers and leaves history intact, because history is recomputed from timestamps that never moved.\n\nThis is the same shape as chart ground rule 15 — store additive components, compute the derived value at the last step so re-aggregation stays arithmetically correct. A stored business duration is a pre-divided rate.\n\n**Two distinct concerns in one dimension.** Business-hours affects DURATIONS. Fiscal calendar affects PERIOD GROUPING — which quarter a date falls in. Different columns, different risk, same dimension. Neither is stored on a fact.\n\n**Worked illustration.** A repair triaged Friday 16:00 and completed Monday 10:00, against a two-day SLA. Calendar clock: 66 hours, 2.75 days, BREACHED. Business clock at 09:00–17:00 Mon–Fri: one hour Friday plus one hour Monday, two hours, MET. Same two stored timestamps; the weekend is the entire difference. A platform that can only report the first misrepresents the performance of any client whose SLA is quoted in business days.\n\n**Reach beyond the schema.** Chart spec 203 records R-4 as *\"Blocking for business-clock use. The chart is insulated; the data layer cannot emit business-clock offsets until R-4 lands.\"* The chart renders whatever offsets it receives. This decision unblocks the data layer that supplies them.\n\n**Known and accepted risk.** Read-time computation must fit the Tier-1 sub-second budget (D-26). It is a join-and-sum against a calendar dimension — set-based, satisfying D-69 — but UNMEASURED, because no data exists at volume. If measurement later shows a specific query missing the budget, the remedy is a TARGETED materialization for that query, which D-49 already characterises as additive rather than schema rework. The remedy must not become storing business duration on the fact generally; that would reintroduce the mutable-derived-value problem this decision exists to avoid.\n\n**What F1a must build.** A date/period dimension shaped to carry per-tenant working-hours, holiday and fiscal-calendar attributes. The attributes may be unpopulated at F1a — the SHAPE may not be deferred, per P-8. No duration column on any fact may be business-clock derived.",
+      "ownerDecisionsEmbedded": [
+        "Option B selected 2026-08-25: toggle computed at read time. Option A (calendar only) rejected as it forecloses a real client requirement. Option C (materialize business durations on facts) rejected as the P-8 trap.",
+        "Rationale for client flexibility explicitly recorded as the owner's intent."
+      ],
+      "acceptanceTest": "Search the effective DDR for 'business clock'. It must return both the read-time-parameter rule AND the prohibition on storing business-clock duration on a fact. Either alone is a defect — the prohibition is what prevents the migration.",
+      "recordedAt": "2026-08-25T10:00:00-04:00"
     }
   ],
   "changeHistory": [
@@ -501,16 +520,22 @@
       "date": "2026-08-24T12:15:00-04:00",
       "change": "AB-CM-036 (D-69) APPROVED by owner. Status PROPOSED -> APPROVED — EFFECTIVE OVERLAY. Effective DDR range now D-01..D-69.",
       "approver": "John"
+    },
+    {
+      "date": "2026-08-25T10:00:00-04:00",
+      "change": "AB-CM-037 (D-70) added and APPROVED. Closes the date/period-dimension half of the R-4 remainder. Effective DDR range now D-01..D-70.",
+      "approver": "John"
     }
   ],
   "effectiveCanonPointers": {
     "note": "Frequently-needed answers that the source documents get wrong on their own.",
     "ddrCurrentVersion": "v1.37 — per AB-CM-029. The DDR file header reads v1.35; the tracker explicitly names v1.23, v1.26, v1.27, v1.29, v1.33 and v1.35 as superseded by v1.37. The header is STALE; the file is not an older file. This resolves CF-003 for the DDR, which could not be settled from inside the repository.",
-    "ddrDecisionRange": "D-01 through D-66 and P-1 through P-9 in the file, PLUS D-67 (AB-CM-011), D-68 (AB-CM-022) and D-69 (AB-CM-036) which exist only as overlays. Effective range is D-01..D-69.",
+    "ddrDecisionRange": "D-01 through D-66 and P-1 through P-9 in the file, PLUS D-67 (AB-CM-011), D-68 (AB-CM-022), D-69 (AB-CM-036) and D-70 (AB-CM-037) which exist only as overlays. Effective range is D-01..D-70.",
     "eventOrderFieldName": "event_sequence_num — per AB-CM-021. The DDR file does not contain this name. Anyone writing DDL from the DDR alone would use the wrong field name.",
     "trackerCurrentVersion": "See AB-CM-029 and AB-CM-016 for the Tracker's own current-facing pointers.",
     "manifestDdrRow": "See AB-CM-030.",
-    "computationPlacement": "D-69 (AB-CM-036). Placement of any computation over event data is decided by two questions: (1) does the input grow with tenant data volume — if yes, set-based SQL, no exception; (2) can SQL express the operation — if yes, SQL anyway. The analytical tier is deliberately outside the Functional Core / Imperative Shell model."
+    "computationPlacement": "D-69 (AB-CM-036). Placement of any computation over event data is decided by two questions: (1) does the input grow with tenant data volume — if yes, set-based SQL, no exception; (2) can SQL express the operation — if yes, SQL anyway. The analytical tier is deliberately outside the Functional Core / Imperative Shell model.",
+    "durationClock": "D-70 (AB-CM-037). Calendar and business clocks are both readable; the clock is a READ-TIME PARAMETER. No business-clock duration is stored on a fact — it is derived by set-based join against the calendar dimension. Storing it would make a tenant calendar change invalidate history."
   },
-  "entryCount": 30
+  "entryCount": 31
 }

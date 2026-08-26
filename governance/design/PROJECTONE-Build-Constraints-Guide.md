@@ -409,6 +409,9 @@ These govern the application tier. The analytical tier is carved out above.
 **Classify idempotency explicitly.** Any operation that may be retried is marked idempotent or not, deliberately. Not discovered during an incident.
 > *Testable line:* if you cannot say whether running it twice is safe, it is not ready to be retried.
 
+**Dependency inversion.** Business logic depends on abstractions, not on infrastructure — a domain function must not name a database driver, an HTTP client, or a vendor SDK.
+> *Testable line:* if swapping the database would require editing domain logic, the dependency runs the wrong way.
+
 **No hidden dependencies.** Declared and injected. A module reaching for a global, a singleton, or the clock has a dependency its signature denies.
 > *Testable line:* if a test needs monkey-patching to control behaviour, the dependency is hidden.
 
@@ -517,6 +520,51 @@ Each deferred layer names the event that reopens it. **When a trigger fires, the
 
 ---
 
+## 10. Duration clocks and the period dimension
+
+**Source:** D-70 (AB-CM-037), approved 2026-08-25 · closes the date/period half of the R-4 remainder
+
+### Two clocks, one set of stored timestamps
+
+Any duration may be read on a **calendar clock** or a **business clock**. The clock is a **read-time parameter**, not a stored property.
+
+| Clock | Counts | Example: Fri 16:00 → Mon 10:00 |
+|---|---|---|
+| Calendar | every elapsed hour | 66 hours — a 2-day SLA is **breached** |
+| Business | working hours only | 2 hours — the same SLA is **met** |
+
+The weekend is 48 of those 66 hours. A platform that can only report the first misrepresents any client whose SLA is quoted in business days.
+
+### The prohibition that makes it safe
+
+> **No business-clock duration is ever stored on a fact.**
+
+Only raw timestamps and calendar duration are stored. Business duration is derived at read time by **set-based join** against the calendar dimension — never row-wise, per §8.
+
+**Why.** A business-clock duration derives from a **mutable input**: the tenant's calendar. Add a public holiday and every stored value covering that date becomes wrong. Correcting them means rewriting derived values across live data — the migration P-8 exists to prevent.
+
+Computing at read time inverts the failure. Adding a holiday changes future answers and leaves history intact, because history is recomputed from timestamps that never moved.
+
+This is chart ground rule 15 in another setting: store additive components, compute the derived value last. **A stored business duration is a pre-divided rate.**
+
+> **The testable line:** if a column holds a business-clock duration, a calendar change silently invalidates it. Store the timestamps; derive the clock.
+
+### Two concerns, one dimension
+
+**Business hours** affect *durations*. **Fiscal calendar** affects *period grouping* — which quarter a date falls in. Different columns, different risk, same dimension. Neither is stored on a fact.
+
+### What F1a must build
+
+A date/period dimension shaped to carry per-tenant working-hours, holiday and fiscal-calendar attributes. **The attributes may be unpopulated at F1a. The shape may not be deferred** — that is P-8.
+
+### Known and accepted risk
+
+Read-time computation must fit the Tier-1 sub-second budget (D-26). It is a join-and-sum, set-based, satisfying §8 — but **unmeasured**, because no data exists at volume.
+
+If a specific query later misses the budget, the remedy is a **targeted materialization for that query**, which D-49 already characterises as additive rather than schema rework. The remedy must **not** become storing business duration on facts generally — that reintroduces the mutable-derived-value problem this section exists to prevent.
+
+---
+
 ## Constraint index
 
 | § | Constraint | Source | FR | Enforced by |
@@ -530,6 +578,7 @@ Each deferred layer names the event that reopens it. **When a trigger fires, the
 | 7 | Decisions that exist only as overlays | AB-CM-011/021/022 | CF-005 | review; testable lines |
 | 8 | Code structure and computation placement | D-69 / AC-MINING-PLACEMENT | — | review; testable lines |
 | 9 | Testing architecture (F1a scope) | owner decision 2026-08-24 | — | review; testable lines |
+| 10 | Duration clocks and period dimension | D-70 | — | review; testable line |
 
 Only §2 is machine-enforced today. The rest depend on review, which is why each carries a testable line rather than a general principle. §7 is the least defended of all: it depends on a reader knowing to consult the overlay register, which the DDR itself does not tell them to do.
 
