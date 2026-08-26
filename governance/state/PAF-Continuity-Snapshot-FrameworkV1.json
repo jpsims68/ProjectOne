@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-25T10:15:00-04:00",
+  "snapshotDateTime": "2026-08-26T18:00:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -323,7 +323,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Work queue item 6: Step 112 authorization. All B2.12 prerequisites are now CLOSED and queue items 1-5 are complete. CF-007 (verify documentation agrees on the source of truth) is open but does not block. Authorization is NON-DELEGABLE and is never satisfied by silence, elapsed time, an agent's recommendation, or urgency. Production application implementation remains NOT AUTHORIZED until it is given.",
+  "nextAuthorizedAction": "Reconciliation planning. sourceOfTruthAnalysis establishes that canon points to the DDR and does not know the repository or the overlay mechanism exists. F-SETUP-029-01 establishes the DDR is genuinely v1.35 and must NOT be set to 1.37. Two owner decisions are required before reconciliation begins: the CR-5 widening question, and CF-008. Step 112 authorization remains open and unblocked but the owner has deferred it pending these questions. Production application implementation remains NOT AUTHORIZED.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -360,7 +360,9 @@
     "Do NOT record a hash as evidence without a check that re-derives it — a hash nobody recomputes is decoration, not proof (F-SETUP-025-01)",
     "Do NOT defer an architecture layer without a trigger AND a prompt point — 'later' is not a trigger, and every untriggered deferral in this project has needed rescuing (deferredWithTriggers)",
     "Do NOT reconstruct what a prior instruction probably said — find the record. Nine requirement categories were invented where seven were already specified (F-SETUP-028-01)",
-    "Do NOT store a business-clock duration on a fact — a tenant calendar change silently invalidates it (D-70)"
+    "Do NOT store a business-clock duration on a fact — a tenant calendar change silently invalidates it (D-70)",
+    "Do NOT set the DDR version to 1.37 — versions 1.36 and 1.37 were never written; the file is genuinely v1.35 (F-SETUP-029-01)",
+    "Do NOT treat the repository as system of record over the DDR — no project document mentions the repository, and canon does not know the overlay mechanism exists (sourceOfTruthAnalysis)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -594,11 +596,24 @@
     {
       "id": "CF-007",
       "subject": "Verify documentation agrees on where the source of truth lives",
-      "status": "OPEN",
+      "status": "ANALYSIS COMPLETE 2026-08-26 — condition NOT met; documentation does not agree",
       "severity": "MEDIUM",
       "what": "The owner accepted the repository as system of record ON CONDITION that no documentation disagrees. Not yet verified. The Manifest, Tracker, Continuity Brief and Source Registry must all point to the same place; the 406/412 numbering convention implies a Project-knowledge home and may contradict.",
       "why": "Two documents disagreeing about where truth lives is the defect class behind CORR-001 and F-SETUP-018-01.",
-      "recordedAt": "2026-08-25"
+      "recordedAt": "2026-08-25",
+      "result": "See sourceOfTruthAnalysis. No changes made, per owner instruction."
+    },
+    {
+      "id": "CF-008",
+      "subject": "Unanswered decision: does closing CR-5 item 3 join the current DDR batch?",
+      "status": "OPEN",
+      "severity": "MEDIUM",
+      "origin": "Chat 'Building an MCP for ProjectOne'. The final exchange posed the decision; no answer follows.",
+      "verbatim": "'Decision: does closing CR-5 item 3 get pulled into the current DDR batch alongside the R-4 date-dimension work — E1 yes, close both together; E2 defer to the Phase-4 cut; E3 close it now but scoped to lifecycle only, with the broader answerability catalog deferred?'",
+      "nowNarrower": "E1 is partly overtaken. The R-4 date-dimension half CLOSED as D-70 on 2026-08-25 WITHOUT the CR-5 half it was paired with. The live question is: close CR-5 item 3 now, or defer to the Phase-4 cut?",
+      "why": "CR-5 item 3 — needs_lifecycle / single_ok tagging — has no storage home. The prior analysis argued the catalog must be QUERYABLE METADATA rather than application logic, because a language model cannot infer a disablement rule that exists only in code paths, and must cover more than lifecycle: grain legality under D-09, Tier placement, baseline dependency, censored-vs-complete conformance.",
+      "relatedOpenItem": "Registry AI-facing fields — synonyms, semantic hints, an AI-visible/hidden flag — deadline is FIRST TENANT ONBOARDING, not MVP. Adding columns later is cheap; backfilling across live tenants is not.",
+      "recordedAt": "2026-08-26"
     }
   ],
   "preF1aPrerequisites": {
@@ -1033,5 +1048,103 @@
         "ref": "work queue item 7"
       }
     ]
+  },
+  "sourceOfTruthAnalysis": {
+    "performedAt": "2026-08-26",
+    "scope": "All 29 Project-knowledge documents and all repository documentation",
+    "requestedBy": "Owner, to verify the condition attached to accepting the repository as system of record (CF-007)",
+    "instruction": "ANALYSIS ONLY — no documentation was changed.",
+    "finding": "The documentation does NOT agree. Two independent authority systems exist, each unaware of the other, both using the word 'tier', resolving conflicts by different rules.",
+    "projectFilesPass": {
+      "documentsScanned": 29,
+      "mentionOfRepository": "ZERO. No project document mentions GitHub, a repository, or a repo. Not one, across every file.",
+      "statedAuthority": [
+        {
+          "doc": "403 Manifest",
+          "verbatim": "Authority is set here, by tier. Read this first; resolve any conflict between documents using the precedence order below.",
+          "tierOfDDR": "Tier 2 — 'Locked design decisions (DDR) — the authoritative design record.' Tier 1 is Strategy/Vision."
+        },
+        {
+          "doc": "201 DDR",
+          "verbatim": "THIS DDR IS THE AUTHORITATIVE SOURCE for decisions."
+        },
+        {
+          "doc": "404 Continuity Brief",
+          "note": "Reading order: Manifest (authority map) -> Tracker ('authoritative for where we are') -> DDR (design truth).",
+          "guard": "'Guard: write closures back to the DDR; don't let the PRD harden design facts.'"
+        }
+      ],
+      "scopedAuthorities": [
+        {
+          "doc": "410 Roadmap",
+          "authoritativeFor": "build sequence only",
+          "subordination": "explicitly 'subordinate to DDR + PRD' in both 401 and 403"
+        },
+        {
+          "doc": "402 Tracker",
+          "authoritativeFor": "'where we are' — live status, not design"
+        },
+        {
+          "doc": "301 Playbook",
+          "authoritativeFor": "analysis/metric/recipe catalog",
+          "subordination": "'evidence only for design/schema'"
+        },
+        {
+          "doc": "202/203/204 chart specs",
+          "authoritativeFor": "their own component",
+          "subordination": "'sits beside the DDR in Tier 2'"
+        },
+        {
+          "doc": "101 Orientation",
+          "note": "restates DDR decisions; DDR wins if they disagree"
+        }
+      ],
+      "conclusion": "NO project document points to a source of truth other than the DDR. Every scoped authority names the DDR as its parent.",
+      "oneUnresolvedItem": "104 Business Model contains 'pick one when this doc is authored' — an authority statement never decided. Commercial, not design."
+    },
+    "repositoryPass": {
+      "readmeClaim": "'The repository is the system of record. It wins any disagreement with a summary, a branch, a working copy, or anyone's recollection.'",
+      "sourceRegistryTierModel": "tier 1 = ACTIVE_GOVERNANCE (policy, registries, overlays); tier 2 = NORMATIVE_IMMUTABLE (design sources)",
+      "classifications": {
+        "201 DDR": "tier 2, NORMATIVE_IMMUTABLE",
+        "402": "tier 2",
+        "403": "tier 2",
+        "Build Constraints Guide": "tier 1, ACTIVE_GOVERNANCE"
+      },
+      "consequence": "The repository's registry places a document authored during this session ABOVE the DDR. The Manifest places the DDR near the top and knows nothing of the repository."
+    },
+    "overlayMechanismFinding": {
+      "severity": "HIGH",
+      "finding": "CANON DOES NOT KNOW THE OVERLAY MECHANISM EXISTS. Searching all 29 project documents for '999' returns nothing. Every hit for 'overlay' is a PRODUCT FEATURE — translucent overlays, the FA-11 alignment overlay — never document modification.",
+      "scope": "This is not confined to D-69 and D-70. ALL 30 overlay entries are invisible to canon, including the 27 the owner approved on 2026-08-11 and D-67/D-68.",
+      "againstCanonsOwnRule": "404 states the guard plainly: 'write closures back to the DDR'. The overlay register is a parallel system canon has never seen.",
+      "notCreatedThisSession": "The external 999 tracker v0.4 predates this session. The gap is inherited, not introduced."
+    },
+    "numberingCheck": "Canon's highest allocated decision is D-66. D-67 through D-70 continue cleanly. NO COLLISION.",
+    "ownerExpectation": "The owner predicted this outcome before the analysis: 'the DDR is, continues to be, and always has been the source of truth.' The evidence supports it. Nothing built in the repository displaced the DDR; the repository asserted otherwise in a document canon has never seen."
+  },
+  "ddrVersionFinding": {
+    "id": "F-SETUP-029-01",
+    "severity": "HIGH",
+    "foundAt": "2026-08-26",
+    "finding": "THE DDR FILE IS GENUINELY v1.35. Versions 1.36 and 1.37 were never written.",
+    "evidence": [
+      "DDR header reads v1.35, dated 2026-08-04.",
+      "DDR changelog's HIGHEST entry is 1.35. No 1.36 entry. No 1.37 entry. Header and changelog agree independently.",
+      "'1.36' appears NOWHERE in any project document.",
+      "'v1.37' appears only as a POINTER in 402 and 403 — never as a changelog entry.",
+      "402 line 374 states 'CR-5 item 3 widened in the DDR (v1.37) to include data-availability'. The DDR contains ZERO occurrences of 'data-availability', and still says CR-5 item 3 'still has no storage home'.",
+      "SELECTIVE MISS CONFIRMED: the same batch (B2.8, 2026-08-04) claimed edits to 301 and the DDR. 301 got its change — 'required_inputs' appears 25 times. The DDR did not."
+    ],
+    "likeliestReading": "The 301 tagging landed. The DDR clause described what that tagging IMPLIES for CR-5 item 3 rather than recording an applied DDR edit, and '(v1.37)' was written as the version the DDR WOULD carry. The pointer then stuck and propagated.",
+    "compromisedArtifact": "AB-CM-029 is an APPROVED overlay instructing that pointers be corrected TO v1.37. Executing it propagates a version that was never written. Approved, embedded in the repository in five places, premise unsupported.",
+    "propagation": "402 line 389 shows a v1.33 pointer being actively 'corrected' UP to v1.37 — cementing the phantom.",
+    "residualUncertainty": "ONE claimed 1.36/1.37 change was tested. Other claimed changes may exist that were not found. One checked claim is not a proof.",
+    "doNotDo": "Do NOT set the DDR version to 1.37. The version label must follow the content decision, not precede it.",
+    "ownerDecisionsRequired": [
+      "Was the CR-5 item 3 widening to data-availability ever actually DECIDED, or only planned?",
+      "Should the DDR advance to 1.36 with that change applied, or remain at 1.35 with the Tracker and Manifest corrected DOWNWARD?"
+    ],
+    "agentErrorRecorded": "The agent earlier asserted the header was stale and the file current, taking AB-CM-029's word rather than opening the changelog. Third occasion this session where reading the source contradicted a confident summary. The correction came from checking, not from being challenged."
   }
 }
