@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T17:30:00-04:00",
+  "snapshotDateTime": "2026-08-24T18:30:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -323,7 +323,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Work queue item 4: write the F1a build brief (B2.12 PRE-3). Unblocked by the pilot dataset. Then item 5 (reconcile PRE-1). Step 112 remains BLOCKED until items 4-5 close. Production application implementation remains NOT AUTHORIZED. Check deferredWithTriggers before assuming any architecture layer is out of scope.",
+  "nextAuthorizedAction": "Work queue item 5: reconcile B2.12 PRE-1 — confirm the Build Constraints Guide plus VSA enforcement covers the Build-Requirements/Architecture document canon asked for. Then Step 112 authorization (item 6). Production application implementation remains NOT AUTHORIZED.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -611,8 +611,11 @@
         "id": "PRE-3",
         "subject": "Clean build-kickoff seed",
         "canonText": "406 is the PILOT kickoff (fictional ITSM client + obsolete fabricated dataset) — NOT the production build entry. A fresh F1a build brief is required.",
-        "status": "OPEN — NOT CREATED",
-        "action": "Author the F1a build brief. Queue item 4. Depends on PRE-2."
+        "status": "CLOSED 2026-08-24 — governance/design/PROJECTONE-F1a-Build-Brief.md",
+        "action": "Author the F1a build brief. Queue item 4. Depends on PRE-2.",
+        "artifact": "governance/design/PROJECTONE-F1a-Build-Brief.md",
+        "scopeDecision": "Cluster M (ingestion load-run spine) moved from F1b into F1a by owner decision 2026-08-24. The event fact carries load_run_key; an FK pointing at a table that does not exist is unenforceable, and adding the constraint later means altering a populated fact — the migration P-8 forbids.",
+        "supersedesNote": "406 remains valid as a standing reference (§1-§10) and is CITED rather than restated. Its P.* pilot sections — fictional ITSM client, obsolete fabricated dataset — are superseded for production use."
       }
     ]
   },
@@ -737,8 +740,9 @@
         "n": 4,
         "item": "Write the F1a build brief",
         "owner": "agent + owner",
-        "status": "OPEN — unblocked by item 2",
-        "ref": "PRE-3"
+        "status": "CLOSED 2026-08-24 — F1a build brief written",
+        "ref": "PRE-3",
+        "artifact": "governance/design/PROJECTONE-F1a-Build-Brief.md"
       },
       {
         "n": 5,
