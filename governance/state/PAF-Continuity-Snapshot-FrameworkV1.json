@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-24T18:30:00-04:00",
+  "snapshotDateTime": "2026-08-25T10:15:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -323,7 +323,7 @@
       "mechanism": "explicit review of approval package"
     }
   ],
-  "nextAuthorizedAction": "Work queue item 5: reconcile B2.12 PRE-1 — confirm the Build Constraints Guide plus VSA enforcement covers the Build-Requirements/Architecture document canon asked for. Then Step 112 authorization (item 6). Production application implementation remains NOT AUTHORIZED.",
+  "nextAuthorizedAction": "Work queue item 6: Step 112 authorization. All B2.12 prerequisites are now CLOSED and queue items 1-5 are complete. CF-007 (verify documentation agrees on the source of truth) is open but does not block. Authorization is NON-DELEGABLE and is never satisfied by silence, elapsed time, an agent's recommendation, or urgency. Production application implementation remains NOT AUTHORIZED until it is given.",
   "doNotDo": [
     "Do NOT edit any frozen artifact in place — governed change package + new baseline version only",
     "Do NOT record any GitHub step as passing unless the owner actually executed it and returned output",
@@ -358,7 +358,9 @@
     "Do NOT assume a stated rule is operative — the source registry declared the overlay rule and provided overlayRefs on every source while all 40 were empty (F-SETUP-020-01)",
     "Do NOT authorize Step 112 while any B2.12 prerequisite is open — canon set three gates before F1a and none was closed as of 2026-08-24 (preF1aPrerequisites)",
     "Do NOT record a hash as evidence without a check that re-derives it — a hash nobody recomputes is decoration, not proof (F-SETUP-025-01)",
-    "Do NOT defer an architecture layer without a trigger AND a prompt point — 'later' is not a trigger, and every untriggered deferral in this project has needed rescuing (deferredWithTriggers)"
+    "Do NOT defer an architecture layer without a trigger AND a prompt point — 'later' is not a trigger, and every untriggered deferral in this project has needed rescuing (deferredWithTriggers)",
+    "Do NOT reconstruct what a prior instruction probably said — find the record. Nine requirement categories were invented where seven were already specified (F-SETUP-028-01)",
+    "Do NOT store a business-clock duration on a fact — a tenant calendar change silently invalidates it (D-70)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -499,6 +501,15 @@
       "fix": "Generator writes LF explicitly; recorded hash corrected to 53707b90...; check_generated_data_reproducible.py built.",
       "foundBy": "A reproducibility comparison run during branch verification — regenerate and compare against the committed file. Not by any existing gate.",
       "lesson": "A recorded hash is only evidence if something re-derives it. Otherwise it is decoration that resembles proof."
+    },
+    {
+      "id": "F-SETUP-028-01",
+      "foundAt": "PRE-1 reconciliation, 2026-08-25",
+      "severity": "LOW",
+      "defect": "Asked what 'others TBD' meant in PRE-1, the agent invented nine requirement categories from first principles rather than finding the record. The owner researched the originating conversation and produced a screenshot naming SEVEN dimensions — architecture, layering, data access, API, frontend, testing, cross-cutting — none of which matched the invented list.",
+      "whyItMattered": "Plausible content filled a gap where the real answer existed and was retrievable. The invented categories would have sent the owner compiling a list nobody asked for while the actual seven went unaddressed.",
+      "lesson": "When an instruction refers to a prior decision, find the decision. Do not reconstruct what it probably said.",
+      "foundBy": "Owner. Fourth time in this build that owner-directed scepticism found something the agent's process did not."
     }
   ],
   "carriedForward": [
@@ -579,6 +590,15 @@
       "recordedIn": "Build Constraints Guide §8, 'One local-versus-Azure trap'",
       "reEvaluationTrigger": "Re-evaluate at whichever comes FIRST: (a) the first DDL is written, or (b) OQ-13 resolves. Both are real events, not 'someday'.",
       "durableAnswer": "The regex case is one instance of a general divergence: Azure SQL Database tracks ahead of the boxed product, so any post-2022 capability may exist in the target and not locally. The durable fix is not a second pattern-matching check — it is CI running against a real Azure SQL Database, so BOTH directions are caught by execution. That belongs with the OQ-13 / FR-009 cluster, not here, and cannot be scoped until the deployment target is decided."
+    },
+    {
+      "id": "CF-007",
+      "subject": "Verify documentation agrees on where the source of truth lives",
+      "status": "OPEN",
+      "severity": "MEDIUM",
+      "what": "The owner accepted the repository as system of record ON CONDITION that no documentation disagrees. Not yet verified. The Manifest, Tracker, Continuity Brief and Source Registry must all point to the same place; the 406/412 numbering convention implies a Project-knowledge home and may contradict.",
+      "why": "Two documents disagreeing about where truth lives is the defect class behind CORR-001 and F-SETUP-018-01.",
+      "recordedAt": "2026-08-25"
     }
   ],
   "preF1aPrerequisites": {
@@ -590,9 +610,56 @@
         "id": "PRE-1",
         "subject": "Build-Requirements / Architecture design doc, authored FIRST",
         "canonText": "specifies the engineering/architecture requirements the build must strictly adhere to — e.g. Vertical Slice Architecture",
-        "status": "LIKELY SATISFIED DIFFERENTLY — NOT RECONCILED",
+        "status": "CLOSED 2026-08-25 — reconciled clause by clause; satisfied differently, with two gaps found and fixed",
         "assessment": "The Build Constraints Guide §1–8 now carries D-69, and VSA-1/VSA-3 is enforced by check_slice_boundaries.py — a build failure, which is stricter than a document. This is arguably more than canon asked for, but nobody has verified the coverage against B2.12 item by item.",
-        "action": "Reconcile clause by clause; record the result. Queue item 5."
+        "action": "Reconcile clause by clause; record the result. Queue item 5.",
+        "reconciliation": {
+          "canonWording": "'Build-Requirements / Architecture design doc (authored FIRST): specifies the engineering/architecture requirements the build must strictly adhere to -- e.g. Vertical Slice Architecture (VSA), and others TBD. Owner is compiling the requirements list; Claude authors the doc from it, checking each requirement for consistency with the DDR / no-migration (P-8) / agnostic frame. Provisional home: Tier-4 build doc (number TBD -- e.g. 412).'",
+          "procedureFollowed": "Yes, though arrived at sideways. The owner supplied ProjectOne-Coding-Strategy.md as the requirements list; each principle was checked against the DDR (which surfaced the AC-MINING-PLACEMENT conflict), against P-8 (the premature-abstraction tension), and against the agnostic frame. The conflict that check found became D-69.",
+          "sevenDimensions": [
+            {
+              "dimension": "Architecture — VSA",
+              "status": "CI-ENFORCED by check_slice_boundaries.py, stricter than the document canon asked for",
+              "gap": "feature-folder structure and what a slice owns end-to-end remain unspecified — deferred, no slice exists until F2"
+            },
+            {
+              "dimension": "Layering & dependencies",
+              "status": "CLOSED 2026-08-25",
+              "gap": "dependency inversion existed only in the D-69 overlay text, not the guide's prose. FOUND BY THIS RECONCILIATION and added to §8."
+            },
+            {
+              "dimension": "Data access",
+              "status": "CLOSED 2026-08-25",
+              "note": "Azure patterns §2 + FR-010 enforced; two-tier serving contract settled by D-49/D-50 plus D-70 for the period dimension"
+            },
+            {
+              "dimension": "API — REST conventions, versioning",
+              "status": "ABSENT — deferred",
+              "ref": "DEF-09, trigger: F1a work begins"
+            },
+            {
+              "dimension": "Frontend",
+              "status": "COVERED",
+              "ref": "§5 AC-DOM-OWNERSHIP, §7c D-67 theming, chart ground rules"
+            },
+            {
+              "dimension": "Testing & verification",
+              "status": "COVERED",
+              "ref": "§9, added 2026-08-24"
+            },
+            {
+              "dimension": "Cross-cutting",
+              "status": "PARTIAL",
+              "note": "tenancy present, no-migration §4; observability deferred as DEF-08"
+            }
+          ],
+          "falsePositivesCaught": [
+            "'API covered' was a FALSE POSITIVE — the search for 'REST' matched 'restated', 'restore', 'restrictive'. API conventions are genuinely absent.",
+            "'dependency inversion covered' was FALSE — it appeared in the D-69 overlay text but not in the guide a developer reads. Fixed in this PR."
+          ],
+          "homeDeviation": "Canon proposed a Tier-4 doc numbered 412. The guide landed in governance/design/ instead. Owner accepted the repository as system of record ON CONDITION that documentation does not disagree about where truth lives. That condition is NOT YET VERIFIED — see CF-007.",
+          "requirementsListStatus": "The seven dimensions came from the record, not from invention. An earlier attempt to list requirement categories from first principles produced nine invented categories that did not match what canon specified — recorded as a method failure."
+        }
       },
       {
         "id": "PRE-2",
@@ -748,14 +815,14 @@
         "n": 5,
         "item": "Reconcile PRE-1 against the Build Constraints Guide and VSA enforcement",
         "owner": "agent",
-        "status": "OPEN",
+        "status": "CLOSED 2026-08-25 — reconciled; 2 gaps found and fixed, 1 deferred (DEF-09), CF-007 opened",
         "ref": "PRE-1"
       },
       {
         "n": 6,
         "item": "Step 112 authorization",
         "owner": "OWNER",
-        "status": "BLOCKED by 1-5",
+        "status": "UNBLOCKED — items 1-5 closed",
         "note": "Non-delegable. Never satisfied by silence."
       }
     ],

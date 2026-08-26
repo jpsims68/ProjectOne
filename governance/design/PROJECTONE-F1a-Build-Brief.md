@@ -98,7 +98,7 @@ From 406 §6, unchanged and still binding:
 
 From 406 §7. **Propose options; do not decide silently.**
 
-1. **Tier-1 base-metric materialization shape** — grain of the pre-digest rows. Not in the DDR.
+1. **Tier-1 base-metric materialization shape** — grain of the pre-digest rows. **Largely settled by D-49**: no general cube layer; materialize exactly three (event successor per D-50, case-grain summary, variant table) plus a date dimension, all at raw-activity level. What remains is build-time tuning inside Tier-1, not a schema choice.
 2. **Closure table versus materialized path** for hierarchy ancestry — required for G-15 subtree filtering.
 3. **Tier-1 serving strategy — build to D-49 (DIRECTIONAL).** Do **not** build a general cube layer.
 4. **Successor stamping — four hazards (D-50).** Not write-once, so open cases carry a null successor until a later batch extends them. Chains are per-scenario. Changing `df_tiebreak` invalidates every chain. Variants are not derivable from successors.
@@ -106,6 +106,14 @@ From 406 §7. **Propose options; do not decide silently.**
 6. **Registry must support "do not import this field"** — an explicit ignore placement.
 7. **Resolver / tenant-registry placement** — separate control DB versus in-line.
 8. **Default-scenario `case_key` denormalization onto `event`** — build-time tuning choice.
+
+---
+
+### Period dimension — settled by D-70
+
+The date dimension F1a builds must carry per-tenant **working-hours, holiday and fiscal-calendar** attributes. Attributes may be unpopulated; **the shape may not be deferred**.
+
+**No business-clock duration may be stored on any fact.** Durations are read on a calendar or business clock selected at read time, derived by set-based join against the calendar dimension. Storing a business duration makes a tenant calendar change silently invalidate history — the migration P-8 forbids. See Build Constraints Guide §10.
 
 ---
 
