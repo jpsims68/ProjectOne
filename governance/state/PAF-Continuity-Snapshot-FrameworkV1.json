@@ -1,7 +1,7 @@
 {
   "schema": "PAFContextContinuitySnapshot",
   "version": "1.0",
-  "snapshotDateTime": "2026-08-26T18:00:00-04:00",
+  "snapshotDateTime": "2026-08-26T23:45:00-04:00",
   "packageChain": {
     "thisPackageId": "PAF-STEPS-1-111-THIN-PACKAGE",
     "immutableCorpusHash": "0edd9d5b0993e974ec9141e4b72116dad4e6bf238173cf08a775e7c4be778f0e",
@@ -362,7 +362,8 @@
     "Do NOT reconstruct what a prior instruction probably said — find the record. Nine requirement categories were invented where seven were already specified (F-SETUP-028-01)",
     "Do NOT store a business-clock duration on a fact — a tenant calendar change silently invalidates it (D-70)",
     "Do NOT set the DDR version to 1.37 — versions 1.36 and 1.37 were never written; the file is genuinely v1.35 (F-SETUP-029-01)",
-    "Do NOT treat the repository as system of record over the DDR — no project document mentions the repository, and canon does not know the overlay mechanism exists (sourceOfTruthAnalysis)"
+    "Do NOT treat the repository as system of record over the DDR — no project document mentions the repository, and canon does not know the overlay mechanism exists (sourceOfTruthAnalysis)",
+    "Do NOT move to Claude Code before CLAUDE.md exists — deferredWithTriggers has no delivery mechanism without it (CF-009)"
   ],
   "resumeInstructions": "STANDING INSTRUCTION FOR ANY SUCCESSOR SESSION: (1) Always reply in plain terms, briefly, beginning every message with 'in concise and plain terms: '. (2) At the end of EVERY run, give the owner brief explicit directions on which files to download and what to re-upload next time. RESUME PROCEDURE (revised at Step 111 — the repository is now the system of record): (a) Clone github.com/jpsims68/ProjectOne fresh. Never diagnose from a branch, a working copy, or a summary — including the owner's. The repository wins any disagreement. (b) Read governance/state/PAF-Continuity-Snapshot-FrameworkV1.json for state, and governance/baselines/ for the last known-stable baseline. (c) Verify the re-uploaded Core Build Reference Package SHA-256 equals packageChain.immutableCorpusHash. A mismatch is a STOP condition. The Core package is still REQUIRED: it holds 28 files that exist nowhere else, including the Steps 1-113 execution plan — the canonical authority for what each step means. (d) The Steps-1-100 package is SUPERSEDED and need not be re-uploaded. Keep one archived copy for chain provenance. (e) Run the governance checks and bootstrap_selftest.py before trusting any green result. (f) Read canonicalStepCrosswalk before assuming any step is complete. (g) Read carriedForward. It holds work and findings that exist OUTSIDE this repository and would otherwise be lost — notably the PAF Starter Kit (CF-001) and unresolved version drift across the canonical Project documents (CF-003).",
   "forwardRequirementsRegister": "profile/PROJECTONE-Forward-Requirements.json — 10 entries. SATISFIED: FR-001..005, 007, 008. BUILT: FR-010. RECORDED-PENDING: FR-006 (post-MVP trigger). OPEN: FR-009 (observability, deferred pending OQ-13). MUST be checked before any listed target artifact is marked complete.",
@@ -614,6 +615,26 @@
       "why": "CR-5 item 3 — needs_lifecycle / single_ok tagging — has no storage home. The prior analysis argued the catalog must be QUERYABLE METADATA rather than application logic, because a language model cannot infer a disablement rule that exists only in code paths, and must cover more than lifecycle: grain legality under D-09, Tier placement, baseline dependency, censored-vs-complete conformance.",
       "relatedOpenItem": "Registry AI-facing fields — synonyms, semantic hints, an AI-visible/hidden flag — deadline is FIRST TENANT ONBOARDING, not MVP. Adding columns later is cheap; backfilling across live tenants is not.",
       "recordedAt": "2026-08-26"
+    },
+    {
+      "id": "CF-009",
+      "subject": "CLAUDE.md — the deferral triggers have no delivery mechanism",
+      "status": "OPEN",
+      "severity": "HIGH",
+      "what": "deferredWithTriggers holds nine entries (DEF-01..09), each naming a reopening event and instructing that the owner be prompted. NOTHING READS IT. No process polls it, no check evaluates it, and an agent only sees it if it chooses to open the snapshot and notices the entry.",
+      "why": "This is the exact failure mode the entries were created to prevent. A deferral without a delivery mechanism is an intention, and every untriggered deferral in this project has needed rescuing.",
+      "mechanism": "Claude Code automatically reads a CLAUDE.md at the repository root at session start. This repository does not have one. That file is where the instruction belongs: read the snapshot, check deferredWithTriggers, and if a trigger has fired raise it BY NAME before doing anything else.",
+      "alsoBelongsThere": [
+        "the doNotDo list (34 entries)",
+        "verify against the authoritative source, never a working copy",
+        "notes before code — the owner executes as he reads",
+        "a negative result is only as good as the search behind it",
+        "the DDR is the source of truth, not this repository"
+      ],
+      "partiallyAutomatable": "DEF-01's trigger — a slice.manifest.json listing producedContracts — is mechanically detectable and could fire from a check. Others, such as 'F1a work begins', are not.",
+      "timing": "BEFORE the move to Claude Code at Step 113, not after. Doing it after means the first Claude Code session is the one that does not receive the instruction.",
+      "ownerDecision": "Owner directed 2026-08-26 that this be handled separately on return, not folded into the reconciliation.",
+      "recordedAt": "2026-08-26"
     }
   ],
   "preF1aPrerequisites": {
@@ -842,6 +863,14 @@
       }
     ],
     "withF1a": [
+      {
+        "n": "6a",
+        "item": "Write CLAUDE.md at the repository root before moving to Claude Code",
+        "owner": "agent + owner",
+        "trigger": "before Step 113 / the move to Claude Code",
+        "ref": "CF-009",
+        "status": "OPEN"
+      },
       {
         "n": 7,
         "item": "API / integration architecture — only the surface F1a touches",
@@ -1146,5 +1175,12 @@
       "Should the DDR advance to 1.36 with that change applied, or remain at 1.35 with the Tracker and Manifest corrected DOWNWARD?"
     ],
     "agentErrorRecorded": "The agent earlier asserted the header was stale and the file current, taking AB-CM-029's word rather than opening the changelog. Third occasion this session where reading the source contradicted a confident summary. The correction came from checking, not from being challenged."
+  },
+  "toolingTransition": {
+    "plan": "Move application development from this chat interface to Claude Code AT STEP 113, not before.",
+    "rationale": "Everything between Step 111 and Step 113 is decision work — Step 112 authorisation, the owner's queue of questions, and the canon reconciliation. None of it needs a coding agent. Step 113 (F1a, writing DDL) is the first work where Claude Code earns its place.",
+    "coupling": "The Codex plugin decision (DEF-09-adjacent, deferred to Step 112) requires Claude Code. If cross-model review is wanted from the start of F1a, both moves happen together.",
+    "workingModelChange": "Today the agent produces a bundle and the owner copies files in, commits and pushes. In Claude Code the agent has direct filesystem and git access and that cycle disappears. Faster, but it REMOVES A CHECKPOINT where the owner currently sees everything before it lands. Decide deliberately rather than discovering it.",
+    "prerequisite": "CF-009 — CLAUDE.md must exist first, or the first Claude Code session is the one that does not receive the standing instructions."
   }
 }
