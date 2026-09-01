@@ -1,7 +1,7 @@
 {
   "header": {
     "artifactId": "PROJECTONE-999-OVERLAY-REGISTER",
-    "version": "2.0",
+    "version": "2.1",
     "status": "ACTIVE",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
@@ -16,7 +16,10 @@
   },
   "purpose": "Records modifications to IMMUTABLE UPLOADED SOURCES. Such a source is never edited in place — the file as uploaded is preserved exactly, and every change to its content is recorded here instead. An overlay entry is therefore the authoritative statement of what a source now says, layered over what it originally said.",
   "whyOverlaysRatherThanEdits": "An uploaded source is evidence of what was provided and when. Editing it in place destroys that evidence and makes it impossible to tell an original requirement from a later reinterpretation. The overlay keeps both: the source stays as received, and the modification carries its own date, author, and reason.",
-  "readingRule": "An immutable source MUST be read together with every ACTIVE overlay targeting it. Reading the source alone yields a stale answer, and in at least one case an actively wrong one: the DDR file contains no occurrence of D-67, D-68, or the D-47 field name event_sequence_num. All three exist ONLY as overlays. Where an overlay and its source conflict, the overlay wins.",
+  "readingRule": "An immutable source MUST be read together with every ACTIVE overlay targeting it. A DISCHARGED overlay is excluded from this rule. Its prescription is in the source; it is historical evidence, not an effective modification. Reading a source alone can yield a stale answer, and in at least one case yielded an actively wrong one: until DDR v1.37 (2026-08-31) the DDR file contained no occurrence of D-67, D-68, or the D-47 field name event_sequence_num, and all three existed ONLY as overlays. That instance is now discharged — the five DDR-targeting overlays are folded into the source — but the rule stands for every source that still carries effective overlays. Where an EFFECTIVE overlay and its source conflict, the overlay wins.",
+  "statusDefinitions": {
+    "DISCHARGED — FOLDED INTO SOURCE": "The overlay's prescription has been carried out in the target document itself. The source now governs; this entry is preserved as historical evidence of what was prescribed, when, by whose approval, and which version of the source discharged it. A discharged overlay is NOT read alongside its source and does NOT win a conflict with it. Where the source and a discharged overlay differ, the difference is expected: the source carries approved refinements made at the time of folding in. Modelled on 412 EXC-16 closure semantics — replaced by an approved governing decision, with the historical record preserved."
+  },
   "targetsNotHeldInThisRepository": "The 500-series sources are uploaded artifacts and are not committed here. An overlay does not require its target to be co-located; it requires the target to be identified unambiguously. Each entry therefore records the target's SHA-256 as it stood when the overlay was written, so a future reader can tell whether the source has since changed underneath the overlay. A hash mismatch is not automatically an error — it means the overlay must be re-read against the newer source before being trusted.",
   "overlays": [
     {
@@ -101,7 +104,13 @@
     {
       "overlayId": "AB-CM-011",
       "title": "Add the Data-Driven Theming Architecture as the next DDR decision",
-      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "status": "DISCHARGED — FOLDED INTO SOURCE",
+      "priorStatus": "APPROVED — EFFECTIVE OVERLAY",
+      "dischargedBy": "201-ProjectOne-Design-Decision-Record.md v1.37",
+      "dischargedAt": "2026-08-31T21:05:00-04:00",
+      "dischargeApproval": "John, canon reconciliation Phase 5",
+      "dischargeCondition": "This entry is discharged ONLY against DDR v1.37 or later. If the DDR in hand reads v1.36 or earlier, this overlay has NOT been applied to it and must be read as effective.",
+      "dischargeNote": "D-67 is present in DDR v1.37 with an added cross-reference to D-37's branding/labels tenant setting (rider R-P1-01) and a provenance tag. The DDR text is authoritative; this entry records the original prescription.",
       "approval": "John explicitly approved the theming requirement, 2026-08-05",
       "targetSource": "201-ProjectOne-Design-Decision-Record.md",
       "targetSnapshot": "Version 1.37, D-01 through D-66",
@@ -236,7 +245,13 @@
     {
       "overlayId": "AB-CM-021",
       "title": "Standardize the D-47 event-order field name as `event_sequence_num`",
-      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "status": "DISCHARGED — FOLDED INTO SOURCE",
+      "priorStatus": "APPROVED — EFFECTIVE OVERLAY",
+      "dischargedBy": "201-ProjectOne-Design-Decision-Record.md v1.37",
+      "dischargedAt": "2026-08-31T21:05:00-04:00",
+      "dischargeApproval": "John, canon reconciliation Phase 5",
+      "dischargeCondition": "This entry is discharged ONLY against DDR v1.37 or later. If the DDR in hand reads v1.36 or earlier, this overlay has NOT been applied to it and must be read as effective.",
+      "dischargeNote": "event_sequence_num is used throughout DDR v1.37 at all nine operative occurrences. Three historical occurrences are deliberately preserved as written history — the dated v1.24 changelog entry and the D-47 detail provenance sentence — per DOC-25.",
       "approval": "PBGCA-010-A approved by John, 2026-08-08",
       "targetSource": "201-ProjectOne-Design-Decision-Record.md",
       "targetSnapshot": "Version 1.37",
@@ -251,7 +266,13 @@
     {
       "overlayId": "AB-CM-022",
       "title": "Add D-68 business-unit assignment precedence for `event.business_unit_key`",
-      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "status": "DISCHARGED — FOLDED INTO SOURCE",
+      "priorStatus": "APPROVED — EFFECTIVE OVERLAY",
+      "dischargedBy": "201-ProjectOne-Design-Decision-Record.md v1.37",
+      "dischargedAt": "2026-08-31T21:05:00-04:00",
+      "dischargeApproval": "John, canon reconciliation Phase 5",
+      "dischargeCondition": "This entry is discharged ONLY against DDR v1.37 or later. If the DDR in hand reads v1.36 or earlier, this overlay has NOT been applied to it and must be read as effective.",
+      "dischargeNote": "D-68 is present in DDR v1.37 carrying all seven rules, plus a provenance tag.",
       "approval": "PBGCA-011-A* explicitly approved by John, 2026-08-08",
       "targetSource": "201-ProjectOne-Design-Decision-Record.md",
       "targetSnapshot": "Version 1.37, plus effective D-67 overlay",
@@ -461,7 +482,13 @@
     {
       "overlayId": "AB-CM-036",
       "title": "Add D-69 code structure and computation placement (Functional Core / Imperative Shell with analytical-tier carve-out)",
-      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "status": "DISCHARGED — FOLDED INTO SOURCE",
+      "priorStatus": "APPROVED — EFFECTIVE OVERLAY",
+      "dischargedBy": "201-ProjectOne-Design-Decision-Record.md v1.37",
+      "dischargedAt": "2026-08-31T21:05:00-04:00",
+      "dischargeApproval": "John, canon reconciliation Phase 5",
+      "dischargeCondition": "This entry is discharged ONLY against DDR v1.37 or later. If the DDR in hand reads v1.36 or earlier, this overlay has NOT been applied to it and must be read as effective.",
+      "dischargeNote": "D-69 is present in DDR v1.37. Per owner disposition DISP-05, the labels AC-MINING-PLACEMENT and CP-002 are written out inline and replaced by one approved parenthetical naming where each identifier lives. The Azure regex claim is replaced by an OQ-13-anchored caution (rider R-P1-09). 'Analytical tier' is bound on first use; a D-49 disambiguation clause and a pointer to D-72 are added. These are approved refinements, not drift.",
       "approval": "D69-A approved by John, 2026-08-24. Explicit approval following review of the drafted decision.",
       "targetSource": "201-ProjectOne-Design-Decision-Record.md",
       "targetSnapshot": "Version 1.37, plus effective D-67 and D-68 overlays",
@@ -483,7 +510,13 @@
     {
       "overlayId": "AB-CM-037",
       "title": "Add D-70 period/date dimension shape and the dual-clock rule (closes the R-4 remainder)",
-      "status": "APPROVED — EFFECTIVE OVERLAY",
+      "status": "DISCHARGED — FOLDED INTO SOURCE",
+      "priorStatus": "APPROVED — EFFECTIVE OVERLAY",
+      "dischargedBy": "201-ProjectOne-Design-Decision-Record.md v1.37",
+      "dischargedAt": "2026-08-31T21:05:00-04:00",
+      "dischargeApproval": "John, canon reconciliation Phase 5",
+      "dischargeCondition": "This entry is discharged ONLY against DDR v1.37 or later. If the DDR in hand reads v1.36 or earlier, this overlay has NOT been applied to it and must be read as effective.",
+      "dischargeNote": "D-70 is present in DDR v1.37, with an added sub-item approved 2026-08-29 declaring SLA clock basis per process, closing D-53's SLA day-basis ambiguity.",
       "approval": "D70-A approved by John, 2026-08-25. Option B selected after review of three options and their costs.",
       "targetSource": "201-ProjectOne-Design-Decision-Record.md",
       "targetSnapshot": "Version 1.37, plus effective D-67, D-68, D-69",
@@ -525,17 +558,22 @@
       "date": "2026-08-25T10:00:00-04:00",
       "change": "AB-CM-037 (D-70) added and APPROVED. Closes the date/period-dimension half of the R-4 remainder. Effective DDR range now D-01..D-70.",
       "approver": "John"
+    },
+    {
+      "date": "2026-08-31T21:05:00-04:00",
+      "change": "Canon reconciliation Phase 5. Added the DISCHARGED — FOLDED INTO SOURCE status, modelled on 412 EXC-16 closure semantics. Discharged AB-CM-011, AB-CM-021, AB-CM-022, AB-CM-036 and AB-CM-037 against DDR v1.37, in which their prescriptions now live. Amended readingRule to exclude discharged overlays and corrected its factual claim about the DDR's contents, which v1.37 superseded. Corrected effectiveCanonPointers: ddrCurrentVersion (two errors predating this change), ddrDecisionRange, eventOrderFieldName, computationPlacement and durationClock. Entry text preserved unchanged as historical evidence. purpose deliberately not amended — the source-plus-overlays model question is Phase 7.",
+      "approver": "John"
     }
   ],
   "effectiveCanonPointers": {
     "note": "Frequently-needed answers that the source documents get wrong on their own.",
-    "ddrCurrentVersion": "v1.37 — per AB-CM-029. The DDR file header reads v1.35; the tracker explicitly names v1.23, v1.26, v1.27, v1.29, v1.33 and v1.35 as superseded by v1.37. The header is STALE; the file is not an older file. This resolves CF-003 for the DDR, which could not be settled from inside the repository.",
-    "ddrDecisionRange": "D-01 through D-66 and P-1 through P-9 in the file, PLUS D-67 (AB-CM-011), D-68 (AB-CM-022), D-69 (AB-CM-036) and D-70 (AB-CM-037) which exist only as overlays. Effective range is D-01..D-70.",
-    "eventOrderFieldName": "event_sequence_num — per AB-CM-021. The DDR file does not contain this name. Anyone writing DDL from the DDR alone would use the wrong field name.",
+    "ddrCurrentVersion": "v1.37, written 2026-08-31 by the canon reconciliation. Versions 1.36 and 1.37 as cited in 402 and 403 before that date were never authored; v1.36 was written 2026-08-26 (D-71) and v1.37 is the first real v1.37. 402 and 403 still require correction — Phase 6.",
+    "ddrDecisionRange": "D-01 through D-74 and P-1 through P-9, all present in the file. D-67, D-68, D-69, D-70, D-72, D-73 and D-74 were folded in at v1.37; the overlays that prescribed them are DISCHARGED. No decision exists only as an overlay.",
+    "eventOrderFieldName": "event_sequence_num — present throughout DDR v1.37. Three historical occurrences of the former sequence_num are preserved deliberately as written history and are not current usage.",
     "trackerCurrentVersion": "See AB-CM-029 and AB-CM-016 for the Tracker's own current-facing pointers.",
     "manifestDdrRow": "See AB-CM-030.",
-    "computationPlacement": "D-69 (AB-CM-036). Placement of any computation over event data is decided by two questions: (1) does the input grow with tenant data volume — if yes, set-based SQL, no exception; (2) can SQL express the operation — if yes, SQL anyway. The analytical tier is deliberately outside the Functional Core / Imperative Shell model.",
-    "durationClock": "D-70 (AB-CM-037). Calendar and business clocks are both readable; the clock is a READ-TIME PARAMETER. No business-clock duration is stored on a fact — it is derived by set-based join against the calendar dimension. Storing it would make a tenant calendar change invalidate history."
+    "computationPlacement": "D-69, in DDR v1.37 (folded in from AB-CM-036, now DISCHARGED). Placement of any computation over event data is decided by two questions: (1) does the input grow with tenant data volume — if yes, set-based SQL, no exception; (2) can SQL express the operation — if yes, SQL anyway. The analytical tier is deliberately outside the Functional Core / Imperative Shell model. Read D-69 in the DDR; the overlay records only what was originally prescribed.",
+    "durationClock": "D-70, in DDR v1.37 (folded in from AB-CM-037, now DISCHARGED). Calendar and business clocks are both readable; the clock is a READ-TIME PARAMETER. No business-clock duration is stored on a fact — it is derived by set-based join against the calendar dimension. Storing it would make a tenant calendar change invalidate history. D-70 also carries a sub-item approved 2026-08-29 declaring SLA clock basis per process. Read D-70 in the DDR; the overlay records only what was originally prescribed."
   },
   "entryCount": 31
 }
