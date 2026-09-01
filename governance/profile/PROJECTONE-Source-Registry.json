@@ -135,7 +135,7 @@
         }
       ],
       "availability": "PRESENT",
-      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 5 approved overlay entries. Reading the base file alone yields a stale answer."
+      "readRule": "DISCHARGED — the five overlay entries listed here were folded into the source at DDR v1.37 (2026-08-31) and are historical evidence, not effective modifications. Reading the base file alone is now a COMPLETE read, provided the copy in hand reads v1.37 or later. If it reads v1.36 or earlier, the overlays have not been applied to it and must be read as effective."
     },
     {
       "sourceId": "202",
