@@ -12,7 +12,7 @@
     "createdAt": "2026-08-13T10:01:00-04:00",
     "frozenAt": "2026-08-13T15:26:10-04:00",
     "frozenUnder": "APR-002 (Step 54 owner approval)",
-    "lastUpdated": "2026-08-24T10:15:00-04:00"
+    "lastUpdated": "2026-09-02T21:58:00-04:00"
   },
   "tierModel": {
     "tiers": [
@@ -62,8 +62,9 @@
     "unboundBehavior": "MOST_RESTRICTIVE_PLUS_WARNING"
   },
   "immutabilityModel": {
-    "immutableClassRule": "Immutable uploaded ProjectOne sources are never edited in place.",
-    "correctionMechanism": "999 overlay entry only.",
+    "immutableClassRule": "An uploaded ProjectOne source marked immutable:true is never edited in place. This is per-source. A source marked immutable:false is LIVE-MAINTAINED — edit it, bump its version, re-upload it, and do NOT write an overlay against it.",
+    "correctionMechanism": "For immutable:true sources, a 999 overlay entry only. For live-maintained sources, direct edit with a version bump; the Manifest records the version.",
+    "conversionRule": "A source moves from immutable to live-maintained only by explicit owner ruling, recorded here and in the register changeHistory. It is not implied by having been edited.",
     "directMaintenanceRule": "Assistant-created artifacts (Policy, S&R, registries, Profile, schemas, contracts) are maintained directly and must NOT be routed through the 999 overlay."
   },
   "sources": [
@@ -106,7 +107,7 @@
       "version": "as-packaged",
       "versionResolved": true,
       "status": "ACTIVE",
-      "immutable": true,
+      "immutable": false,
       "contentHash": "46c7036aa83aae6999bbd692a1648e91f79fd2e5574bb38e8717eac72cfa5ece",
       "governsSubjects": [
         "product/design source"
@@ -282,7 +283,7 @@
       "version": "as-packaged",
       "versionResolved": true,
       "status": "ACTIVE",
-      "immutable": true,
+      "immutable": false,
       "contentHash": "37c91d54f873c103dd48f6eebce849d58406c5961219e66f9c8d6cff467b2a8d",
       "governsSubjects": [
         "product/design source"
@@ -316,7 +317,7 @@
       "version": "as-packaged",
       "versionResolved": true,
       "status": "ACTIVE",
-      "immutable": true,
+      "immutable": false,
       "contentHash": "18d9945deff5323b2e86a7c6397cef7404f37169b806b7c611dca5ecd938e5c9",
       "governsSubjects": [
         "product/design source"
@@ -846,10 +847,10 @@
       "sourceId": "406",
       "displayName": "406-ProjectOne-DDL-Build-Kickoff-Brief.md",
       "tier": 2,
-      "version": "v11",
+      "version": "v12",
       "versionResolved": true,
       "status": "ACTIVE",
-      "immutable": true,
+      "immutable": false,
       "governsSubjects": [
         "DDL build kickoff",
         "standing reference §1–§8"
