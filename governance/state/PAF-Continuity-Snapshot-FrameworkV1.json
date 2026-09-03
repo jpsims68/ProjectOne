@@ -1147,10 +1147,20 @@
       "finding": "CANON DOES NOT KNOW THE OVERLAY MECHANISM EXISTS. Searching all 29 project documents for '999' returns nothing. Every hit for 'overlay' is a PRODUCT FEATURE — translucent overlays, the FA-11 alignment overlay — never document modification.",
       "scope": "This is not confined to D-69 and D-70. ALL 30 overlay entries are invisible to canon, including the 27 the owner approved on 2026-08-11 and D-67/D-68.",
       "againstCanonsOwnRule": "404 states the guard plainly: 'write closures back to the DDR'. The overlay register is a parallel system canon has never seen.",
-      "notCreatedThisSession": "The external 999 tracker v0.4 predates this session. The gap is inherited, not introduced."
+      "notCreatedThisSession": "The external 999 tracker v0.4 predates this session. The gap is inherited, not introduced.",
+      "resolvedAt": "RESOLVED 2026-09-02 by the canon reconciliation. 403 Manifest v75 names the overlay register by repository path in its 'Governance artifacts held OUTSIDE the Project' section, and the five DDR-targeting overlays were folded into DDR v1.37. Eleven of thirty-one entries are now DISCHARGED — FOLDED INTO SOURCE. The finding recorded here is preserved as written: it was accurate on 2026-08-26 and is the evidence for why the reconciliation was undertaken."
     },
     "numberingCheck": "Canon's highest allocated decision is D-66. D-67 through D-70 continue cleanly. NO COLLISION.",
-    "ownerExpectation": "The owner predicted this outcome before the analysis: 'the DDR is, continues to be, and always has been the source of truth.' The evidence supports it. Nothing built in the repository displaced the DDR; the repository asserted otherwise in a document canon has never seen."
+    "ownerExpectation": "The owner predicted this outcome before the analysis: 'the DDR is, continues to be, and always has been the source of truth.' The evidence supports it. Nothing built in the repository displaced the DDR; the repository asserted otherwise in a document canon has never seen.",
+    "supersededFacts": {
+      "notice": "This analysis is a dated evidence record from 2026-08-26. Its findings are preserved verbatim and were NOT edited. The facts below have since changed; the analysis is read as history, not as current state.",
+      "projectFilesPass.mentionOfRepository": "SUPERSEDED. 402 Tracker v85 names jpsims68/ProjectOne, and 403 Manifest v75 lists governance artifacts by repository path. Canon now knows the repository exists.",
+      "numberingCheck": "SUPERSEDED. Canon's highest allocated decision is D-74 as of DDR v1.37, not D-66. The no-collision conclusion still holds.",
+      "repositoryPass.consequence": "SUPERSEDED as stated. The two tier systems were read against each other on 2026-09-03. They are orthogonal, not competing: registry tiers are categories describing how a source is maintained, Manifest tiers are an ordinal precedence hierarchy describing subject matter. Both say the DDR governs design — the registry says so explicitly in scopeRule. The apparent inversion came from comparing tier numbers across two systems that do not share an axis. Recorded as a vocabulary hazard in the Source Registry's tierModel.axisNote.",
+      "finding": "PARTIALLY SUPERSEDED. 'Two independent authority systems, each unaware of the other' was accurate on 2026-08-26 and drove the reconciliation. As of 2026-09-03 each names the other, and the README states the subject boundary explicitly. The observation that both use the word 'tier' by different rules remains true and is now documented rather than resolved.",
+      "recordedAt": "2026-09-03T09:44:00-04:00",
+      "recordedBy": "Canon reconciliation Phase 7, finding C-1/C-3/C-4. Owner: John."
+    }
   },
   "ddrVersionFinding": {
     "id": "F-SETUP-029-01",
