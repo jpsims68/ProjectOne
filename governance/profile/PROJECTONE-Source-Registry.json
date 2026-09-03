@@ -307,7 +307,7 @@
         }
       ],
       "availability": "PRESENT",
-      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 4 approved overlay entries. Reading the base file alone yields a stale answer."
+      "readRule": "DISCHARGED — the four overlay entries listed here were folded into the source at Tracker v85 (2026-09-01) and are historical evidence, not effective modifications. Reading the base file alone is now a COMPLETE read, provided the copy in hand reads v85 or later. If it reads v84 or earlier, the overlays have not been applied to it and must be read as effective. Two prescriptions were superseded rather than applied and are not in the source at all — see AB-CM-009's discharge note."
     },
     {
       "sourceId": "403",
@@ -345,7 +345,7 @@
         }
       ],
       "availability": "PRESENT",
-      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 5 approved overlay entries. Reading the base file alone yields a stale answer."
+      "readRule": "INCOMPLETE READ WITHOUT OVERLAYS. This source has 3 approved overlay entries still effective — AB-CM-008, AB-CM-025 and AB-CM-035, which prescribe registering the governance artifacts held outside the Project. Manifest v74 records that registration as a deliberate open item, so reading the base file alone yields an incomplete authority map. AB-CM-017 and AB-CM-030 are DISCHARGED against v74 and are not read alongside it."
     },
     {
       "sourceId": "404",
