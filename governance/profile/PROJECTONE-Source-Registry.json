@@ -1,8 +1,8 @@
 {
   "header": {
     "artifactId": "PROJECTONE-SOURCE-REGISTRY",
-    "version": "2.0",
-    "status": "FROZEN",
+    "version": "2.1",
+    "status": "ACTIVE",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
     "governedBy": [
@@ -10,9 +10,10 @@
       "PAF-BINDING-MODEL"
     ],
     "createdAt": "2026-08-13T10:01:00-04:00",
-    "frozenAt": "2026-08-13T15:26:10-04:00",
-    "frozenUnder": "APR-002 (Step 54 owner approval)",
-    "lastUpdated": "2026-09-02T21:58:00-04:00"
+    "previouslyFrozenAt": "2026-08-13T15:26:10-04:00",
+    "previouslyFrozenUnder": "APR-002 (Step 54 owner approval)",
+    "lastUpdated": "2026-09-03T12:14:00-04:00",
+    "supersessionBasis": "CP-006 — profile layer is live-maintained, not frozen"
   },
   "tierModel": {
     "tiers": [
