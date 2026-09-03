@@ -20,13 +20,13 @@
         "tier": 1,
         "sourceClass": "ACTIVE_GOVERNANCE",
         "governs": "policy, agent authority, registries, overlays",
-        "treatment": "Effective canon = immutable source + approved overlays"
+        "treatment": "Effective canon = source + approved overlays, where the source is marked immutable:true. Sources marked immutable:false are live-maintained and edited in place. The per-source flag governs; this tier does not."
       },
       {
         "tier": 2,
         "sourceClass": "NORMATIVE_IMMUTABLE",
         "governs": "product/design sources",
-        "treatment": "Read with applicable overlays; never edited in place"
+        "treatment": "Read with applicable overlays where immutable:true. Sources marked immutable:false are live-maintained and edited in place — see immutabilityModel. The per-source flag governs; this tier does not."
       },
       {
         "tier": 3,
@@ -35,7 +35,8 @@
         "treatment": "Informs, never determines"
       }
     ],
-    "scopeRule": "Precedence is evaluated per subject. DDR wins on design conflicts; Build Policy is the sole home for VSA/CPM/UX and the 330 requirements; Roadmap governs sequence only."
+    "scopeRule": "Precedence is evaluated per subject. DDR wins on design conflicts; Build Policy is the sole home for VSA/CPM/UX and the 330 requirements; Roadmap governs sequence only.",
+    "axisNote": "These tiers classify HOW a source is maintained and read. They are categories, not a ranking — tier 1 does not outrank tier 2. Precedence is per subject, per scopeRule. The Project Manifest also uses the word 'tier', for a different, seven-level ordinal hierarchy classifying what a document is ABOUT, where the number IS precedence. The two systems are orthogonal and were compared subject by subject on 2026-09-03 with no disagreement found. Do not resolve a conflict by comparing a tier number in one system against a tier number in the other."
   },
   "useClassifications": [
     {
@@ -45,7 +46,7 @@
     },
     {
       "classification": "NORMATIVE_IMMUTABLE",
-      "meaning": "Immutable product/design source",
+      "meaning": "Product/design source. The class name is historical: immutability is now per-source, set by the `immutable` flag, not by this classification.",
       "mayDetermineResult": true
     },
     {
