@@ -1,8 +1,8 @@
 {
   "header": {
     "artifactId": "PROJECTONE-RISK",
-    "version": "1.0",
-    "status": "FROZEN",
+    "version": "1.1",
+    "status": "ACTIVE",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
     "governedBy": [
@@ -10,8 +10,10 @@
       "PAF-BINDING-MODEL"
     ],
     "createdAt": "2026-08-13T10:01:00-04:00",
-    "frozenAt": "2026-08-13T15:26:10-04:00",
-    "frozenUnder": "APR-002 (Step 54 owner approval)"
+    "previouslyFrozenAt": "2026-08-13T15:26:10-04:00",
+    "previouslyFrozenUnder": "APR-002 (Step 54 owner approval)",
+    "lastUpdated": "2026-09-03T12:14:00-04:00",
+    "supersessionBasis": "CP-006 \u2014 profile layer is live-maintained, not frozen"
   },
   "binding": {
     "contractId": "paf.risk-standard",

@@ -1,7 +1,7 @@
 {
   "header": {
     "artifactId": "PROJECTONE-PROFILE",
-    "version": "1.5",
+    "version": "1.6",
     "status": "ACTIVE",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
@@ -10,8 +10,8 @@
       "PAF-BINDING-MODEL"
     ],
     "createdAt": "2026-08-13T10:01:00-04:00",
-    "supersedes": "PROJECTONE-PROFILE@1.4",
-    "supersessionBasis": "CP-005 governed change \u2014 technology registry bound"
+    "supersedes": "PROJECTONE-PROFILE@1.5",
+    "supersessionBasis": "CP-006 governed change \u2014 profile-layer maintenance model"
   },
   "profileId": "PROJECTONE",
   "boundFrameworkVersion": "PAF v0.x (construction baseline; final bind at Step 55 freeze)",
@@ -268,5 +268,16 @@
       "status": "RECORDED \u2014 not yet scheduled. Connector implementation is post-MVP and unscoped; this note establishes the position, not a commitment to build."
     }
   },
-  "technologyRegistry": "profile/PROJECTONE-Technology-Registry.json"
+  "technologyRegistry": "profile/PROJECTONE-Technology-Registry.json",
+  "profileMaintenanceModel": {
+    "recordedBy": "CP-006",
+    "recordedAt": "2026-09-03T12:14:00-04:00",
+    "rule": "The profile layer is NOT frozen. framework/ holds the frozen generic core; profile/ holds project-specific configuration and is meant to change. The Step 54 freeze under APR-002 applied FROZEN to every governance artifact including this layer, before that separation was drawn, and the status was never downgraded.",
+    "changePackageRequired": [
+      "profile/PROJECTONE-Profile.json \u2014 carries configuration bindings that other artifacts hash and resolve against. Changes ONLY by change package, with a version transition."
+    ],
+    "liveMaintained": "Every other profile artifact is edited directly. Each edit MUST bump the artifact's version and set lastUpdated. An edit that does not bump the version is a defect: the Source Registry read v2.0 across six consecutive edits, which is what this package discloses.",
+    "hashManifestScope": "Profile artifacts are NOT listed in framework/SHA256SUMS.txt and must not be added. The hash manifest is scoped to the frozen core by design. Adding profile artifacts would enforce a freeze the framework does not intend and block routine configuration work.",
+    "enforcementGap": "Nothing verifies that a FROZEN artifact is unchanged. activation_checkpoint.py AC-3.13 checks only that a FROZEN artifact carries version, frozenAt and frozenUnder. That is why six un-versioned edits to a FROZEN artifact produced no failure. Open item; not fixed by this package."
+  }
 }
