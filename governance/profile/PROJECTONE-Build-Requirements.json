@@ -1,7 +1,7 @@
 {
   "header": {
     "artifactId": "PROJECTONE-BUILD-REQUIREMENTS",
-    "version": "1.1",
+    "version": "1.2",
     "status": "ACTIVE",
     "schemaVersion": "1.0",
     "layer": "PROFILE",
@@ -12,8 +12,8 @@
     "createdAt": "2026-08-13T10:01:00-04:00",
     "previouslyFrozenAt": "2026-08-13T15:26:10-04:00",
     "previouslyFrozenUnder": "APR-002 (Step 54 owner approval)",
-    "lastUpdated": "2026-09-03T12:14:00-04:00",
-    "supersessionBasis": "CP-006 \u2014 profile layer is live-maintained, not frozen"
+    "lastUpdated": "2026-09-04T16:02:00-04:00",
+    "supersessionBasis": "CR-001 \u2014 C21 consolidation fidelity resolved at 330/330"
   },
   "loadedByReference": true,
   "policySource": {
@@ -408,5 +408,5 @@
     "EXC-15",
     "EXC-16"
   ],
-  "consolidationFidelityNote": "75 of 330 requirements have untested consolidation fidelity pending DATA/API/SEC and non-pilot CODE recap docs \u2014 a branch-local pause the owner ratified. Carried as an open verification item, not a silent gap."
+  "consolidationFidelityNote": "RESOLVED 2026-09-04. C21 is complete across all thirteen families: 330 exact, 0 drift, 0 absent, run with the package's own c21-fidelity-reconciliation.py \u2014 the same instrument that produced the earlier 255/255 result, so the figures are directly comparable. The DATA (20), API (25), SEC (30) and non-pilot CODE (12) recaps were located in ProjectOne-Supplemental-Context-Package-v1.0.zip and verified byte-identical to the transfer manifest recorded on 2026-08-13. The check was negative-tested before the result was relied on: three deliberate defects (a sentence inserted into SEC-21, a word swapped in DATA-15, an API heading removed) were all detected in the correct families. Prior text, retained as history: \"75 of 330 requirements have untested consolidation fidelity pending DATA/API/SEC and non-pilot CODE recap docs \u2014 a branch-local pause the owner ratified.\""
 }

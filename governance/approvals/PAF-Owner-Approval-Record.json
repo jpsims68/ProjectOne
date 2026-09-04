@@ -51,7 +51,7 @@
         "Verification mechanism mapping (360/360) is assistant judgment, not independently verified \u2014 OD-05 remains open and recommended",
         "Live GitHub/CI, secrets, per-role sandboxing, cross-family independence CANNOT_SATISFY on this platform \u2014 deferred to owner execution",
         "Framework has governed 12 simulated scenarios, not real production work",
-        "75 of 330 requirements have untested consolidation fidelity pending recap documents"
+        "RESOLVED 2026-09-04. C21 consolidation fidelity is complete at 330 of 330 exact, 0 drift, 0 absent. The four recap documents recorded here as pending were never missing: they were in ProjectOne-Supplemental-Context-Package-v1.0.zip, verified 39 of 39 against its own SHA256SUMS.txt and 38 of 38 against the transfer manifest. This note is retained as written history; see governance/corrections/CR-001."
       ]
     }
   ],

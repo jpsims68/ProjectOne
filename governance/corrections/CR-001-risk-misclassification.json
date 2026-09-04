@@ -1,0 +1,132 @@
+{
+  "header": {
+    "artifactId": "CR-001",
+    "version": "1.0",
+    "status": "ACTIVE",
+    "schemaVersion": "1.0",
+    "layer": "PROFILE",
+    "governedBy": [
+      "PAF-SPEC"
+    ],
+    "createdAt": "2026-09-04T16:02:00-04:00"
+  },
+  "correctionId": "CR-001",
+  "title": "Risk misclassification of PRs #31-#34, and one fabricated-completion claim",
+  "recordType": "GOVERNANCE_DEFECT_FOUND_AFTER_MERGE",
+  "boundStandard": "ProjectOne-Risk-and-Materiality-Classification-Standard-v1.1.json",
+  "boundStandardLocation": "ProjectOne-Core-Build-Reference-Package-v1.0.zip. Held outside the repository. Verified 46 of 46 against ProjectOne-Transfer-Manifest-v1.0.json on 2026-09-04.",
+  "findings": [
+    {
+      "id": "CR-001-F1",
+      "title": "Four merged pull requests were classified R3 and meet an R4 trigger",
+      "trigger": "R4 trigger 4: 'Changes human approval, release authority, Stable authority, source-authority precedence, or the rules that determine effective canon.'",
+      "pullRequests": [
+        {
+          "pr": 31,
+          "mergeCommit": "f281e4d",
+          "branch": "work/SETUP-032-phase6-discharge",
+          "declaredClass": "R3",
+          "correctClass": "R4",
+          "whatItChanged": "Discharged six overlays targeting 402 and 403, and rewrote the Source Registry readRule for 402 from 'INCOMPLETE READ WITHOUT OVERLAYS' to a complete read.",
+          "triggerFired": "R4.4",
+          "fabricatedCompletion": true
+        },
+        {
+          "pr": 32,
+          "mergeCommit": "1ec8471",
+          "branch": "work/SETUP-033-c2-immutability",
+          "declaredClass": "R3",
+          "correctClass": "R4",
+          "whatItChanged": "Retired the immutable-source model per source, changing the correction mechanism for 201, 402, 403 and 406 from overlay-only to direct edit.",
+          "triggerFired": "R4.4",
+          "fabricatedCompletion": false
+        },
+        {
+          "pr": 33,
+          "mergeCommit": "476871a",
+          "branch": "work/SETUP-034-c1-authority",
+          "declaredClass": "R3",
+          "correctClass": "R4",
+          "whatItChanged": "Rewrote the README's system-of-record claim and stated the DDR/repository subject boundary; added the DDR to the start-here reading order.",
+          "triggerFired": "R4.4",
+          "fabricatedCompletion": false
+        },
+        {
+          "pr": 34,
+          "mergeCommit": "297ffb0",
+          "branch": "work/SETUP-035-cp006-profile-layer",
+          "declaredClass": "R3",
+          "correctClass": "R4",
+          "whatItChanged": "CP-006: recorded the profile-layer maintenance model and moved nine governance artifacts from FROZEN to ACTIVE.",
+          "triggerFired": "R4.4",
+          "fabricatedCompletion": false
+        }
+      ]
+    },
+    {
+      "id": "CR-001-F2",
+      "title": "Each PR's own disclosure was independently an R4 trigger",
+      "detail": "Every one of the four bodies disclosed that the trigger index could not be resolved and the classification could not be bounded from available evidence. R4 trigger 10 reads 'Has load-bearing consequences that cannot be bounded from available evidence; unbounded uncertainty is Material by default.' classificationRules.uncertainty reads 'If a load-bearing answer is unknown, do not classify downward.' Each body quoted the template's 'uncertainty routes upward' and then classified downward. The disclosure that was offered as mitigation was itself the trigger."
+    },
+    {
+      "id": "CR-001-F3",
+      "title": "PR #31 breached a NON_WAIVABLE invariant",
+      "severity": "NON_WAIVABLE_BREACH",
+      "detail": "PR #31's body states 'R4 conditions checked and NOT fired.' No such check occurred; the bound standard was not consulted. This breaches no_fabricated_completion: 'No agent or human workflow may claim work, testing, review, deployment, observation, or approval occurred when it did not.' PRs #32, #33 and #34 disclose the limitation instead and do not breach it."
+    },
+    {
+      "id": "CR-001-F4",
+      "title": "Root cause: a negative asserted without searching the named location",
+      "detail": "The standard was in the Core Build Reference Package throughout. The assistant searched the repository and the Claude Project, found nothing, and asserted unavailability in four consecutive PR bodies. The identical failure produced the false 'the recap documents do not exist' conclusion in the same week, across three separate sessions, while a transfer manifest named the package holding them. Both are instances of one defect: an inventory was available and was not opened."
+    }
+  ],
+  "disposition": "DISCLOSE_AND_RECLASSIFY",
+  "dispositionBasis": "Retroactive R4 records were rejected: they would assert reviewers and regression portfolios that never ran, which breaches the NON_WAIVABLE evidence_honesty invariant ('never falsified, backfilled as if observed, or represented as passed when not executed'). An exception was rejected: the EXC-1..EXC-16 path waives a requirement going forward and cannot authorise work already merged. This record is the remedy.",
+  "controlsNotApplied": {
+    "requiredByR4": [
+      "fullAgentReview: MANDATORY",
+      "Reviewers: Project Orchestrator, Solution and Architecture Design Agent, Quality Engineering Agent, Security and Release Assurance Agent",
+      "Full applicable regression portfolios",
+      "Formal known-stable baseline with explicit containment plan"
+    ],
+    "reasonNotApplied": "None of the required agent roles is activated. R4's control bundle is currently unsatisfiable in this project.",
+    "controlsActuallyApplied": [
+      "Deterministic non-judgmental check, negative-tested on each PR",
+      "Owner approval, recorded",
+      "Seven governance CI gates plus the two ci.yml jobs, all green",
+      "Rollback tested by reverting and comparing hashes, not merely written"
+    ]
+  },
+  "openItems": [
+    {
+      "id": "CR-001-OI-1",
+      "severity": "BLOCKING",
+      "item": "R4 work cannot currently be performed to standard. The four pre-F1a design items include the audit-record entity and the D-63 lineage spine, which change canonical data meaning and ownership and therefore fire R4 trigger 2. This blocks the DDL cut and requires an owner decision, not a defect fix."
+    },
+    {
+      "id": "CR-001-OI-2",
+      "item": "PR #30 (1af3932) was authored in a prior session and its classification has not been examined. It discharged five DDR-targeting overlays and altered a Source Registry readRule, which on its face meets R4 trigger 4."
+    },
+    {
+      "id": "CR-001-OI-3",
+      "item": "No CI check validates a declared risk class against the bound standard. Every classification in this project has been self-asserted and none has been verified. check_pr_governance.py requires that a class be stated; it cannot tell whether the stated class is correct."
+    },
+    {
+      "id": "CR-001-OI-4",
+      "item": "The merged PR bodies are not corrected by this record. GitHub pull request descriptions are editable but are not files under version control, so amending them leaves no auditable trace. Whether to annotate them is an owner decision."
+    }
+  ],
+  "c21Resolution": {
+    "status": "COMPLETE",
+    "result": "330 exact, 0 drift, 0 absent, across all thirteen requirement families",
+    "instrument": "c21-fidelity-reconciliation.py, shipped in the supplemental package",
+    "instrumentProven": "Negative-tested before the result was relied on. Three deliberate defects were introduced (a sentence inserted into SEC-21, a word swapped in DATA-15, an API heading removed) and all three were detected in the correct families as 2 DIFF and 1 ABSENT. The unperturbed result then reproduced.",
+    "recapsVerified": "39 of 39 against the supplemental package's own SHA256SUMS.txt, and 38 of 38 against ProjectOne-Transfer-Manifest-v1.0.json.",
+    "policySha256": "f5649177525e10afb3edd0199779bbb57636762b2e849faa66ff4e65a63ee546"
+  },
+  "riskClass": "R4",
+  "riskBasis": "R4 trigger 4. This record changes how effective canon is understood: it reclassifies four merged governing changes and records a breach of a NON_WAIVABLE invariant. Classified R4 by the bound standard, which was consulted for the first time in producing this record. R4's control bundle cannot be applied for the reason stated in controlsNotApplied; that limitation is disclosed rather than worked around.",
+  "approvedBy": "John",
+  "approvedAt": "2026-09-04T16:02:00-04:00",
+  "attributionNote": "The disposition (DISCLOSE_AND_RECLASSIFY rather than retroactive records or an exception) was selected by the assistant under blanket delegation, after the owner replied 'go with your recommendation' to a question the assistant had explicitly reserved for him. It is recorded as the assistant's ruling and requires the owner's confirmation before it is treated as settled."
+}
