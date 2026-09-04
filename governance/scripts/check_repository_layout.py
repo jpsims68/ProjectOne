@@ -46,6 +46,11 @@ ALLOWED_ROOT = {
     "vite.config.ts",
     "tsconfig.json",
     "index.html",
+    # Added 2026-09-04 (CF-009): Claude Code reads CLAUDE.md only from the
+    # repository root, so it cannot live under governance/. It carries standing
+    # instructions for sessions, not a governance artifact, and matches no
+    # GOVERNED_PATTERN. This allowlist predates the file.
+    "CLAUDE.md",
 }
 
 # Names that identify governance/framework artifacts wherever they appear.
